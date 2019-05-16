@@ -409,41 +409,26 @@ class KkDownloader extends AbstractPlugin
                 );
             }
 
-            // render the LINK-Part:
-            $content .= '<div class="linkOutput"><div class="dl-link">' . $fileExtIcon . '&nbsp;';
-            $content .= $this->pi_linkTP($fileDescription, $urlParameters= ['download' => $image, 'did' => $uid]);
-            $content .= '</div>';
-
             // add the filesize block, if desired
+            $formattedFileSize = '';
             if ($this->settings['showFileSize']) {
-                $downloadfile = $this->filebasepath.$image;
-                $fileSize = filesize($downloadfile);
+                $downloadFile = $this->filebasepath.$image;
+                $fileSize = filesize($downloadFile);
                 $decimals = 2;
                 if ($fileSize < 1024) {
                     $decimals = 0;
                 }
-                $formattedFileSize = $this->format_size($fileSize, $decimals);
-                $fsc = trim($this->conf['filesizeClass']);
-                if (empty($fsc)) {
-                    $filesizedivB = '<div>';
-                    $filesizedivE = '</div>';
-                } else {
-                    $filesizedivB = '<div class="'.$fsc.'">';
-                    $filesizedivE = '</div>';
-                }
-                $content .= sprintf(
-                    ' %s(%s%s)%s',
-                    $filesizedivB,
-                    LocalizationUtility::translate('filesize', 'kkDownloader'),
-                    $formattedFileSize,
-                    $filesizedivE
+                $formattedFileSize = sprintf(
+                    '&nbsp;(%s)',
+                    $this->format_size($fileSize, $decimals)
                 );
             }
 
             // add the file date+time block, if desired
+            $formattedFileMDate = '';
             if ($this->settings['showFileMDate']) {
-                $downloadfile = $this->filebasepath . $image;
-                $fileModificationTime = filemtime($downloadfile);
+                $downloadFile = $this->filebasepath . $image;
+                $fileModificationTime = filemtime($downloadFile);
                 if ($this->settings['showFileMDate'] == '1') {
                     $dtf = $this->conf['dateformat'];
                 } else {
@@ -453,26 +438,24 @@ class KkDownloader extends AbstractPlugin
                     $dtf = 'd.m.Y H:i';
                 }
                 $formattedFileDate = date($dtf, $fileModificationTime);
-                $mdsc = trim($this->conf['fileMDateClass']);
-                if (empty($mdsc)) {
-                    $fileMDatedivB = '<div>';
-                    $fileMDatedivE = '</div>';
-                } else {
-                    $fileMDatedivB = '<div class="' . $mdsc . '">';
-                    $fileMDatedivE = '</div>';
-                }
-                $content .= sprintf(
-                    ' %s%s%s%s',
-                    $fileMDatedivB,
+                $formattedFileMDate = sprintf(
+                    '<dd>%s: %s</dd>',
                     LocalizationUtility::translate('fileMDate', 'kkDownloader'),
-                    $formattedFileDate,
-                    $fileMDatedivE
+                    $formattedFileDate
                 );
             }
-            $content .= '</div>';
+
+            // render the LINK-Part:
+            $content .= sprintf(
+                '<dt>%s&nbsp;%s%s</dt>%s',
+                $fileExtIcon,
+                $this->pi_linkTP($fileDescription, $urlParameters= ['download' => $image, 'did' => $uid]),
+                $formattedFileSize,
+                $formattedFileMDate
+            );
         }
 
-        return $content;
+        return '<dl>' . $content . '</dl>';
     }
 
     /**

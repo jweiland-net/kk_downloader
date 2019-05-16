@@ -1,0 +1,168 @@
+#kkdl_flexWrap {
+  padding: 0 0 0px 0;
+  margin: 0 0 20px 0;
+  width: 500px;
+  clear: both; }
+
+.result-count {
+  width: 49%;
+  float: left;
+  margin: 10px 0 15px;
+}
+
+.page-browser {
+  width: 49%;
+  text-align: right;
+  float: right;
+  margin: 10px 0 15px;
+}
+
+.kkdl_text {
+  float: left;
+  text-align: left;
+}
+
+.kkdl_image {
+  float: left;
+  text-align: left;
+  margin-right: 15px;
+}
+
+.image img {
+  padding: 0;
+  margin: 0 10px 10px 0;
+  float: left;
+  width: 63px;
+  height: 63px;
+  border: 2px solid #D0EFED;
+}
+
+.kkdl_flex {
+  padding: 5px;
+  margin: 0px 3px 5px 0;
+  height: auto;
+  background: #f0f4f3;
+  clear: both;
+  /* div around each link
+  .linkOutput {
+   }
+  */
+}
+.kkdl_flex .title {
+  padding: 0;
+  margin: 0;
+  color: #004D74;
+  font-weight: bolder;
+}
+.kkdl_flex .category_class {
+  margin-bottom: 12px;
+}
+.kkdl_flex .kkdl_text.bodytext {
+  padding: 0;
+  margin: 0;
+}
+.kkdl_flex .kkdl_text.bodytext .kk_filesize {
+  float: left;
+  margin-left: 10px;
+}
+.kkdl_flex .kkdl_text.bodytext .dl-link-text {
+  float: left;
+}
+.kkdl_flex .kkdl_text.bodytext .kk_fileMDate {
+  clear: left;
+  float: left;
+}
+.kkdl_flex .clicks {
+  font-size: 11px;
+}
+.kkdl_flex .datetime {
+  font-size: 11px;
+}
+.kkdl_flex .links {
+  float: left;
+  padding: 0;
+  margin: 0;
+}
+.kkdl_flex .description h6 {
+  text-decoration: underline;
+  font-style: italic;
+  font-size: 13px;
+  font-size: 1rem;
+}
+.kkdl_flex a {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+}
+.kkdl_flex a.more {
+  padding: 0;
+  margin: 0;
+}
+.kkdl_flex a:hover {
+  text-decoration: none;
+}
+
+.kkdl_single {
+  float: left;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+}
+.kkdl_single .kkdl_text {
+  min-width: 450px;
+  max-width: 80%;
+}
+.kkdl_single .kkdl_text.bodytext {
+  padding: 0;
+  margin: 0;
+}
+.kkdl_single .kkdl_text.bodytext .kk_filesize {
+  float: left;
+  margin-left: 10px;
+}
+.kkdl_single .kkdl_text.bodytext .dl-link-text {
+  float: left;
+}
+.kkdl_single .kkdl_text.bodytext .kk_fileMDate {
+  clear: left;
+  float: left;
+}
+.kkdl_single .kkdl_descriptions {
+  clear: both;
+  float: left;
+  margin-top: 10px;
+}
+.kkdl_single .kkdl_descriptions h6 {
+  font-style: italic;
+  text-decoration: underline;
+}
+.kkdl_single .links {
+  padding: 0;
+  margin: 0;
+}
+.kkdl_single .title {
+  padding: 0;
+  margin: 0;
+  color: #004D74;
+  font-weight: bolder;
+}
+.kkdl_single .datetime,
+.kkdl_single .clicks {
+  font-size: 11px;
+  font-size: 0.8461538462rem;
+}
+.kkdl_single .image img {
+  padding: 0;
+  margin: 0 10px 10px 0;
+  float: left;
+  width: 63px;
+  height: 63px;
+  border: 2px solid #D0EFED;
+}
+
+.clearer {
+  clear: both;
+  margin: 0;
+  border: 0;
+  background: none;
+}

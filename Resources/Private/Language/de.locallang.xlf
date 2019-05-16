@@ -87,6 +87,10 @@
 				<source>[more]</source>
 				<target>[mehr]</target>
 			</trans-unit>
+			<trans-unit id="linkBack">
+				<source>Link back to previous page</source>
+				<target>Link zurück zur Herkunftsseite</target>
+			</trans-unit>
 			<trans-unit id="pi_list_browseresults_page">
 				<source>Page</source>
 				<target>Seite</target>

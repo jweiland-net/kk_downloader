@@ -66,6 +66,9 @@
 			<trans-unit id="more">
 				<source>[more]</source>
 			</trans-unit>
+			<trans-unit id="linkBack">
+				<source>Link back to previous page</source>
+			</trans-unit>
 			<trans-unit id="pi_list_browseresults_page">
 				<source>Page</source>
 			</trans-unit>

@@ -1,38 +1,41 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-	<f:flashMessages />
+<f:flashMessages />
 
-	<f:if condition="{settings.whatToDisplay}=='SINGLE'">
-		<f:then>
-			<f:render section="renderSingleView" arguments="{_all}" />
-		</f:then>
-		<f:else>
-			<f:render section="renderListView" arguments="{_all}" />
-		</f:else>
-	</f:if>
+<f:if condition="{settings.whatToDisplay}=='SINGLE'">
+	<f:then>
+		<f:render section="renderSingleView" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<f:render section="renderListView" arguments="{_all}" />
+	</f:else>
+</f:if>
 
-	<f:section name="renderSingleView">
-		<f:if condition="{download}">
-			<div class="kkdl_single">
-				<h2 class="title">{download.title}</h2>
+<f:comment> <!-- S I N G L E - V I E W --></f:comment>
 
+<f:section name="renderSingleView">
+	<f:if condition="{download}">
+		<div class="kkdl_single">
+			<h2 class="title">{download.title}</h2>
+
+			<f:if condition="{settings.showImagePreview}">
+				<div class="kkdl_image">{download.previewImage->f:format.raw()}</div>
+			</f:if>
+
+			<div class="kkdl_documentation">
 				<f:if condition="{download.categories}">
 					<div class="category_class">{download.categories}</div>
 				</f:if>
 
-				<div class="kkdl_text">
-					<div class="links">{download.fileItems->f:format.raw()}</div>
-					<p class="bodytext">
+				<div class="kkdl_text bodytext">
+					{download.fileItems->f:format.raw()}
+					<div class="kkdl_descriptions">
+						<h6>{f:translate(key: 'shortDescription')}:</h6>
 						<b>
-							{f:translate(key: 'shortDescription')}:<br />
-							{download.description -> f:format.crop(maxCharacters: 10000, respectWordBoundaries: 1)->f:format.nl2br()}
+							{download.description->f:format.crop(maxCharacters: 10000, respectWordBoundaries: 1)->f:format.nl2br()}
 						</b>
-						<br />{download.longdescription->f:format.html()}
-					</p>
+						<br><br>{download.longdescription->f:format.html()}
+					</div>
 				</div>
-
-				<f:if condition="{settings.showImagePreview}">
-					<div class="kkdl_image">{download.previewImage->f:format.raw()}</div>
-				</f:if>
 
 				<div style="clear: both"></div>
 
@@ -46,80 +49,100 @@
 				<f:render section="renderLastDownload" arguments="{download: download}" />
 				<f:render section="renderIpLastDownload" arguments="{download: download}" />
 				<f:render section="renderEditDate" arguments="{download: download}" />
-			</div>
-		</f:if>
-	</f:section>
 
-	<f:section name="renderListView">
-		<div class="kkdl_flexWrap">
-			<div class="result-count">{resultCount->f:format.raw()}</div>
-			<f:if condition="{settings.showPagebrowser}">
-				<f:render section="renderPagebrowser" arguments="{_all}" />
-			</f:if>
-			<f:for each="{downloads}" as="download">
-				<div class="kkdl_flex">
-					<h2 class="title">{download.name}</h2>
-					<div class="category_class">
-						<f:if condition="{download.categories}">
-							{f:translate(key: 'categories')}: {download.categories}
-						</f:if>
-					</div>
-					<div class="kkdl_text">
-						<div class="links">{download.fileItems->f:format.raw()}</div>
-						<div class="description">
-							{download.description -> f:format.crop(maxCharacters: 10000, respectWordBoundaries: 1)->f:format.nl2br()}
-						</div>
-						<f:link.page pageUid="{pidOfDetailPage}" target="_top" additionalParams="{tx_kkdownloader_pi1: {uid: download.uid}}">{f:translate(key: 'more')}</f:link.page>
-					</div>
-					<f:if condition="{settings.showImagePreview}">
-						<div class="kkdl_image">{download.previewImage->f:format.raw()}</div>
-					</f:if>
-					<div style="clear: both"></div>
-
-					<f:if condition="{settings.showDownloadsCount}">
-						<div class="clicks">{download.clicks} {f:translate(key: 'clicks')}</div>
-					</f:if>
-
-					<f:render section="renderLastDownload" arguments="{download: download}" />
-					<f:render section="renderIpLastDownload" arguments="{download: download}" />
-					<f:render section="renderEditDate" arguments="{download: download}" />
+				<div class="linkBack">
+						<a href="javascript:history.go(-1)" title="{f:translate(key: 'linkBack')}">
+							<f:translate key="linkBack" />
+						</a>
+					</p>
 				</div>
-			</f:for>
-			<f:if condition="{settings.showPagebrowser}">
-				<f:render section="renderPagebrowser" arguments="{_all}" />
-			</f:if>
-		</div>
-	</f:section>
-
-	<f:section name="renderLastDownload">
-		<f:if condition="{download.last_download}">
-			<div class="datetime">
-				{f:translate(key: 'lastDownload')}
-				{download.last_download->f:format.date(format: 'd.m.Y H:i')}
 			</div>
-		</f:if>
-	</f:section>
-
-	<f:section name="renderIpLastDownload">
-		<f:if condition="{settings.showIPLastDownload} && {download.ip_last_download}">
-			<div class="description">{f:translate(key: 'ipLastDownload')} {download.ip_last_download}</div>
-		</f:if>
-	</f:section>
-
-	<f:section name="renderEditDate">
-		<f:if condition="{settings.showEditDate}">
-			<div class="datetime">
-				{f:translate(key: 'lastEdit')}
-				{download.tstamp->f:format.date(format: 'd.m.Y')}
-			</div>
-		</f:if>
-	</f:section>
-
-	<f:section name="renderPagebrowser">
-		<div class="page-browser">
-			{linkPrev->f:format.raw()}
-			{pages->f:format.raw()}
-			{linkNext->f:format.raw()}
 		</div>
-	</f:section>
+	</f:if>
+</f:section>
+
+<f:comment> <!-- L I S T - V I E W --> </f:comment>
+
+<f:section name="renderListView">
+	<div class="kkdl_flexWrap">
+		<div class="result-count">{resultCount->f:format.raw()}</div>
+		<f:if condition="{settings.showPagebrowser}">
+			<f:render section="renderPagebrowser" arguments="{_all}" />
+		</f:if>
+		<f:for each="{downloads}" as="download">
+			<div class="kkdl_flex">
+				<h2 class="title">{download.name}</h2>
+
+				<f:if condition="{download.categories}">
+					<div class="category_class">
+						{f:translate(key: 'categories')}: {download.categories}
+					</div>
+				</f:if>
+
+				<f:if condition="{settings.showImagePreview}">
+					<div class="kkdl_image">{download.previewImage->f:format.raw()}</div>
+				</f:if>
+
+				<div class="kkdl_text bodytext">
+					<div class="links">{download.fileItems->f:format.raw()}</div>
+					<div class="description">
+						<h6>{f:translate(key: 'shortDescription')}:</h6>
+						{download.description -> f:format.crop(maxCharacters: 10000, respectWordBoundaries: 1)->f:format.nl2br()}
+					</div>
+				</div>
+
+				<div style="clear: both"></div>
+
+				<f:if condition="{settings.showDownloadsCount}">
+					<div class="clicks">{download.clicks} {f:translate(key: 'clicks')}</div>
+				</f:if>
+
+				<f:render section="renderLastDownload" arguments="{download: download}" />
+				<f:render section="renderIpLastDownload" arguments="{download: download}" />
+				<f:render section="renderEditDate" arguments="{download: download}" />
+
+				<f:link.page pageUid="{pidOfDetailPage}" target="_top" additionalParams="{tx_kkdownloader_pi1: {uid: download.uid}}">
+					{f:translate(key: 'more')}
+				</f:link.page>
+			</div>
+		</f:for>
+		<f:if condition="{settings.showPagebrowser}">
+			<f:render section="renderPagebrowser" arguments="{_all}" />
+		</f:if>
+	</div>
+</f:section>
+
+<f:comment> <!-- I N T E R N A L   S E C T I O N S --> </f:comment>
+
+<f:section name="renderLastDownload">
+	<f:if condition="{download.last_download}">
+		<div class="datetime">
+			{f:translate(key: 'lastDownload')}
+			{download.last_download->f:format.date(format: 'd.m.Y H:i')}
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="renderIpLastDownload">
+	<f:if condition="{settings.showIPLastDownload} && {download.ip_last_download}">
+		<div class="description">{f:translate(key: 'ipLastDownload')} {download.ip_last_download}</div>
+	</f:if>
+</f:section>
+
+<f:section name="renderEditDate">
+	<f:if condition="{settings.showEditDate}">
+		<div class="datetime">
+			{f:translate(key: 'lastEdit')}
+			{download.tstamp->f:format.date(format: 'd.m.Y')}
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="renderPagebrowser">
+	<div class="page-browser">
+		{linkPrev->f:format.raw()}
+		{pages->f:format.raw()}
+		{linkNext->f:format.raw()}
+	</div>
+</f:section>
 </html>
