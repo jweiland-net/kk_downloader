@@ -334,16 +334,23 @@ class KkDownloader extends AbstractPlugin
         $settings['showPagebrowser'] = (bool)$this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showPagebrowser', 'sDEF');
         $settings['showImagePreview'] = (bool)$this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'imagepreview', 'sDEF');
         $settings['showDownloadsCount'] = (bool)$this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'downloads', 'sDEF');
-
-        // @ToDo: needed for SINGLE view
-        $settings['creationDateType'] = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showCRDate', 'sDEF'));
-        $settings['creationDateType'] = $settings['creationDateType'] ?: $this->conf['displayCreationDate'];
-
         $settings['showEditDate'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showEditDate', 'sDEF');
         $settings['showDateLastDownload'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showDateLastDownload', 'sDEF');
         $settings['showIPLastDownload'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showIPLastDownload', 'sDEF');
         $settings['showFileMDate'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showFileMDate', 'sDEF');
         $settings['whatToDisplay'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'what_to_display', 'sDEF');
+
+        // special handling for creation date
+        $creationDateType = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showCRDate', 'sDEF'));
+        $settings['creationDateType'] = '';
+        if (!empty($creationDateType)) {
+            if ($creationDateType === '1') {
+                $dtf = $this->conf['dateformat'] ?: 'd.m.Y';
+            } else {
+                $dtf = $this->conf['datetimeformat'] ?: 'd.m.Y H:i';
+            }
+            $settings['creationDateType'] = $dtf;
+        }
 
         return $settings;
     }

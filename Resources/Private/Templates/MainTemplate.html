@@ -99,6 +99,7 @@
 
 				<f:render section="renderLastDownload" arguments="{download: download}" />
 				<f:render section="renderIpLastDownload" arguments="{download: download}" />
+				<f:render section="renderCrDate" arguments="{download: download}" />
 				<f:render section="renderEditDate" arguments="{download: download}" />
 
 				<f:link.page pageUid="{pidOfDetailPage}" target="_top" additionalParams="{tx_kkdownloader_pi1: {uid: download.uid}}">
@@ -126,6 +127,15 @@
 <f:section name="renderIpLastDownload">
 	<f:if condition="{settings.showIPLastDownload} && {download.ip_last_download}">
 		<div class="description">{f:translate(key: 'ipLastDownload')} {download.ip_last_download}</div>
+	</f:if>
+</f:section>
+
+<f:section name="renderCrDate">
+	<f:if condition="{settings.creationDateType}">
+		<div class="datetime showCrDate">
+			{f:translate(key: 'crDate')}
+			<b>{download.crdate->f:format.date(format: '{settings.creationDateType}')}</b>
+		</div>
 	</f:if>
 </f:section>
 

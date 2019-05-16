@@ -4,6 +4,7 @@
   * Update labels in FlexForm (showFileMDate/selectCategory)
   * Move CSS from TS-Template into own CSS file
   * Little Template and CSS modifications
+  * Implement crDate to template back again
 
 2019-05-09  Stefan Froemken <projects@jweiland.net>
   * Extension key kk_downloader was transferred to jweiland.net

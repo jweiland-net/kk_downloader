@@ -43,6 +43,10 @@
 				<source>since</source>
 				<target>seit</target>
 			</trans-unit>
+			<trans-unit id="crDate">
+				<source>Date file created</source>
+				<target>Erstell-Datum des Eintrags </target>
+			</trans-unit>
 			<trans-unit id="lastEdit">
 				<source>This record was last edited at</source>
 				<target>Datum der letzten Veränderung</target>

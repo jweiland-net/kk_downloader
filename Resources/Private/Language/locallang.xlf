@@ -33,6 +33,9 @@
 			<trans-unit id="date">
 				<source>since</source>
 			</trans-unit>
+			<trans-unit id="crDate">
+				<source>Date file created</source>
+			</trans-unit>
 			<trans-unit id="lastEdit">
 				<source>This record was last edited at</source>
 			</trans-unit>
