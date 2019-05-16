@@ -34,12 +34,6 @@ plugin.tx_kkdownloader_pi1 {
   # used for download-file date & time
   datetimeformat = d.m.y H:i
 
-  # span-class for File date and time
-  fileMDateClass = kk_fileMDate
-
-  # span-class for displaying the file-size
-  filesizeClass = kk_filesize
-
   # download icon
   # leave empty to use Icons of TYPO3 (IconFactory)
   # If you set an IconPath, this icon will be used for all Downloads
