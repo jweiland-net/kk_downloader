@@ -69,7 +69,14 @@ class DownloadRepository
         return $download;
     }
 
-    public function getDownloads(array $storageFolders = [], int $categoryUid = 0, string $orderBy = '', string $direction = 'ASC'): array
+    public function getDownloads(
+        array $storageFolders = [],
+        int $categoryUid = 0,
+        string $orderBy = '',
+        string $direction = 'ASC',
+        int $limit = 10,
+        int $offset = 0
+    ): array
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
 
@@ -106,6 +113,8 @@ class DownloadRepository
                     $queryBuilder->createNamedParameter([-1, 0], Connection::PARAM_INT_ARRAY)
                 )
             )
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
             ->execute()
             ->fetchAll();
 
