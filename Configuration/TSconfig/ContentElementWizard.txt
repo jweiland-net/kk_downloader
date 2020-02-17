@@ -1,0 +1,16 @@
+mod.wizards.newContentElement.wizardItems.plugins {
+  elements {
+    kk_downloader_list {
+      iconIdentifier = ext-kkdownloader-wizard-icon
+      title = LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:plugin.kkdownloader.title
+      description = LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:plugin.kkdownloader.description
+      tt_content_defValues {
+        CType = list
+        list_type = kkdownloader_pi1
+      }
+    }
+  }
+}
+
+# Add CType Preview
+mod.web_layout.tt_content.preview.list.kkdownloader_pi1 = EXT:kk_downloader/Resources/Private/Templates/PluginPreview/TableView.html
