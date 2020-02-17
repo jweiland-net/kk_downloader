@@ -8,6 +8,15 @@
 				<target>KK Downloader</target>
 			</trans-unit>
 
+			<trans-unit id="plugin.kkdownloader.title">
+				<source>KK Downloader</source>
+				<target>KK Downloader</target>
+			</trans-unit>
+			<trans-unit id="plugin.kkdownloader.description">
+				<source>Adds a plugin to list or show Downloads managed with KK Downloader.</source>
+				<target>Fügt ein Plugin hinzu, das Downloads auflistet/anzeigt, die über KK Downloader verwaltet werden.</target>
+			</trans-unit>
+
 			<trans-unit id="tx_kkdownloader_images">
 				<source>Download</source>
 				<target>Download</target>
