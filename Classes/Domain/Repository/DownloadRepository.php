@@ -91,7 +91,7 @@ class DownloadRepository
             );
         }
 
-        if (empty($orderby)) {
+        if (empty($orderBy)) {
             $queryBuilder->orderBy('tx_kkdownloader_images.name', 'ASC');
         } else {
             $queryBuilder->orderBy('tx_kkdownloader_images.' . $orderBy, $direction);
