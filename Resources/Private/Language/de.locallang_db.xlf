@@ -17,6 +17,11 @@
 				<target>Fügt ein Plugin hinzu, das Downloads auflistet/anzeigt, die über KK Downloader verwaltet werden.</target>
 			</trans-unit>
 
+			<trans-unit id="palette.language_hidden" xml:space="preserve">
+				<source>Visibility and Language</source>
+				<target>Sichtbarkeit und Sprache</target>
+			</trans-unit>
+
 			<trans-unit id="tx_kkdownloader_images">
 				<source>Download</source>
 				<target>Download</target>
