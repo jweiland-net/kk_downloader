@@ -15,7 +15,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.what_to_display</label>
 							<config>
 								<type>select</type>
-								<renderType>selectMultipleSideBySide</renderType>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LIST</numIndex>
@@ -26,8 +26,8 @@
 										<numIndex index="1">SINGLE</numIndex>
 									</numIndex>
 								</items>
-								<maxitems>6</maxitems>
-								<size>3</size>
+								<maxitems>1</maxitems>
+								<size>1</size>
 							</config>
 						</TCEforms>
 					</what_to_display>

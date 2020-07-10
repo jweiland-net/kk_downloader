@@ -1,7 +1,3 @@
-page.includeCSS {
-  kkDownloader = EXT:kk_downloader/Resources/Public/Css/KkDownloader.css
-}
-
 plugin.tx_kkdownloader_pi1 {
   # switch for debug mode:
   debug = 0

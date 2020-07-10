@@ -1,14 +1,46 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:flashMessages />
 
-<f:if condition="{settings.whatToDisplay}=='SINGLE'">
-	<f:then>
-		<f:render section="renderSingleView" arguments="{_all}" />
-	</f:then>
-	<f:else>
-		<f:render section="renderListView" arguments="{_all}" />
-	</f:else>
-</f:if>
+<div class="tx-kkdownloader">
+	<f:if condition="{settings.whatToDisplay}=='LIST'">
+		<f:then>
+			<f:render section="renderListView" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:render section="renderSingleView" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</div>
+
+<f:comment> <!-- L I S T - V I E W --> </f:comment>
+
+<f:section name="renderListView">
+	<div class="grid">
+		<div class="col-12">{resultCount->f:format.raw()}</div>
+	</div>
+
+	<f:if condition="{settings.showPagebrowser}">
+		<f:render section="renderPagebrowser" arguments="{_all}" />
+	</f:if>
+
+	<f:for each="{downloads}" as="download">
+		<div class="grid">
+			<f:if condition="{settings.showImagePreview}">
+				<f:then>
+					<div class="col-3">{download.previewImage->f:format.raw()}</div>
+					<div class="col-9"><f:render section="renderListEntryContent" arguments="{_all}" /></div>
+				</f:then>
+				<f:else>
+					<div class="col-12"><f:render section="renderListEntryContent" arguments="{_all}" /></div>
+				</f:else>
+			</f:if>
+		</div>
+	</f:for>
+
+	<f:if condition="{settings.showPagebrowser}">
+		<f:render section="renderPagebrowser" arguments="{_all}" />
+	</f:if>
+</f:section>
 
 <f:comment> <!-- S I N G L E - V I E W --></f:comment>
 
@@ -61,59 +93,31 @@
 	</f:if>
 </f:section>
 
-<f:comment> <!-- L I S T - V I E W --> </f:comment>
-
-<f:section name="renderListView">
-	<div class="kkdl_flexWrap">
-		<div class="result-count">{resultCount->f:format.raw()}</div>
-		<f:if condition="{settings.showPagebrowser}">
-			<f:render section="renderPagebrowser" arguments="{_all}" />
-		</f:if>
-		<f:for each="{downloads}" as="download">
-			<div class="kkdl_flex">
-				<h2 class="title">{download.name}</h2>
-
-				<f:if condition="{download.categories}">
-					<div class="category_class">
-						{f:translate(key: 'categories')}: {download.categories}
-					</div>
-				</f:if>
-
-				<f:if condition="{settings.showImagePreview}">
-					<div class="kkdl_image">{download.previewImage->f:format.raw()}</div>
-				</f:if>
-
-				<div class="kkdl_text bodytext">
-					<div class="links">{download.fileItems->f:format.raw()}</div>
-					<div class="description">
-						<h6>{f:translate(key: 'shortDescription')}:</h6>
-						{download.description -> f:format.crop(maxCharacters: 10000, respectWordBoundaries: 1)->f:format.nl2br()}
-					</div>
-				</div>
-
-				<div style="clear: both"></div>
-
-				<f:if condition="{settings.showDownloadsCount}">
-					<div class="clicks">{download.clicks} {f:translate(key: 'clicks')}</div>
-				</f:if>
-
-				<f:render section="renderLastDownload" arguments="{download: download}" />
-				<f:render section="renderIpLastDownload" arguments="{download: download}" />
-				<f:render section="renderCrDate" arguments="{download: download}" />
-				<f:render section="renderEditDate" arguments="{download: download}" />
-
-				<f:link.page pageUid="{pidOfDetailPage}" target="_top" additionalParams="{tx_kkdownloader_pi1: {uid: download.uid}}">
-					{f:translate(key: 'more')}
-				</f:link.page>
-			</div>
-		</f:for>
-		<f:if condition="{settings.showPagebrowser}">
-			<f:render section="renderPagebrowser" arguments="{_all}" />
-		</f:if>
-	</div>
-</f:section>
-
 <f:comment> <!-- I N T E R N A L   S E C T I O N S --> </f:comment>
+
+<f:section name="renderListEntryContent">
+	<h2>{download.name}</h2>
+	<p>{download.description -> f:format.crop(maxCharacters: 10000, respectWordBoundaries: 1)->f:format.nl2br()}</p>
+
+	<f:link.page pageUid="{pidOfDetailPage}" target="_top" additionalParams="{tx_kkdownloader_pi1: {uid: download.uid}}">
+		{f:translate(key: 'more')}
+	</f:link.page>
+
+	<f:if condition="{download.categories}">
+		<div>{f:translate(key: 'categories')}: {download.categories}</div>
+	</f:if>
+
+	<div>{download.fileItems->f:format.raw()}</div>
+
+	<f:if condition="{settings.showDownloadsCount}">
+		<div class="clicks">{download.clicks} {f:translate(key: 'clicks')}</div>
+	</f:if>
+
+	<f:render section="renderLastDownload" arguments="{download: download}" />
+	<f:render section="renderIpLastDownload" arguments="{download: download}" />
+	<f:render section="renderCrDate" arguments="{download: download}" />
+	<f:render section="renderEditDate" arguments="{download: download}" />
+</f:section>
 
 <f:section name="renderLastDownload">
 	<f:if condition="{download.last_download}">
