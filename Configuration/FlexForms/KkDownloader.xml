@@ -15,6 +15,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.what_to_display</label>
 							<config>
 								<type>select</type>
+								<renderType>selectMultipleSideBySide</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LIST</numIndex>
@@ -25,11 +26,8 @@
 										<numIndex index="1">SINGLE</numIndex>
 									</numIndex>
 								</items>
-								<maxitems>100</maxitems>
-								<size>6</size>
-								<multiple>1</multiple>
-								<selectedListStyle>width:150px</selectedListStyle>
-								<itemListStyle>width:150px</itemListStyle>
+								<maxitems>6</maxitems>
+								<size>3</size>
 							</config>
 						</TCEforms>
 					</what_to_display>
@@ -39,7 +37,10 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.selectCategory</label>
 							<config>
 								<type>select</type>
-								<itemsProcFunc>JWeiland\KkDownloader\UserFunc\AddFieldsToFlexForm->addFields</itemsProcFunc>
+								<renderType>selectMultipleSideBySide</renderType>
+								<itemsProcFunc>JWeiland\KkDownloader\UserFunc\AddItemsToFlexFormField->addCategoryItems</itemsProcFunc>
+								<maxitems>6</maxitems>
+								<size>3</size>
 							</config>
 						</TCEforms>
 					</dynField>
@@ -59,6 +60,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderby</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderbyTitle</numIndex>
@@ -100,6 +102,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.ascdesc</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.asc</numIndex>
@@ -161,6 +164,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showCRDate</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showCRDate.nodate</numIndex>
@@ -186,6 +190,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileMDate</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileMDate.nodate</numIndex>
@@ -250,13 +255,8 @@
 						<TCEforms>
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.template_file</label>
 							<config>
-								<type>group</type>
-								<internal_type>file</internal_type>
-								<allowed>tmpl,html,htm</allowed>
-								<max_size>100</max_size>
-								<maxitems>1</maxitems>
-								<size>1</size>
-								<selectedListStyle>Width:275px</selectedListStyle>
+								<type>input</type>
+								<size>30</size>
 							</config>
 						</TCEforms>
 					</template_file>
