@@ -38,41 +38,58 @@ use TYPO3\CMS\Frontend\Plugin\AbstractPlugin;
 class KkDownloader extends AbstractPlugin
 {
     /**
-     * Same as class name
-     *
      * @var string
      */
     public $prefixId = 'tx_kkdownloader_pi1';
 
     /**
-     * Path to this script relative to the extension dir.
-     *
      * @var string
      */
     public $scriptRelPath = 'pi1/class.tx_kkdownloader_pi1.php';
 
     /**
-     * Path to extension
-     *
      * @var string
      */
     public $extPath = 'typo3conf/ext/kk_downloader/';
 
     /**
-     * The extension key
-     *
      * @var string
      */
     public $extKey = 'kk_downloader';
 
+    /**
+     * @var bool
+     */
     public $pi_checkCHash = true;
+
+    /**
+     * @var string
+     */
     public $filebasepath = 'uploads/tx_kkdownloader/';
+
+    /**
+     * @var string
+     */
     public $defaultTemplate = 'EXT:kk_downloader/Resources/Private/Templates/MainTemplate.html';
 
-    public $langArr;
+    /**
+     * @var array
+     */
+    public $langArr = [];
 
-    public $showCats;
-    public $template;
+    /**
+     * @var bool
+     */
+    public $showCats = false;
+
+    /**
+     * @var string
+     */
+    public $template = '';
+
+    /**
+     * @var array
+     */
     public $internal = [];
 
     /**
@@ -101,8 +118,15 @@ class KkDownloader extends AbstractPlugin
      */
     protected $settings = [];
 
+    /**
+     * @var int
+     */
     protected $languageUid = 0;
     protected $languageMode = null;
+
+    /**
+     * @var bool
+     */
     protected $languageOverlayMode = false;
 
     /**
@@ -714,9 +738,6 @@ class KkDownloader extends AbstractPlugin
         $flashMessageQueue->enqueue($flashMessage);
     }
 
-    /**
-     * @return mixed|\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-     */
     protected function getTypoScriptFrontendController(): TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
