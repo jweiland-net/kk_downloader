@@ -136,7 +136,7 @@ return [
                 'image',
                 [
                     'minitems' => 0,
-                    'maxitems' => 1,
+                    'maxitems' => 10,
                     'default' => 0,
                     'foreign_match_fields' => [
                         'fieldname' => 'image',
