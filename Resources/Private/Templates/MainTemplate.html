@@ -25,15 +25,12 @@
 
 	<f:for each="{downloads}" as="download">
 		<div class="grid">
-			<f:if condition="{settings.showImagePreview}">
-				<f:then>
-					<div class="col-3">{download.previewImage->f:format.raw()}</div>
-					<div class="col-9"><f:render section="renderListEntryContent" arguments="{_all}" /></div>
-				</f:then>
-				<f:else>
-					<div class="col-12"><f:render section="renderListEntryContent" arguments="{_all}" /></div>
-				</f:else>
-			</f:if>
+			<div class="col-3">
+				<f:if condition="{settings.showImagePreview}">
+					{download.previewImage->f:format.raw()}
+				</f:if>
+			</div>
+			<div class="col-9"><f:render section="renderListEntryContent" arguments="{_all}" /></div>
 		</div>
 	</f:for>
 

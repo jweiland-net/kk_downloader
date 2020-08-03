@@ -271,58 +271,19 @@ class KkDownloader extends AbstractPlugin
 
     protected function createPreviewImage(array $download): string
     {
-        $previewImageForDownload = '';
-        $allowedMimeTypes = [
-            'image/gif',
-            'image/jpeg',
-            'image/png',
-            'image/bmp',
-            'image/tiff',
-        ];
-
-        // if download record contains a preview image
-        if (!empty($download['imagepreview'])) {
-            $this->conf['image.']['file.']['import.']['data'] = 'file:current:uid';
-            $previewImageForDownload = $this->cObj->cObjGetSingle(
-                'FILES',
-                [
-                    'references.' => [
-                        'table' => 'tx_kkdownloader_images',
-                        'uid' => (int)$download['uid'],
-                        'fieldName' => 'imagepreview'
-                    ],
-                    'renderObj' => 'IMAGE',
-                    'renderObj.' => $this->conf['image.']
-                ]
-            );
-        } else {
-            // Loop throw download images and use first image with allowed mimetype as thumbnail
-            $images = GeneralUtility::trimExplode(',', $download['image'], true);
-            foreach ($images as $image) {
-                $filePath = $this->filebasepath . $image;
-                $imageExt = $this->checkMimeType($filePath);
-
-                // create IMG-Tag, if image has allowed MimeType
-                if (in_array($imageExt, $allowedMimeTypes)) {
-                    $img = $this->conf['image.'];
-                    $img['file'] = $filePath;
-                    $previewImageForDownload = $this->cObj->cObjGetSingle('IMAGE', $img);
-                    break;
-                } else {
-                    // MimeType is not an image, check against 'pdf'
-                    $fileInfo = GeneralUtility::split_fileref($image);
-                    $fileExt = trim($fileInfo['fileext']);
-                    if ($fileExt === 'pdf') {
-                        $img = $this->conf['image.'];
-                        $img['file'] = $filePath;
-                        $previewImageForDownload = $this->cObj->cObjGetSingle('IMAGE', $img);
-                        break;
-                    }
-                }
-            }
-        }
-
-        return $previewImageForDownload;
+        return $this->cObj->cObjGetSingle(
+            'FILES',
+            [
+                'references.' => [
+                    'table' => 'tx_kkdownloader_images',
+                    'uid' => (int)$download['uid'],
+                    'fieldName' => $download['imagepreview'] ? 'imagepreview' : 'image'
+                ],
+                'maxItems' => 1,
+                'renderObj' => 'IMAGE',
+                'renderObj.' => $this->conf['image.']
+            ]
+        );
     }
 
     protected function initialize()

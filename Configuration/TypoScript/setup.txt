@@ -2,7 +2,7 @@ plugin.tx_kkdownloader_pi1 {
   # switch for debug mode:
   debug = 0
 
-  # as an exsample for modifying items out of the locallang.xml:
+  # as an example for modifying items out of the locallang.xml:
   _LOCAL_LANG.default {
     pi_list_browseresults_page = P
   }
@@ -64,7 +64,12 @@ plugin.tx_kkdownloader_pi1 {
 
   # image settings
   image {
-    file.maxW = 160
+    file {
+      maxW = 160
+      import {
+        data = file:current:uid
+      }
+    }
     imageLinkWrap = 1
     imageLinkWrap {
       enable = 1
