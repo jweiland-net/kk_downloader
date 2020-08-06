@@ -10,31 +10,9 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
-					<what_to_display>
+					<settings.categories>
 						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.what_to_display</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">LIST</numIndex>
-										<numIndex index="1">LIST</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">SINGLE</numIndex>
-										<numIndex index="1">SINGLE</numIndex>
-									</numIndex>
-								</items>
-								<maxitems>1</maxitems>
-								<size>1</size>
-							</config>
-						</TCEforms>
-					</what_to_display>
-
-					<dynField>
-						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.selectCategory</label>
+							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.categories</label>
 							<config>
 								<type>select</type>
 								<renderType>selectMultipleSideBySide</renderType>
@@ -43,51 +21,51 @@
 								<size>3</size>
 							</config>
 						</TCEforms>
-					</dynField>
+					</settings.categories>
 
-					<showCats>
+					<settings.showCategories>
 						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showCats</label>
+							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showCategories</label>
 							<config>
 								<type>check</type>
 								<default>0</default>
 							</config>
 						</TCEforms>
-					</showCats>
+					</settings.showCategories>
 
-					<orderby>
+					<settings.orderBy>
 						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderby</label>
+							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderBy</label>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="1" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderbyTitle</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderByTitle</numIndex>
 										<numIndex index="1">name</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderbyFilename</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderByFilename</numIndex>
 										<numIndex index="1">image</numIndex>
 									</numIndex>
 									<numIndex index="3" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderbyCrDate</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderByCrDate</numIndex>
 										<numIndex index="1">crdate</numIndex>
 									</numIndex>
 									<numIndex index="4" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderbyLastModified</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderByLastModified</numIndex>
 										<numIndex index="1">tstamp</numIndex>
 									</numIndex>
 									<numIndex index="5" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderbyCategory</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderByCategory</numIndex>
 										<numIndex index="1">cat</numIndex>
 									</numIndex>
 									<numIndex index="6" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderbyDateLastDownloaded</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderByDateLastDownloaded</numIndex>
 										<numIndex index="1">last_downloaded</numIndex>
 									</numIndex>
 									<numIndex index="7" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderbySorting</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderBySorting</numIndex>
 										<numIndex index="1">sorting</numIndex>
 									</numIndex>
 								</items>
@@ -95,9 +73,9 @@
 								<size>1</size>
 							</config>
 						</TCEforms>
-					</orderby>
+					</settings.orderBy>
 
-					<ascdesc>
+					<settings.orderDirection>
 						<TCEforms>
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.ascdesc</label>
 							<config>
@@ -117,65 +95,55 @@
 								<size>1</size>
 							</config>
 						</TCEforms>
-					</ascdesc>
+					</settings.orderDirection>
 
-					<results_at_a_time>
+					<settings.pageBrowser.enable>
 						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.results_at_a_time</label>
-							<config>
-								<type>input</type>
-								<size>3</size>
-							</config>
-						</TCEforms>
-					</results_at_a_time>
-
-					<showPagebrowser>
-						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showPagebrowser</label>
+							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showPageBrowser</label>
 							<config>
 								<type>check</type>
 								<default>0</default>
 							</config>
 						</TCEforms>
-					</showPagebrowser>
+					</settings.pageBrowser.enable>
 
-					<imagepreview>
+					<settings.list.showImagePreview>
 						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.imagepreview</label>
+							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showImagePreview</label>
 							<config>
 								<type>check</type>
 								<default>0</default>
 							</config>
 						</TCEforms>
-					</imagepreview>
+					</settings.list.showImagePreview>
 
-					<filesize>
+					<settings.showFilesize>
 						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.filesize</label>
+							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFilesize</label>
 							<config>
 								<type>check</type>
 								<default>0</default>
 							</config>
 						</TCEforms>
-					</filesize>
+					</settings.showFilesize>
 
-					<showCRDate>
+					<settings.showFileCreationDate>
 						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showCRDate</label>
+							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileCreationDate</label>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="1" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showCRDate.nodate</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileCreationDate.nodate</numIndex>
 										<numIndex index="1">0</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showCRDate.date</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileCreationDate.date</numIndex>
 										<numIndex index="1">1</numIndex>
 									</numIndex>
 									<numIndex index="3" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showCRDate.datetime</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileCreationDate.datetime</numIndex>
 										<numIndex index="1">2</numIndex>
 									</numIndex>
 								</items>
@@ -183,25 +151,25 @@
 								<size>1</size>
 							</config>
 						</TCEforms>
-					</showCRDate>
+					</settings.showFileCreationDate>
 
-					<showFileMDate>
+					<settings.showFileModificationDate>
 						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileMDate</label>
+							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileModificationDate</label>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="1" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileMDate.nodate</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileModificationDate.nodate</numIndex>
 										<numIndex index="1">0</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileMDate.date</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileModificationDate.date</numIndex>
 										<numIndex index="1">1</numIndex>
 									</numIndex>
 									<numIndex index="3" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileMDate.datetime</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileModificationDate.datetime</numIndex>
 										<numIndex index="1">2</numIndex>
 									</numIndex>
 								</items>
@@ -209,9 +177,9 @@
 								<size>1</size>
 							</config>
 						</TCEforms>
-					</showFileMDate>
+					</settings.showFileModificationDate>
 
-					<showEditDate>
+					<settings.showEditDate>
 						<TCEforms>
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showEditDate</label>
 							<config>
@@ -219,19 +187,19 @@
 								<default>0</default>
 							</config>
 						</TCEforms>
-					</showEditDate>
+					</settings.showEditDate>
 
-					<downloads>
+					<settings.showDownloadClicks>
 						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showclicks</label>
+							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showDownloadClicks</label>
 							<config>
 								<type>check</type>
 								<default>0</default>
 							</config>
 						</TCEforms>
-					</downloads>
+					</settings.showDownloadClicks>
 
-					<showDateLastDownload>
+					<settings.showDateLastDownload>
 						<TCEforms>
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showDateLastDownload</label>
 							<config>
@@ -239,9 +207,9 @@
 								<default>0</default>
 							</config>
 						</TCEforms>
-					</showDateLastDownload>
+					</settings.showDateLastDownload>
 
-					<showIPLastDownload>
+					<settings.showIPLastDownload>
 						<TCEforms>
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showIPLastDownload</label>
 							<config>
@@ -249,17 +217,7 @@
 								<default>0</default>
 							</config>
 						</TCEforms>
-					</showIPLastDownload>
-
-					<template_file>
-						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.template_file</label>
-							<config>
-								<type>input</type>
-								<size>30</size>
-							</config>
-						</TCEforms>
-					</template_file>
+					</settings.showIPLastDownload>
 				</el>
 			</ROOT>
 		</sDEF>
