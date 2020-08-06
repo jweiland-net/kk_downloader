@@ -4,6 +4,19 @@ if (!defined('TYPO3_MODE')) {
 }
 
 call_user_func(function() {
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'JWeiland.KkDownloader',
+        'Download',
+        [
+            'Download' => 'list,detail',
+        ],
+        []
+    );
+
+
+
+
+
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig('options.saveDocNew.tx_kkdownloader_images = 1');
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig('options.saveDocNew.tx_kkdownloader_cat = 1');
 
