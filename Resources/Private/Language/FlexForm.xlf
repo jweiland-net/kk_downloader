@@ -3,40 +3,40 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader">
 		<header/>
 		<body>
-			<trans-unit id="tx_kkdownloader.filesize">
-				<source>Show filesize</source>
+			<trans-unit id="tx_kkdownloader.showFilesize">
+				<source>Show showFilesize</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.imagepreview">
+			<trans-unit id="tx_kkdownloader.showImagePreview">
 				<source>Image preview?</source>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader.results_at_a_time">
 				<source>No of items to show in one view before browsing</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.showPagebrowser">
-				<source>Show pagebrowser</source>
+			<trans-unit id="tx_kkdownloader.showPageBrowser">
+				<source>Show Pagebrowser</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.showCRDate">
+			<trans-unit id="tx_kkdownloader.showFileCreationDate">
 				<source>Show creation date/time of the download item</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.showCRDate.nodate">
+			<trans-unit id="tx_kkdownloader.showFileCreationDate.nodate">
 				<source>No date/time</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.showCRDate.date">
+			<trans-unit id="tx_kkdownloader.showFileCreationDate.date">
 				<source>Only date</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.showCRDate.datetime">
+			<trans-unit id="tx_kkdownloader.showFileCreationDate.datetime">
 				<source>Date and Time</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.showFileMDate">
+			<trans-unit id="tx_kkdownloader.showFileModificationDate">
 				<source>Show file last edit date</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.showFileMDate.nodate">
+			<trans-unit id="tx_kkdownloader.showFileModificationDate.nodate">
 				<source>No date/time</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.showFileMDate.date">
+			<trans-unit id="tx_kkdownloader.showFileModificationDate.date">
 				<source>Only date</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.showFileMDate.datetime">
+			<trans-unit id="tx_kkdownloader.showFileModificationDate.datetime">
 				<source>Date and Time</source>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader.showEditDate">
@@ -48,10 +48,10 @@
 			<trans-unit id="tx_kkdownloader.showIPLastDownload">
 				<source>Show IP-address of last download</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.showCats">
+			<trans-unit id="tx_kkdownloader.showCategories">
 				<source>Show Categories</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.selectCategory">
+			<trans-unit id="tx_kkdownloader.categories">
 				<source>Select categories</source>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader_conf">
@@ -75,41 +75,38 @@
 			<trans-unit id="tx_kkdownloader.layout4">
 				<source>Image bottom</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.showclicks">
+			<trans-unit id="tx_kkdownloader.showDownloadClicks">
 				<source>Display counted clicks</source>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader.what_to_display">
-				<source>View</source>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader.template_file">
 				<source>Template file</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.orderby">
+			<trans-unit id="tx_kkdownloader.orderBy">
 				<source>Sort (only View = "LIST")</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.orderbyTitle">
+			<trans-unit id="tx_kkdownloader.orderByTitle">
 				<source>by title</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.orderbyFilename">
+			<trans-unit id="tx_kkdownloader.orderByFilename">
 				<source>by file-name</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.orderbyCrDate">
+			<trans-unit id="tx_kkdownloader.orderByCrDate">
 				<source>by creation date</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.orderbyLastModified">
+			<trans-unit id="tx_kkdownloader.orderByLastModified">
 				<source>by date last modified</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.orderbyCategory">
+			<trans-unit id="tx_kkdownloader.orderByCategory">
 				<source>by category</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.orderbyDateLastDownloaded">
+			<trans-unit id="tx_kkdownloader.orderByDateLastDownloaded">
 				<source>by date last downloaded</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.orderbySorting">
+			<trans-unit id="tx_kkdownloader.orderBySorting">
 				<source>by sorting in sysfolder</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.ascdesc">
-				<source>Ascending/Descending</source>
+			<trans-unit id="tx_kkdownloader.orderDirection">
+				<source>Order Direction</source>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader.asc">
 				<source>Ascending</source>

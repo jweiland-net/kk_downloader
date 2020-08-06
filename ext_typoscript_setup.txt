@@ -1,34 +1,26 @@
-# Bilder
-plugin.tx_kkdownloader_pi1 {
-  # template
-  templateFile = EXT:kk_downloader/Resources/Private/Templates/MainTemplate.html
-  singlePID = 1
-  # download description (1 = filename.fileextension, 2 = filename, 3 = fileextension)
-  linkdescription = 1
-  # download icon
-  # leave empty to use Icons of TYPO3 (IconFactory)
-  # If you set an IconPath, this icon will be used for all Downloads
-  # Example: downloadIcon = EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
-  downloadIcon =
-  # Use this Icon, if a file-extension could not be found
-  # Will only work, if downloadIcon is empty
-  missingDownloadIcon = EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
-  # image settings
-  image {
-    file.maxW = 80
-    imageLinkWrap = 1
-    imageLinkWrap {
-      enable = 1
-      bodyTag = <BODY bgColor=white>
-      wrap = <A href="javascript:close();"> | </A>
-      width = 400m
-      height = 400
-      JSwindow = 1
-      JSwindow.newWindow = 1
-      JSwindow.expand = 17,20
+# This config part can be removing when TYPO3 9 compatibility was removed
+config.tx_extbase {
+  persistence.classes {
+    JWeiland\KkDownloader\Domain\Model\Download {
+      mapping {
+        tableName = tx_kkdownloader_images
+        columns {
+          name.mapOnProperty = title
+          image.mapOnProperty = files
+          imagepreview.mapOnProperty = preview
+          longdescription.mapOnProperty = longDescription
+          downloaddescription.mapOnProperty = downloadDescription
+          categories.mapOnProperty = cat
+        }
+      }
+    }
+    JWeiland\KkDownloader\Domain\Model\Category {
+      mapping {
+        tableName = tx_kkdownloader_cat
+        columns {
+          cat.mapOnProperty = title
+        }
+      }
     }
   }
-  # date and time by Kurt Kupix
-  # displayCreationDate (0 = no date & time, 1 = only date, 2 = date & time)
-  displayCreationDate = 1
 }
