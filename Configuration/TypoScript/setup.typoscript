@@ -1,86 +1,85 @@
-plugin.tx_kkdownloader_pi1 {
-  # switch for debug mode:
-  debug = 0
-
-  # as an example for modifying items out of the locallang.xml:
-  _LOCAL_LANG.default {
-    pi_list_browseresults_page = P
-  }
-  _LOCAL_LANG.de {
-    pi_list_browseresults_page = S
-  }
-
-  # for a better transfomation of the content of the field "longdescription"
-  # not set, the standard parseFunc is taken
-  # parseFunc < lib.parseFunc_RTE
-
-  # PID of the general download folder (if no page-"starting-point" is set)
-  defaultDownloadPid = all
-
-  # PID of the page for a SINGLE view
-  singlePID =
-
-  # download description (1 = filename.fileextension, 2 = filename, 3 = fileextension)
-  linkdescription = 2
-
-  # date and time format
-  dateformat = d.m.y
-  timeformat = H:i
-
-  # used for download-file date & time
-  datetimeformat = d.m.y H:i
-
-  # download icon
-  # leave empty to use Icons of TYPO3 (IconFactory)
-  # If you set an IconPath, this icon will be used for all Downloads
-  # Example: downloadIcon = EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
-  downloadIcon =
-
-  # Use this Icon, if a file-extension could not be found
-  # Will only work, if downloadIcon is empty
-  missingDownloadIcon = EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
-
-  # limit of single items on one list-page
-  results_at_a_time = 25
-
-  pageBrowser {
-    # maximum 10 pages a 25 items = 250 downloads per default
-    maxPages = 10
-    # should pagebrowser-text be shown (coming out of locallang.xml)
-    showPBrowserText = 1
-    # Should the list result (Item 1 to 5 of 23) be shown?
-    showResultCount = 1
-    # Wrapping operations
-    activepage_stdWrap.wrap = <strong>|</strong>
-    page_stdWrap.wrap = |
-    pagelink_stdWrap.wrap = |
-    previous_stdWrap.wrap = |
-    next_stdWrap.wrap = |
+plugin.tx_kkdownloader {
+  view {
+    templateRootPaths {
+      0 = EXT:kkdownloader/Resources/Private/Templates/
+      1 = {$plugin.tx_kkdownloader.view.templateRootPath}
+    }
+    partialRootPaths {
+      0 = EXT:kkdownloader/Resources/Private/Partials/
+      1 = {$plugin.tx_kkdownloader.view.partialRootPath}
+    }
+    layoutRootPaths {
+      0 = EXT:kkdownloader/Resources/Private/Layouts/
+      1 = {$plugin.tx_kkdownloader.view.layoutRootPath}
+    }
   }
 
   persistence {
-    storagePid = 1
+    storagePid = {$plugin.tx_kkdownloader.persistence.storagePid}
   }
 
-  # image settings
-  image {
-    file {
-      maxW = 160
-      import {
-        data = file:current:uid
+  mvc {
+    callDefaultActionIfActionCantBeResolved = 1
+  }
+
+  settings {
+    pidOfDetailPage = {$plugin.tx_kkdownloader.settings.pidOfDetailPage}
+    pidOfListPage = {$plugin.tx_kkdownloader.settings.pidOfListPage}
+
+    # Download Description (1 = filename.fileextension, 2 = filename, 3 = fileextension)
+    linkDescription = 2
+
+    # Date and time format
+    dateFormat = d.m.y
+    timeFormat = H:i
+
+    # Used for download-file date & time
+    dateTimeFormat = d.m.y H:i
+
+    # download icon
+    # leave empty to use Icons of TYPO3 (IconFactory)
+    # If you set an IconPath, this icon will be used for all Downloads
+    # Example: downloadIcon = EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
+    downloadIcon =
+
+    # Use this Icon, if a file-extension could not be found
+    # Will only work, if downloadIcon is empty
+    missingDownloadIcon = EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
+
+    list {
+      # Should the list result (Item 1 to 5 of 23) be shown?
+      showResultCount = 1
+
+      image {
+        width = 120c
+        height = 80c
+        maxWidth = 120
+        minWidth = 120
+        maxHeight = 80
+        minHeight = 80
       }
     }
-    imageLinkWrap = 1
-    imageLinkWrap {
+    show {
+      image {
+        width = 200c
+        height = 150c
+        maxWidth = 200
+        minWidth = 200
+        maxHeight = 150
+        minHeight = 150
+      }
+    }
+
+    pageBrowser {
       enable = 1
-      bodyTag = <BODY bgColor=#222222>
-      wrap = <A href="javascript:close();"> | </A>
-      width = 500m
-      height = 600
-      border = 1
-      JSwindow = 1
-      JSwindow.newWindow = 1
-      JSwindow.expand = 17,20
+      itemsPerPage = {$plugin.tx_kkdownloader.settings.pageBrowser.itemsPerPage}
+      insertAbove = {$plugin.tx_kkdownloader.settings.pageBrowser.insertAbove}
+      insertBelow = {$plugin.tx_kkdownloader.settings.pageBrowser.insertBelow}
+      maximumNumberOfLinks = {$plugin.tx_kkdownloader.settings.pageBrowser.maximumNumberOfLinks}
     }
   }
+
+  # Example, how to override LanguageKeys in *.locallang.xlf for Frontend
+  _LOCAL_LANG.de.languageKey = Titel
+  _LOCAL_LANG.default.languageKey = Title
 }
