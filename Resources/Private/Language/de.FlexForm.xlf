@@ -52,8 +52,8 @@
 				<target>Datum und Zeit</target>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader.showEditDate">
-				<source>Show T3-object last edit date</source>
-				<target>Änderungsdatum des Eintrags anzeigen</target>
+				<source>Show last edit date of download record</source>
+				<target>Änderungsdatum des Download-Eintrags anzeigen</target>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader.showDateLastDownload">
 				<source>Show date of last download</source>

@@ -26,6 +26,7 @@ use TYPO3\CMS\Core\Service\MarkerBasedTemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -290,8 +291,10 @@ class KkDownloader extends AbstractPlugin
     {
         $this->initializeLanguage();
         $this->settings = $this->getFlexFormSettings();
-        $this->downloadRepository = GeneralUtility::makeInstance(DownloadRepository::class);
-        $this->categoryRepository = GeneralUtility::makeInstance(CategoryRepository::class);
+
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->downloadRepository = $objectManager->get(DownloadRepository::class);
+        $this->categoryRepository = $objectManager->get(CategoryRepository::class);
         $this->templateService = GeneralUtility::makeInstance(MarkerBasedTemplateService::class);
     }
 
@@ -357,7 +360,7 @@ class KkDownloader extends AbstractPlugin
      */
     protected function generateDownloadLinks(int $uid, int $downloadDescriptionType = 1)
     {
-        $download = $this->downloadRepository->getDownloadByUid($uid);
+        $download = $this->downloadRepository->findByIdentifier($uid);
         $images = GeneralUtility::trimExplode(',', $download['image'], true);
         $downloadDescriptions = GeneralUtility::trimExplode(
             '<br />',

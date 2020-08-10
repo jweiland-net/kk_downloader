@@ -28,8 +28,8 @@
 				<target>Download-Objekt</target>
 			</trans-unit>
 			<trans-unit id="clicks">
-				<source>downloads</source>
-				<target>Downloads</target>
+				<source>Downloaded: %s times</source>
+				<target>Wurde %s mal heruntergeladen</target>
 			</trans-unit>
 			<trans-unit id="lastDownload">
 				<source>Date last download</source>
@@ -92,8 +92,8 @@
 				<target>[mehr]</target>
 			</trans-unit>
 			<trans-unit id="linkBack">
-				<source>Link back to previous page</source>
-				<target>Link zurück zur Herkunftsseite</target>
+				<source>Back to list</source>
+				<target>Zurück zur Listenansicht</target>
 			</trans-unit>
 			<trans-unit id="pi_list_browseresults_page">
 				<source>Page</source>

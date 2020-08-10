@@ -8,7 +8,7 @@ call_user_func(function() {
         'JWeiland.KkDownloader',
         'Download',
         [
-            'Download' => 'list,detail',
+            'Download' => 'list,show',
         ],
         []
     );

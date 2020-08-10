@@ -23,6 +23,16 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 class Download extends AbstractEntity
 {
     /**
+     * @var \DateTime
+     */
+    protected $crdate;
+
+    /**
+     * @var \DateTime
+     */
+    protected $tstamp;
+
+    /**
      * @var string
      */
     protected $title = '';
@@ -77,6 +87,26 @@ class Download extends AbstractEntity
         $this->files = new ObjectStorage();
         $this->preview = new ObjectStorage();
         $this->categories = new ObjectStorage();
+    }
+
+    public function getCrdate(): \DateTime
+    {
+        return $this->crdate;
+    }
+
+    public function setCrdate(\DateTime $crdate): void
+    {
+        $this->crdate = $crdate;
+    }
+
+    public function getTstamp(): \DateTime
+    {
+        return $this->tstamp;
+    }
+
+    public function setTstamp(\DateTime $tstamp): void
+    {
+        $this->tstamp = $tstamp;
     }
 
     public function getTitle(): string

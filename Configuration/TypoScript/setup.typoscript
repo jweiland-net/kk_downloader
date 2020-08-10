@@ -24,7 +24,7 @@ plugin.tx_kkdownloader {
 
   settings {
     pidOfDetailPage = {$plugin.tx_kkdownloader.settings.pidOfDetailPage}
-    pidOfListPage = {$plugin.tx_kkdownloader.settings.pidOfListPage}
+    c = {$plugin.tx_kkdownloader.settings.pidOfListPage}
 
     # Download Description (1 = filename.fileextension, 2 = filename, 3 = fileextension)
     linkDescription = 2
@@ -47,9 +47,6 @@ plugin.tx_kkdownloader {
     missingDownloadIcon = EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
 
     list {
-      # Should the list result (Item 1 to 5 of 23) be shown?
-      showResultCount = 1
-
       image {
         width = 120c
         height = 80c

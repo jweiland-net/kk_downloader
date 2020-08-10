@@ -1,0 +1,68 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="content">
+	<div class="grid">
+		<div class="col-12">{resultCount->f:format.raw()}</div>
+	</div>
+
+	<f:if condition="{settings.pageBrowser.enable}">
+		<f:then>
+			<f:widget.paginate objects="{downloads}" as="paginatedDownloads" configuration="{itemsPerPage: settings.pageBrowser.itemsPerPage, insertAbove: settings.pageBrowser.insertAbove, insertBelow: settings.pageBrowser.insertBelow, maximumNumberOfLinks: settings.pageBrowser.maximumNumberOfLinks}">
+				<f:render section="renderTable" arguments="{downloads: paginatedDownloads}" />
+			</f:widget.paginate>
+		</f:then>
+		<f:else>
+			<f:render section="renderTable" arguments="{downloads: downloads}" />
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="renderTable">
+	<f:for each="{downloads}" as="download">
+		<div class="grid frame-ruler-after">
+			<f:if condition="{settings.showImagePreview}">
+				<f:then>
+					<div class="col-3">
+						<f:if condition="{settings.showImagePreview}">
+							{download.previewImage->f:format.raw()}
+						</f:if>
+					</div>
+					<div class="col-9"><f:render section="renderListEntryContent" arguments="{_all}" /></div>
+				</f:then>
+				<f:else>
+					<div class="col-12"><f:render section="renderListEntryContent" arguments="{_all}" /></div>
+				</f:else>
+			</f:if>
+		</div>
+	</f:for>
+</f:section>
+
+<f:section name="renderListEntryContent">
+	<h2>
+		<f:link.action action="show"
+									 pageUid="{settings.pidOfDetailPage}"
+									 target="_top"
+									 arguments="{download: download}">
+			{download.title}
+		</f:link.action>
+	</h2>
+	<p>{download.description -> f:format.crop(maxCharacters: 10000, respectWordBoundaries: 1)->f:format.nl2br()}</p>
+
+	<div>{download.fileItems->f:format.raw()}</div>
+
+	<f:if condition="{settings.showDownloadClicks}">
+		<div class="clicks">
+			<f:translate key="clicks" arguments="{0: download.clicks}" />
+		</div>
+	</f:if>
+
+	<f:render partial="Properties" section="renderCategories" arguments="{download: download}" />
+	<f:render partial="Properties" section="renderLastDownload" arguments="{download: download}" />
+	<f:render partial="Properties" section="renderIpLastDownload" arguments="{download: download}" />
+	<f:render partial="Properties" section="renderCrDate" arguments="{download: download}" />
+	<f:render partial="Properties" section="renderEditDate" arguments="{download: download}" />
+</f:section>
+

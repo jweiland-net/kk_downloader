@@ -92,6 +92,18 @@ return [
                 'default' => 0
             ]
         ],
+        'crdate' => [
+            'label' => 'crdate',
+            'config' => [
+                'type' => 'passthrough',
+            ]
+        ],
+        'tstamp' => [
+            'label' => 'tstamp',
+            'config' => [
+                'type' => 'passthrough',
+            ]
+        ],
         'name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.name',

@@ -1,0 +1,45 @@
+<f:section name="renderCategories">
+	<f:if condition="{settings.showCategories} && {download.categories}">
+		<div>
+			{f:translate(key: 'categories')}: {download.categoriesAsString}
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="renderLastDownload">
+	<f:if condition="{settings.showDateLastDownload} && {download.lastDownloaded}">
+		<div class="datetime">
+			{f:translate(key: 'lastDownload')}
+			{download.lastDownloaded->f:format.date(format: 'd.m.Y H:i')}
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="renderIpLastDownload">
+	<f:if condition="{settings.showIPLastDownload} && {download.ipLastDownload}">
+		<div class="description">{f:translate(key: 'ipLastDownload')} {download.ipLastDownload}</div>
+	</f:if>
+</f:section>
+
+<f:section name="renderCrDate">
+	<f:if condition="{settings.showFileCreationDate}">
+		<f:variable name="fileCreationDateFormat" value="d.m.Y" />
+		<f:if condition="{settings.showFileCreationDate} == 2">
+			<f:variable name="fileCreationDateFormat" value="d.m.Y H:i" />
+		</f:if>
+
+		<div class="datetime showCrDate">
+			{f:translate(key: 'crDate')}
+			{download.crdate->f:format.date(format: fileCreationDateFormat)}
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="renderEditDate">
+	<f:if condition="{settings.showEditDate}">
+		<div class="datetime">
+			{f:translate(key: 'lastEdit')}
+			{download.tstamp->f:format.date(format: 'd.m.Y')}
+		</div>
+	</f:if>
+</f:section>
