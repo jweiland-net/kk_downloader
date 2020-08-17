@@ -24,10 +24,13 @@ plugin.tx_kkdownloader {
 
   settings {
     pidOfDetailPage = {$plugin.tx_kkdownloader.settings.pidOfDetailPage}
-    c = {$plugin.tx_kkdownloader.settings.pidOfListPage}
+    pidOfListPage = {$plugin.tx_kkdownloader.settings.pidOfListPage}
 
-    # Download Description (1 = filename.fileextension, 2 = filename, 3 = fileextension)
-    linkDescription = 2
+    # File Description Type (1 = filename.fileextension, 2 = filename, 3 = fileextension)
+    fileDescriptionType = 2
+
+    # File modification date (0 = Off, 1 = just date, 2 = date and time)
+    showFileModificationDate = 1
 
     # Date and time format
     dateFormat = d.m.y

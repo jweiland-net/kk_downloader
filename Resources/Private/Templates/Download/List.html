@@ -30,10 +30,10 @@
 							{download.previewImage->f:format.raw()}
 						</f:if>
 					</div>
-					<div class="col-9"><f:render section="renderListEntryContent" arguments="{_all}" /></div>
+					<div class="col-9"><f:render section="renderListEntryContent" arguments="{download: download}" /></div>
 				</f:then>
 				<f:else>
-					<div class="col-12"><f:render section="renderListEntryContent" arguments="{_all}" /></div>
+					<div class="col-12"><f:render section="renderListEntryContent" arguments="{download: download}" /></div>
 				</f:else>
 			</f:if>
 		</div>
@@ -49,20 +49,64 @@
 			{download.title}
 		</f:link.action>
 	</h2>
+
 	<p>{download.description -> f:format.crop(maxCharacters: 10000, respectWordBoundaries: 1)->f:format.nl2br()}</p>
 
-	<div>{download.fileItems->f:format.raw()}</div>
-
-	<f:if condition="{settings.showDownloadClicks}">
-		<div class="clicks">
-			<f:translate key="clicks" arguments="{0: download.clicks}" />
+	<div class="grid">
+		<div class="col-6">
+			<f:if condition="{settings.showDownloadClicks}">
+				<div class="clicks">
+					<f:translate key="clicks" arguments="{0: download.clicks}" />
+				</div>
+			</f:if>
+			<f:render partial="Properties" section="renderCategories" arguments="{download: download}" />
+			<f:render partial="Properties" section="renderLastDownload" arguments="{download: download}" />
+			<f:render partial="Properties" section="renderIpLastDownload" arguments="{download: download}" />
+			<f:render partial="Properties" section="renderCrDate" arguments="{download: download}" />
+			<f:render partial="Properties" section="renderEditDate" arguments="{download: download}" />
 		</div>
-	</f:if>
 
-	<f:render partial="Properties" section="renderCategories" arguments="{download: download}" />
-	<f:render partial="Properties" section="renderLastDownload" arguments="{download: download}" />
-	<f:render partial="Properties" section="renderIpLastDownload" arguments="{download: download}" />
-	<f:render partial="Properties" section="renderCrDate" arguments="{download: download}" />
-	<f:render partial="Properties" section="renderEditDate" arguments="{download: download}" />
+		<div class="col-6">
+			<ul class="ce-uploads">
+				<f:for each="{download.files}" as="file">
+					<f:variable name="fileDescription">
+						<f:if condition="{file.fileDescription}">
+							<f:then>{file.fileDescription}</f:then>
+							<f:else>
+								<f:switch expression="{settings.fileDescriptionType}">
+									<f:case value="1">{file.fileParts.filebody}.{file.fileParts.fileext}</f:case>
+									<f:case value="2">{file.fileParts.filebody}</f:case>
+									<f:case value="3">{file.fileParts.fileext}</f:case>
+									<f:defaultCase>{file.fileParts.filebody}.{file.fileParts.fileext}</f:defaultCase>
+								</f:switch>
+							</f:else>
+						</f:if>
+					</f:variable>
+
+					<li>
+						<f:if condition="{settings.fileIcon}">
+							<f:then>
+								<f:image src="{settings.fileIcon}" alt="File-Icon" />
+							</f:then>
+							<f:else>
+								<img src="{f:uri.resource(path: 'Icons/FileIcons/{file.fileParts.fileext}.gif', extensionName: 'frontend')}" alt="">
+							</f:else>
+						</f:if>
+						<div>
+							<a href="{file.file.originalResource.publicUrl}" title="{file.file.originalResource.title}">{fileDescription -> f:format.htmlspecialchars()}</a>
+							<f:if condition="{settings.showFileSize} && {file.file.originalResource} && {file.file.originalResource.originalFile}">
+								<f:format.bytes value="{file.file.originalResource.originalFile.properties.size}" />
+							</f:if>
+							<f:if condition="{settings.showFileModificationDate} && {file.originalResource} && {file.originalResource.originalFile}">
+								<f:format.date format="{f:if(condition: settings.showFileModificationDate, then: settings.dateFormat, else: settings.dateTimeFormat)}">
+									{file.originalResource.originalFile.properties.modification_date}
+								</f:format.date>
+							</f:if>
+						</div>
+					</li>
+				</f:for>
+			</ul>
+		</div>
+	</div>
 </f:section>
 

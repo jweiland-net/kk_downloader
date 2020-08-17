@@ -118,7 +118,7 @@ return [
             'config' => [
                 'type' => 'text',
                 'cols' => 30,
-                'rows' => 3,
+                'rows' => 5,
             ]
         ],
         'description' => [
@@ -127,7 +127,7 @@ return [
             'config' => [
                 'type' => 'text',
                 'cols' => 30,
-                'rows' => 3,
+                'rows' => 5,
             ]
         ],
         'longdescription' => [

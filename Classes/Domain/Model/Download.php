@@ -17,6 +17,8 @@ declare(strict_types=1);
 
 namespace JWeiland\KkDownloader\Domain\Model;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -179,9 +181,30 @@ class Download extends AbstractEntity
         $this->clicks = $clicks;
     }
 
-    public function getFiles(): ObjectStorage
+    /**
+     * As the downloadDescription contains all descriptions for all files split by NewLine \n
+     * we need an incremental key in array instead of an SplObjectHash.
+     *
+     * @return array|FileReference[]
+     */
+    public function getFiles(): array
     {
-        return $this->files;
+        // Do not set removeEmptyValues to true
+        $filesDescription = GeneralUtility::trimExplode(
+            chr(10),
+            $this->getFilesDescription()
+        );
+
+        $files = [];
+        /** @var FileReference $file */
+        foreach ($this->files->toArray() as $key => $file) {
+            $files[] = [
+                'file' => $file,
+                'fileDescription' => $filesDescription[$key] ?? '',
+                'fileParts' => GeneralUtility::split_fileref($file->getOriginalResource()->getName())
+            ];
+        }
+        return $files;
     }
 
     public function setFiles(ObjectStorage $files): void

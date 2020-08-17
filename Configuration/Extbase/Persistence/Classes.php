@@ -15,7 +15,7 @@ return [
             'longDescription' => [
                 'fieldName' => 'longdescription'
             ],
-            'downloadDescription' => [
+            'filesDescription' => [
                 'fieldName' => 'downloaddescription'
             ],
             'categories' => [

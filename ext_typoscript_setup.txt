@@ -9,7 +9,7 @@ config.tx_extbase {
           image.mapOnProperty = files
           imagepreview.mapOnProperty = preview
           longdescription.mapOnProperty = longDescription
-          downloaddescription.mapOnProperty = downloadDescription
+          downloaddescription.mapOnProperty = filesDescription
           categories.mapOnProperty = cat
         }
       }

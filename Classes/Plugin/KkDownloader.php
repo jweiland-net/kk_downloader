@@ -429,7 +429,7 @@ class KkDownloader extends AbstractPlugin
 
             // add the file date+time block, if desired
             $formattedFileMDate = '';
-            if ($this->settings['showFileMDate']) {
+            if ($this->settings['c']) {
                 $downloadFile = $this->filebasepath . $image;
                 $fileModificationTime = filemtime($downloadFile);
                 if ($this->settings['showFileMDate'] == '1') {
