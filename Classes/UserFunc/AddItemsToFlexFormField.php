@@ -20,25 +20,19 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * UserFunc to add fields to FlexForm
+ * UserFunc to add items to FlexForm fields
  */
-class AddFieldsToFlexForm
+class AddItemsToFlexFormField
 {
     /**
-     * add fields to flexform
+     * Fill field with configured categories
      *
      * @param array $config
      * @return array
      */
-    public function addFields(array $config): array
+    public function addCategoryItems(array $config): array
     {
         $storagePid = $this->getStorageFolderPid();
-        $optionList = [
-            0 => [
-                0 => 'all',
-                1 => 0
-            ]
-        ];
 
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_kkdownloader_cat');
         if (!empty($storagePid)) {
@@ -62,39 +56,35 @@ class AddFieldsToFlexForm
             ->orderBy('cat', 'ASC')
             ->execute();
 
+        $categoryItems = [];
         while ($row = $statement->fetch()) {
-            array_push(
-                $optionList,
-                [
-                    0 => $row['cat'],
-                    1 => $row['uid']
-                ]
-            );
+            $categoryItems[] = [
+                0 => $row['cat'],
+                1 => $row['uid']
+            ];
         }
 
-        $config['items'] = array_merge($config['items'], $optionList);
+        $config['items'] = array_merge($config['items'], $categoryItems);
 
         return $config;
     }
 
     /**
-     * Returning sysfolder ID where records are stored
+     * Returning StorageFolder PID where records are stored
      */
     public function getStorageFolderPid(): int
     {
-        $positionPid = htmlspecialchars_decode(GeneralUtility::_GET('id'));
+        $positionPid = (int)GeneralUtility::_GET('id');
 
         if (empty($positionPid)) {
-            $siteId = GeneralUtility::_GET('returnUrl');
-            $siteId = GeneralUtility::explodeUrl2Array($siteId);
-            $siteId = $siteId['db_list.php?id'];
-            $positionPid = $siteId;
+            $siteId = GeneralUtility::explodeUrl2Array(GeneralUtility::_GET('returnUrl'));
+            $positionPid = (int)$siteId['db_list.php?id'];
         }
 
-        // Negative PID values is pointing to a page on the same level as the current.
+        // Negative PID values are pointing to a page on the same level as the current.
         if ($positionPid < 0) {
             $pidRow = BackendUtility::getRecord('pages', abs($positionPid), 'pid');
-            $positionPid = $pidRow['pid'];
+            $positionPid = (int)$pidRow['pid'];
         }
 
         $row = BackendUtility::getRecord('pages', $positionPid);
@@ -103,11 +93,6 @@ class AddFieldsToFlexForm
         return (int)$TSconfig['_STORAGE_PID'];
     }
 
-    /**
-     * Get TYPO3s Connection Pool
-     *
-     * @return ConnectionPool
-     */
     protected function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);

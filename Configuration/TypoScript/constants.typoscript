@@ -1,0 +1,31 @@
+plugin.tx_kkdownloader {
+  view {
+    # cat=plugin.tx_kkdownloader/file; type=string; label=Path to template root (FE)
+    templateRootPath = EXT:kkdownloader/Resources/Private/Templates/
+    # cat=plugin.tx_kkdownloader/file; type=string; label=Path to template partials (FE)
+    partialRootPath = EXT:kkdownloader/Resources/Private/Partials/
+    # cat=plugin.tx_kkdownloader/file; type=string; label=Path to template layouts (FE)
+    layoutRootPath = EXT:kkdownloader/Resources/Private/Layouts/
+  }
+  persistence {
+    # cat=plugin.tx_kkdownloader; type=string; label=Default storage PID
+    storagePid =
+  }
+  settings {
+    # cat=plugin.tx_kkdownloader; type=int+; label=PID of Detail page: Leave empty to show details on current page.
+    pidOfDetailPage =
+    # cat=plugin.tx_kkdownloader; type=int+; label=PID of List page
+    pidOfListPage =
+
+    pageBrowser {
+      # cat=plugin.tx_kkdownloader/basic/dims; type=int+; label=Items per page: How many items should be displayed on one page
+      itemsPerPage = 15
+      # cat=plugin.tx_kkdownloader/basic/enable; type=boolean; label=insert above: Should pagebrowser be displayed on top of the list
+      insertAbove = 0
+      # cat=plugin.tx_kkdownloader/basic/enable; type=boolean; label=insert below: Should pagebrowser be displayed at bottom of the list
+      insertBelow = 1
+      # cat=plugin.tx_kkdownloader/basic/dims; type=int+; label=max number of links: Define maximum amount of pages which should be displayed
+      maximumNumberOfLinks = 10
+    }
+  }
+}

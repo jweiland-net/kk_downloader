@@ -6,25 +6,39 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
         'sortby' => 'sorting',
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l18n_parent',
         'transOrigDiffSourceField' => 'l18n_diffsource',
+        'translationSource' => 'l10n_source',
         'default_sortby' => 'ORDER BY name',
         'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',
+            'starttime' => 'starttime',
+            'endtime' => 'endtime',
         ],
-        'iconfile' => 'EXT:kk_downloader/Resources/Public/Icons/tx_kkdownloader_images.gif',
+        'iconfile' => 'EXT:kk_downloader/Resources/Public/Icons/tx_kkdownloader_images.svg',
+        'searchFields' => 'uid,name',
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid,l18n_parent,l18n_diffsource,hidden,name,image,description,longdescription,clicks,cat'
+        'showRecordFieldList' => 'sys_language_uid, l18n_parent, hidden, name, downloaddescription, description, longdescription, image, imagepreview, cat, clicks'
     ],
     'types' => [
-        '0' => ['showitem' => 'sys_language_uid;;;;1-1-1, l18n_parent, l18n_diffsource, hidden;;1, name, image, cat, imagepreview, downloaddescription, description,longdescription;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], clicks']
+        '0' => [
+            'showitem' => '--palette--;LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:palette.language_hidden;language_hidden,
+                name, 
+                --palette--;;description,
+                longdescription, image, imagepreview, cat, clicks,
+                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
+        ]
     ],
     'palettes' => [
-        '1' => ['showitem' => '']
+        'language_hidden' => ['showitem' => 'sys_language_uid, l18n_parent, hidden'],
+        'description' => ['showitem' => 'downloaddescription, description'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -78,74 +92,24 @@ return [
                 'default' => 0
             ]
         ],
+        'crdate' => [
+            'label' => 'crdate',
+            'config' => [
+                'type' => 'passthrough',
+            ]
+        ],
+        'tstamp' => [
+            'label' => 'tstamp',
+            'config' => [
+                'type' => 'passthrough',
+            ]
+        ],
         'name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.name',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-            ]
-        ],
-        'image' => [
-            'exclude' => 1,
-            'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.image',
-            'config' => [
-                'type' => 'group',
-                'internal_type' => 'file',
-                'allowed' => '',
-                'disallowed' => 'php',
-                'max_size' => 5000000,
-                'uploadfolder' => 'uploads/tx_kkdownloader',
-                'show_thumbs' => 1,
-                'size' => 10,
-                'minitems' => 0,
-                'maxitems' => 10,
-            ]
-        ],
-        'imagepreview' => [
-            'exclude' => 1,
-            'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.imagepreview',
-            'config' => [
-                'type' => 'group',
-                'internal_type' => 'file',
-                'allowed' => 'jpg,gif,png',
-                'max_size' => 10000,
-                'uploadfolder' => 'uploads/tx_kkdownloader',
-                'show_thumbs' => 1,
-                'size' => 1,
-                'minitems' => 0,
-                'maxitems' => 1,
-            ]
-        ],
-        'description' => [
-            'exclude' => 1,
-            'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.description',
-            'config' => [
-                'type' => 'text',
-                'cols' => 30,
-                'rows' => 3,
-            ]
-        ],
-        'longdescription' => [
-            'exclude' => 1,
-            'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.longdescription',
-            'config' => [
-                'type' => 'text',
-                'cols' => 30,
-                'rows' => 5,
-                'wizards' => [
-                    '_PADDING' => 2,
-                    'RTE' => [
-                        'notNewRecords' => 1,
-                        'RTEonly' => 1,
-                        'type' => 'script',
-                        'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
-                        'icon' => 'wizard_rte2.gif',
-                        'module' => [
-                            'name' => 'wizard_rte'
-                        ]
-                    ],
-                ],
             ]
         ],
         'downloaddescription' => [
@@ -157,6 +121,119 @@ return [
                 'rows' => 5,
             ]
         ],
+        'description' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.description',
+            'config' => [
+                'type' => 'text',
+                'cols' => 30,
+                'rows' => 5,
+            ]
+        ],
+        'longdescription' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.longdescription',
+            'config' => [
+                'type' => 'text',
+                'cols' => 30,
+                'rows' => 5,
+                'softref' => 'rtehtmlarea_images,typolink_tag,images,email[subst],url',
+                'enableRichtext' => true,
+            ]
+        ],
+        'image' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.image',
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+                'image',
+                [
+                    'minitems' => 0,
+                    'maxitems' => 10,
+                    'default' => 0,
+                    'foreign_match_fields' => [
+                        'fieldname' => 'image',
+                        'tablenames' => 'tx_kkdownloader_images',
+                        'table_local' => 'sys_file',
+                    ],
+                    'behaviour' => [
+                        'allowLanguageSynchronization' => true,
+                    ],
+                    'appearance' => [
+                        'showPossibleLocalizationRecords' => true,
+                        'showRemovedLocalizationRecords' => true,
+                        'showAllLocalizationLink' => true,
+                        'showSynchronizationLink' => true
+                    ],
+                    'overrideChildTca' => [
+                        'types' => [
+                            '0' => [
+                                'showitem' => '
+                                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                --palette--;;filePalette'
+                            ],
+                            \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+                                'showitem' => '
+                                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                --palette--;;filePalette'
+                            ]
+                        ]
+                    ]
+                ]
+            )
+        ],
+        'imagepreview' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.imagepreview',
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+                'imagepreview',
+                [
+                    'minitems' => 0,
+                    'maxitems' => 1,
+                    'default' => 0,
+                    'foreign_match_fields' => [
+                        'fieldname' => 'imagepreview',
+                        'tablenames' => 'tx_kkdownloader_images',
+                        'table_local' => 'sys_file',
+                    ],
+                    'behaviour' => [
+                        'allowLanguageSynchronization' => true,
+                    ],
+                    'appearance' => [
+                        'showPossibleLocalizationRecords' => true,
+                        'showRemovedLocalizationRecords' => true,
+                        'showAllLocalizationLink' => true,
+                        'showSynchronizationLink' => true
+                    ],
+                    'overrideChildTca' => [
+                        'types' => [
+                            '0' => [
+                                'showitem' => '
+                                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                --palette--;;filePalette'
+                            ],
+                            \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+                                'showitem' => '
+                                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                --palette--;;filePalette'
+                            ]
+                        ]
+                    ]
+                ]
+            )
+        ],
+        'cat' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.cat',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
+                'foreign_table' => 'tx_kkdownloader_cat',
+                'foreign_table_where' => 'AND tx_kkdownloader_cat.sys_language_uid IN (-1,0) ORDER BY tx_kkdownloader_cat.cat',
+                'size' => 4,
+                'minitems' => 0,
+                'maxitems' => 10,
+            ]
+        ],
         'clicks' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.clicks',
@@ -164,19 +241,6 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'default' => 0
-            ]
-        ],
-        'cat' => [
-            'exclude' => 1,
-            'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.cat',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingleBox',
-                'foreign_table' => 'tx_kkdownloader_cat',
-                'foreign_table_where' => 'AND tx_kkdownloader_cat.sys_language_uid IN (-1,0) ORDER BY tx_kkdownloader_cat.cat',
-                'size' => 4,
-                'minitems' => 0,
-                'maxitems' => 10,
             ]
         ],
         'last_downloaded' => [

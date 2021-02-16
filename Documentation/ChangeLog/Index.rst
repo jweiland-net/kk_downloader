@@ -7,6 +7,12 @@
 ChangeLog
 =========
 
+**Version 6.0.0**
+
+- Add TYPO3 compatibility
+- Remove TYPO3 8 compatibility
+- Change field "file_template" in FlexForm to type "text"
+
 **Version 5.0.1**
 
 - Typo in orderBy of DownloadRepository

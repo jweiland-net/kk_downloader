@@ -6,24 +6,35 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l18n_parent',
         'transOrigDiffSourceField' => 'l18n_diffsource',
+        'translationSource' => 'l10n_source',
         'default_sortby' => 'ORDER BY cat ASC',
         'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',
+            'starttime' => 'starttime',
+            'endtime' => 'endtime',
         ],
-        'iconfile' => 'EXT:kk_downloader/Resources/Public/Icons/tx_kkdownloader_cat.gif',
+        'iconfile' => 'EXT:kk_downloader/Resources/Public/Icons/tx_kkdownloader_cat.svg',
+        'searchFields' => 'uid,cat',
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid,l18n_parent,l18n_diffsource,hidden,cat'
+        'showRecordFieldList' => 'sys_language_uid, l18n_parent, l18n_diffsource, hidden, cat'
     ],
     'types' => [
-        '0' => ['showitem' => 'sys_language_uid;;;;1-1-1, l18n_parent, l18n_diffsource, hidden;;1, cat']
+        '0' => [
+            'showitem' => '--palette--;LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:palette.language_hidden;language_hidden,
+                cat,
+                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
+        ]
     ],
     'palettes' => [
-        '1' => ['showitem' => '']
+        'language_hidden' => ['showitem' => 'sys_language_uid, l18n_parent, hidden'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -75,6 +86,18 @@ return [
             'config' => [
                 'type' => 'check',
                 'default' => 0
+            ]
+        ],
+        'crdate' => [
+            'label' => 'crdate',
+            'config' => [
+                'type' => 'passthrough',
+            ]
+        ],
+        'tstamp' => [
+            'label' => 'tstamp',
+            'config' => [
+                'type' => 'passthrough',
             ]
         ],
         'cat' => [

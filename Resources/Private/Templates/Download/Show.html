@@ -1,0 +1,38 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="content">
+	<h2 class="title">{download.title}</h2>
+
+	<f:if condition="{settings.showImagePreview}">
+		<div>{download.previewImage->f:format.raw()}</div>
+	</f:if>
+
+	<div class="bodytext">
+		{download.fileItems->f:format.raw()}
+		<p>
+			<em>{download.description->f:format.crop(maxCharacters: 10000, respectWordBoundaries: 1)->f:format.nl2br()}</em>
+		</p>
+		{download.longDescription->f:format.html()}
+	</div>
+
+	<f:if condition="{settings.showDownloadsCount}">
+		<div class="clicks">
+			{download.clicks} {f:translate(key: 'clicks')}
+			<span class="datetime">{f:translate(key: 'date')} {download.crdate->f:format.date(format: 'd.m.Y')}</span>
+		</div>
+	</f:if>
+
+	<f:render partial="Properties" section="renderCategories" arguments="{download: download}" />
+	<f:render partial="Properties" section="renderLastDownload" arguments="{download: download}" />
+	<f:render partial="Properties" section="renderIpLastDownload" arguments="{download: download}" />
+	<f:render partial="Properties" section="renderEditDate" arguments="{download: download}" />
+
+	<div class="linkBack">
+		<f:link.action action="list" pageUid="{settings.pidOfListPage}">
+			{f:translate(key: 'linkBack')}
+		</f:link.action>
+	</div>
+</f:section>

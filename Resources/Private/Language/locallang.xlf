@@ -22,7 +22,7 @@
 				<source>Download object</source>
 			</trans-unit>
 			<trans-unit id="clicks">
-				<source>downloads</source>
+				<source>Downloaded: %s times</source>
 			</trans-unit>
 			<trans-unit id="lastDownload">
 				<source>Date last download</source>
@@ -70,7 +70,7 @@
 				<source>[more]</source>
 			</trans-unit>
 			<trans-unit id="linkBack">
-				<source>Link back to previous page</source>
+				<source>Back to list</source>
 			</trans-unit>
 			<trans-unit id="pi_list_browseresults_page">
 				<source>Page</source>

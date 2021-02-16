@@ -19,9 +19,10 @@
 	},
 	"require": {
 		"ext-pdo": "*",
-		"typo3/cms-core": "^8.7 || ^9.5"
+		"typo3/cms-core": "^9.5.17 || ^10.4.2"
 	},
 	"require-dev": {
+		"roave/security-advisories": "dev-master",
 		"phpunit/phpunit": "~4.8.0"
 	},
 	"autoload": {

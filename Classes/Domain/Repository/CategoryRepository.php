@@ -17,11 +17,12 @@ namespace JWeiland\KkDownloader\Domain\Repository;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Repository for kk_downloader categories
  */
-class CategoryRepository
+class CategoryRepository extends Repository
 {
     /**
      * TableName for categories

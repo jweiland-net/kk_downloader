@@ -4,6 +4,19 @@ if (!defined('TYPO3_MODE')) {
 }
 
 call_user_func(function() {
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'JWeiland.KkDownloader',
+        'Download',
+        [
+            'Download' => 'list,show',
+        ],
+        []
+    );
+
+
+
+
+
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig('options.saveDocNew.tx_kkdownloader_images = 1');
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig('options.saveDocNew.tx_kkdownloader_cat = 1');
 
@@ -32,7 +45,7 @@ tt_content.list.20.kkdownloader_pi1 = < plugin.tx_kkdownloader_pi1
 
     // Register SVG Icon Identifier
     $svgIcons = [
-        'ext-kkdownloader-wizard-icon' => 'plugin_wizard.gif',
+        'ext-kkdownloader-wizard-icon' => 'plugin_wizard.svg',
     ];
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
     foreach ($svgIcons as $identifier => $fileName) {
