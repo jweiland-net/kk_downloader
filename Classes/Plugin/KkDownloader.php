@@ -204,7 +204,9 @@ class KkDownloader extends AbstractPlugin
                 GeneralUtility::intExplode(',', $storageFoldersForDownloads, true),
                 $this->settings['categoryUid'],
                 $this->settings['orderBy'],
-                $this->settings['orderDirection']
+                $this->settings['orderDirection'],
+                (int)$this->internal['results_at_a_time'],
+                (int)$this->piVars['pointer'] * $this->internal['results_at_a_time']
             );
             foreach ($downloads as &$download) {
                 if ($this->settings['showCats']) {
@@ -553,7 +555,7 @@ class KkDownloader extends AbstractPlugin
      */
     protected function addPageBrowserSettingsToView(StandaloneView $view)
     {
-        $amountOfDownloads = $this->internal['res_count'] ;
+        $amountOfDownloads = $this->internal['res_count'];
         $beginAt = (int)$this->piVars['pointer'] * $this->internal['results_at_a_time'];
 
         // Make Next link
