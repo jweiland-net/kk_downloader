@@ -69,7 +69,25 @@ class DownloadRepository
         return $download;
     }
 
-    public function getDownloads(array $storageFolders = [], int $categoryUid = 0, string $orderBy = '', string $direction = 'ASC'): array
+    /**
+     * @param array $storageFolders
+     * @param int $categoryUid
+     * @param string $orderBy
+     * @param string $direction
+     * @param int $limit
+     * @param int $offset
+     * @param bool $countAll
+     * @return array
+     */
+    public function getDownloads(
+        array $storageFolders = [],
+        int $categoryUid = 0,
+        string $orderBy = '',
+        string $direction = 'ASC',
+        int $limit = 10,
+        int $offset = 0,
+        bool $countAll = false
+    ): array
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
 
@@ -106,6 +124,8 @@ class DownloadRepository
                     $queryBuilder->createNamedParameter([-1, 0], Connection::PARAM_INT_ARRAY)
                 )
             )
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
             ->execute()
             ->fetchAll();
 
@@ -114,6 +134,44 @@ class DownloadRepository
         }
 
         return $downloads;
+    }
+
+    public function countAllDownloadsInSelection(
+        array $storageFolders = [],
+        int $categoryUid = 0
+    ): int {
+
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
+
+        if (!empty($storageFolders)) {
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->in(
+                    'pid',
+                    $queryBuilder->createNamedParameter($storageFolders, Connection::PARAM_INT_ARRAY)
+                )
+            );
+        }
+
+        if (!empty($categoryUid)) {
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->inSet(
+                    'cat',
+                    $queryBuilder->quote($categoryUid)
+                )
+            );
+        }
+
+        return $queryBuilder
+            ->count('uid')
+            ->from($this->tableName)
+            ->andWhere(
+                $queryBuilder->expr()->in(
+                    'sys_language_uid',
+                    $queryBuilder->createNamedParameter([-1, 0], Connection::PARAM_INT_ARRAY)
+                )
+            )
+            ->execute()
+            ->fetchColumn(0);
     }
 
     public function updateImageRecordAfterDownload(int $uid)
