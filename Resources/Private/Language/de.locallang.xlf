@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader">
 		<header/>
 		<body>
 			<trans-unit id="title">
