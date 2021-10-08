@@ -263,7 +263,7 @@ class KkDownloader extends AbstractPlugin
             $images = GeneralUtility::trimExplode(',', $download['image'], true);
             foreach ($images as $image) {
                 $filePath = $this->filebasepath . $image;
-                $imageExt = $this->checkMimeType($filePath);
+                $imageExt = $this->getMimeTypeOfFile($filePath);
 
                 // create IMG-Tag, if image has allowed MimeType
                 if (in_array($imageExt, $allowedMimeTypes)) {
@@ -491,18 +491,25 @@ class KkDownloader extends AbstractPlugin
     }
 
     /**
-     * Checks mime_type of an image
+     * Get mime type of file
      *
      * @param string $file
      * @return string
      */
-    protected function checkMimeType(string $file)
+    protected function getMimeTypeOfFile(string $file): string
     {
-        $imageinfos = getimagesize($file);
-        $imagetype = $imageinfos[2];
-        $mimetype = image_type_to_mime_type($imagetype);
+        $mimeType = '';
+        if (function_exists('mime_content_type')) {
+            $mimeType = mime_content_type($file);
+        } else {
+            // @ToDo: SF: Hopefully I will find a better method to extract the mimetype instead of using image functions
+            $imageInfos = getimagesize($file);
+            if (array_key_exists(2, $imageInfos)) {
+                $mimeType = image_type_to_mime_type($imageInfos[2]);
+            }
+        }
 
-        return $mimetype;
+        return $mimeType ?: 'application/octet-stream';
     }
 
     /**
@@ -522,7 +529,7 @@ class KkDownloader extends AbstractPlugin
         $filename = $image;
 
         // check Mimetype
-        $mimetype = $this->checkMimeType($downloadfile);
+        $mimetype = $this->getMimeTypeOfFile($downloadfile);
 
         header('Content-Type: ' . $mimetype);
         header('Content-Disposition: attachment; filename=' . $filename);
