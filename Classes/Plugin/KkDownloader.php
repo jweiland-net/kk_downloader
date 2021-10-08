@@ -69,8 +69,6 @@ class KkDownloader extends AbstractPlugin
     public $filebasepath = 'uploads/tx_kkdownloader/';
     public $defaultTemplate = 'EXT:kk_downloader/Resources/Private/Templates/MainTemplate.html';
 
-    public $langArr;
-
     public $showCats;
     public $template;
     public $internal = [];
@@ -102,7 +100,6 @@ class KkDownloader extends AbstractPlugin
     protected $settings = [];
 
     protected $languageUid = 0;
-    protected $languageMode = null;
     protected $languageOverlayMode = false;
 
     /**
@@ -312,11 +309,7 @@ class KkDownloader extends AbstractPlugin
         if (is_object($this->getTypoScriptFrontendController())) {
             $this->languageUid = (int)$this->getTypoScriptFrontendController()->sys_language_content;
             $this->languageOverlayMode = $this->getTypoScriptFrontendController()->sys_language_contentOL ?: false;
-            $this->languageMode = $this->getTypoScriptFrontendController()->sys_language_mode ?: null;
         }
-
-        $languageRepository = GeneralUtility::makeInstance(LanguageRepository::class);
-        $this->langArr = $languageRepository->getAllLanguages();
     }
 
     /**
