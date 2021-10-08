@@ -155,16 +155,16 @@ class KkDownloader extends AbstractPlugin
         }
 
         $this->internal['results_at_a_time'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'results_at_a_time', 'sDEF');
-        $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? intval($this->internal['results_at_a_time']) : intval($this->conf['results_at_a_time']);
-        $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? intval($this->internal['results_at_a_time']) : 1001;
-        $this->internal['maxPages'] = $this->conf['pageBrowser.']['maxPages'] > 0 ? intval($this->conf['pageBrowser.']['maxPages']) : 10;
+        $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? (int)($this->internal['results_at_a_time']) : (int)($this->conf['results_at_a_time']);
+        $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? (int)($this->internal['results_at_a_time']) : 1001;
+        $this->internal['maxPages'] = $this->conf['pageBrowser.']['maxPages'] > 0 ? (int)($this->conf['pageBrowser.']['maxPages']) : 10;
 
         $view = $this->getView();
         $view->setTemplatePathAndFilename($templateFile);
         if ($this->settings['whatToDisplay'] === 'SINGLE') {
             if (!empty($this->uidOfDownload)) {
                 $download = $this->downloadRepository->getDownloadByUid($this->uidOfDownload);
-                $download = $this->languageOverlay($download, 'tx_kkdownloader_images');
+                $download = $this->recordOverlay($download, 'tx_kkdownloader_images');
 
                 if ($this->settings['showCats']) {
                     $download['categories'] = $this->completeCATs($download['cat']);
@@ -203,6 +203,7 @@ class KkDownloader extends AbstractPlugin
                 $this->settings['orderDirection']
             );
             foreach ($downloads as &$download) {
+                $download = $this->recordOverlay($download, 'tx_kkdownloader_images');
                 if ($this->settings['showCats']) {
                     $download['categories'] = $this->completeCATs($download['cat']);
                 }
@@ -214,6 +215,7 @@ class KkDownloader extends AbstractPlugin
                     (int)$this->conf['linkdescription']
                 );
             }
+            unset($download);
 
             $view->assign('downloads', $downloads);
 
@@ -293,6 +295,7 @@ class KkDownloader extends AbstractPlugin
     {
         $this->initializeLanguage();
         $this->settings = $this->getFlexFormSettings();
+
         $this->downloadRepository = GeneralUtility::makeInstance(DownloadRepository::class);
         $this->categoryRepository = GeneralUtility::makeInstance(CategoryRepository::class);
         $this->templateService = GeneralUtility::makeInstance(MarkerBasedTemplateService::class);
@@ -551,7 +554,7 @@ class KkDownloader extends AbstractPlugin
         // Make Next link
         if ($amountOfDownloads > $beginAt + $this->internal['results_at_a_time']) {
             $next = ($beginAt + $this->internal['results_at_a_time'] > $amountOfDownloads) ? $amountOfDownloads - $this->internal['results_at_a_time']:$beginAt + $this->internal['results_at_a_time'];
-            $next = intval($next / $this->internal['results_at_a_time']);
+            $next = (int)($next / $this->internal['results_at_a_time']);
             $params = ['pointer' => $next];
             $next_link = $this->pi_linkTP_keepPIvars(
                 LocalizationUtility::translate('pi_list_browseresults_next', 'kkDownloader'),
@@ -563,7 +566,7 @@ class KkDownloader extends AbstractPlugin
         // Make Previous link
         if ($beginAt) {
             $prev = ($beginAt - $this->internal['results_at_a_time'] < 0)?0:$beginAt - $this->internal['results_at_a_time'];
-            $prev = intval($prev / $this->internal['results_at_a_time']);
+            $prev = (int)($prev / $this->internal['results_at_a_time']);
             $params = ['pointer' => $prev];
             $prev_link = $this->pi_linkTP_keepPIvars(
                 LocalizationUtility::translate('pi_list_browseresults_prev', 'kkDownloader'),
@@ -649,9 +652,14 @@ class KkDownloader extends AbstractPlugin
         return $view;
     }
 
-    protected function languageOverlay(array $row, string $tableName)
+    protected function recordOverlay(array $row, string $tableName)
     {
         $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+
+        // Workspace overlay
+        $pageRepository->versionOL($tableName, $row);
+
+        // Language overlay
         if (
             isset($GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'])
             && $row[$GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField']] > 0

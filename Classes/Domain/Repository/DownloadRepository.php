@@ -16,6 +16,8 @@ namespace JWeiland\KkDownloader\Domain\Repository;
 
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -28,32 +30,11 @@ class DownloadRepository
      */
     protected $tableName = 'tx_kkdownloader_images';
 
-    /**
-     * @var array
-     */
-    protected $columnsToSelect = [
-        'tx_kkdownloader_images.uid',
-        'tx_kkdownloader_images.crdate',
-        'tx_kkdownloader_images.tstamp',
-        'tx_kkdownloader_images.name',
-        'tx_kkdownloader_images.image',
-        'tx_kkdownloader_images.imagepreview',
-        'tx_kkdownloader_images.description',
-        'tx_kkdownloader_images.longdescription',
-        'tx_kkdownloader_images.clicks',
-        'tx_kkdownloader_images.last_downloaded',
-        'tx_kkdownloader_images.ip_last_download',
-        'tx_kkdownloader_images.cat',
-        'tx_kkdownloader_images.downloaddescription'
-    ];
-
     public function getDownloadByUid(int $uid): array
     {
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
+        $queryBuilder = $this->getQueryBuilderForTable($this->tableName);
         $download = $queryBuilder
-            ->select(...$this->columnsToSelect)
-            ->from($this->tableName)
-            ->where(
+            ->andWhere(
                 $queryBuilder->expr()->eq(
                     'uid',
                     $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
@@ -69,11 +50,15 @@ class DownloadRepository
         return $download;
     }
 
-    public function getDownloads(array $storageFolders = [], int $categoryUid = 0, string $orderBy = '', string $direction = 'ASC'): array
-    {
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
+    public function getDownloads(
+        array $storageFolders = [],
+        int $categoryUid = 0,
+        string $orderBy = '',
+        string $direction = 'ASC'
+    ): array {
+        $queryBuilder = $this->getQueryBuilderForTable($this->tableName);
 
-        if (!empty($storageFolders)) {
+        if ($storageFolders !== []) {
             $queryBuilder->andWhere(
                 $queryBuilder->expr()->in(
                     'pid',
@@ -82,7 +67,7 @@ class DownloadRepository
             );
         }
 
-        if (!empty($categoryUid)) {
+        if ($categoryUid > 0) {
             $queryBuilder->andWhere(
                 $queryBuilder->expr()->inSet(
                     'cat',
@@ -91,26 +76,17 @@ class DownloadRepository
             );
         }
 
-        if (empty($orderBy)) {
+        if ($orderBy === '') {
             $queryBuilder->orderBy('tx_kkdownloader_images.name', 'ASC');
         } else {
             $queryBuilder->orderBy('tx_kkdownloader_images.' . $orderBy, $direction);
         }
 
-        $downloads = $queryBuilder
-            ->select(...$this->columnsToSelect)
-            ->from($this->tableName)
-            ->andWhere(
-                $queryBuilder->expr()->in(
-                    'sys_language_uid',
-                    $queryBuilder->createNamedParameter([-1, 0], Connection::PARAM_INT_ARRAY)
-                )
-            )
-            ->execute()
-            ->fetchAll();
+        $statement = $queryBuilder->execute();
 
-        if ($downloads === false) {
-            $downloads = [];
+        $downloads = [];
+        while ($download = $statement->fetch()) {
+            $downloads[] = $download;
         }
 
         return $downloads;
@@ -137,11 +113,38 @@ class DownloadRepository
             ->execute();
     }
 
-    /**
-     * Get TYPO3s Connection Pool
-     *
-     * @return ConnectionPool
-     */
+    protected function getQueryBuilderForTable(string $table): QueryBuilder
+    {
+        // Column: sys_language_uid
+        $languageField = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+        // Column: l10n_parent
+        $transOrigPointerField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($table);
+        $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
+        $queryBuilder
+            ->select('*')
+            ->from($this->tableName)
+            ->andWhere(
+                $queryBuilder->expr()->in(
+                    $languageField,
+                    [0, -1]
+                ),
+                $queryBuilder->expr()->eq(
+                    $transOrigPointerField,
+                    0
+                )
+            );
+
+        if ($GLOBALS['TCA'][$table]['ctrl']['versioningWS']) {
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->eq('t3ver_oid', 0)
+            );
+        }
+
+        return $queryBuilder;
+    }
+
     protected function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);
