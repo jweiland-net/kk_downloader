@@ -49,6 +49,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showCats</label>
 							<config>
 								<type>check</type>
+								<renderType>checkboxToggle</renderType>
 								<default>0</default>
 							</config>
 						</TCEforms>
@@ -131,6 +132,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showPagebrowser</label>
 							<config>
 								<type>check</type>
+								<renderType>checkboxToggle</renderType>
 								<default>0</default>
 							</config>
 						</TCEforms>
@@ -141,6 +143,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.imagepreview</label>
 							<config>
 								<type>check</type>
+								<renderType>checkboxToggle</renderType>
 								<default>0</default>
 							</config>
 						</TCEforms>
@@ -151,6 +154,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.filesize</label>
 							<config>
 								<type>check</type>
+								<renderType>checkboxToggle</renderType>
 								<default>0</default>
 							</config>
 						</TCEforms>
@@ -211,6 +215,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showEditDate</label>
 							<config>
 								<type>check</type>
+								<renderType>checkboxToggle</renderType>
 								<default>0</default>
 							</config>
 						</TCEforms>
@@ -221,6 +226,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showclicks</label>
 							<config>
 								<type>check</type>
+								<renderType>checkboxToggle</renderType>
 								<default>0</default>
 							</config>
 						</TCEforms>
@@ -231,6 +237,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showDateLastDownload</label>
 							<config>
 								<type>check</type>
+								<renderType>checkboxToggle</renderType>
 								<default>0</default>
 							</config>
 						</TCEforms>
@@ -241,6 +248,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showIPLastDownload</label>
 							<config>
 								<type>check</type>
+								<renderType>checkboxToggle</renderType>
 								<default>0</default>
 							</config>
 						</TCEforms>
