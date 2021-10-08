@@ -1,18 +1,14 @@
 <?php
-namespace JWeiland\KkDownloader\Plugin;
+
+declare(strict_types=1);
 
 /*
- * This file is part of the kk_downloader project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
+ * This file is part of the package jweiland/kk-downloader.
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
+
+namespace JWeiland\KkDownloader\Plugin;
 
 use JWeiland\KkDownloader\Domain\Repository\CategoryRepository;
 use JWeiland\KkDownloader\Domain\Repository\DownloadRepository;
@@ -31,7 +27,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\Page\PageRepository;
 use TYPO3\CMS\Frontend\Plugin\AbstractPlugin;
 
-/**
+/*
  * Main Plugin class
  */
 class KkDownloader extends AbstractPlugin
@@ -274,16 +270,16 @@ class KkDownloader extends AbstractPlugin
                     $img['file'] = $filePath;
                     $previewImageForDownload = $this->cObj->cObjGetSingle('IMAGE', $img);
                     break;
-                } else {
-                    // MimeType is not an image, check against 'pdf'
-                    $fileInfo = GeneralUtility::split_fileref($image);
-                    $fileExt = trim($fileInfo['fileext']);
-                    if ($fileExt === 'pdf') {
-                        $img = $this->conf['image.'];
-                        $img['file'] = $filePath;
-                        $previewImageForDownload = $this->cObj->cObjGetSingle('IMAGE', $img);
-                        break;
-                    }
+                }
+
+                // MimeType is not an image, check against 'pdf'
+                $fileInfo = GeneralUtility::split_fileref($image);
+                $fileExt = trim($fileInfo['fileext']);
+                if ($fileExt === 'pdf') {
+                    $img = $this->conf['image.'];
+                    $img['file'] = $filePath;
+                    $previewImageForDownload = $this->cObj->cObjGetSingle('IMAGE', $img);
+                    break;
                 }
             }
         }
@@ -303,8 +299,6 @@ class KkDownloader extends AbstractPlugin
 
     /**
      * Collect language information
-     *
-     * @return void
      */
     protected function initializeLanguage()
     {
@@ -414,7 +408,7 @@ class KkDownloader extends AbstractPlugin
             // add the filesize block, if desired
             $formattedFileSize = '';
             if ($this->settings['showFileSize']) {
-                $downloadFile = $this->filebasepath.$image;
+                $downloadFile = $this->filebasepath . $image;
                 $fileSize = filesize($downloadFile);
                 $decimals = 2;
                 if ($fileSize < 1024) {
@@ -515,7 +509,6 @@ class KkDownloader extends AbstractPlugin
      *
      * @param string $image: Name of download
      * @param int $uid: download uid for click counter
-     * @return void
      */
     protected function downloadImage(string $image, int $uid)
     {
@@ -544,11 +537,10 @@ class KkDownloader extends AbstractPlugin
      * Add variables to view
      *
      * @param StandaloneView $view
-     * @return void
      */
     protected function addPageBrowserSettingsToView(StandaloneView $view)
     {
-        $amountOfDownloads = $this->internal['res_count'] ;
+        $amountOfDownloads = $this->internal['res_count'];
         $beginAt = (int)$this->piVars['pointer'] * $this->internal['results_at_a_time'];
 
         // Make Next link
@@ -588,7 +580,7 @@ class KkDownloader extends AbstractPlugin
         if (ceil($actualPage + $this->internal['maxPages']/2) <= $pages) {
             $lastPage = ceil($actualPage + $this->internal['maxPages'] / 2) > 0 ? ceil($actualPage + $this->internal['maxPages']/2) : 0;
             $subFirst = 0;
-        } else{
+        } else {
             $lastPage = $pages;
             $subFirst = ceil($this->internal['maxPages']/2-($pages-$actualPage));
         }
@@ -612,7 +604,7 @@ class KkDownloader extends AbstractPlugin
                 $pages .= $this->cObj->stdWrap($item, $this->conf['pageBrowser.']['activepage_stdWrap.']) . ' ';
             } else {
                 $params = ['pointer' => $i];
-                $link = $this->pi_linkTP_keepPIvars($this->cObj->stdWrap($item, $this->conf['pageBrowser.']['pagelink_stdWrap.']) , $params) . ' ';
+                $link = $this->pi_linkTP_keepPIvars($this->cObj->stdWrap($item, $this->conf['pageBrowser.']['pagelink_stdWrap.']), $params) . ' ';
                 $pages .= $this->cObj->stdWrap($link, $this->conf['pageBrowser.']['page_stdWrap.']);
             }
         }
@@ -692,7 +684,7 @@ class KkDownloader extends AbstractPlugin
         if (!is_string($messageBody)) {
             throw new \InvalidArgumentException('The message body must be of type string, "' . gettype($messageBody) . '" given.', 1243258395);
         }
-        /* @var \TYPO3\CMS\Core\Messaging\FlashMessage $flashMessage */
+        /** @var \TYPO3\CMS\Core\Messaging\FlashMessage $flashMessage */
         $flashMessage = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Messaging\FlashMessage::class,
             (string)$messageBody,
