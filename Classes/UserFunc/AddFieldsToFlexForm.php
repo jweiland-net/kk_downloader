@@ -79,13 +79,12 @@ class AddFieldsToFlexForm
      */
     public function getStorageFolderPid(): int
     {
-        $positionPid = htmlspecialchars_decode(GeneralUtility::_GET('id'));
+        $positionPid = htmlspecialchars_decode(GeneralUtility::_GET('id') ?? '');
 
         if (empty($positionPid)) {
             $siteId = GeneralUtility::_GET('returnUrl');
             $siteId = GeneralUtility::explodeUrl2Array($siteId);
-            $siteId = $siteId['db_list.php?id'];
-            $positionPid = $siteId;
+            $positionPid = (int)$siteId['id'];
         }
 
         // Negative PID values is pointing to a page on the same level as the current.
