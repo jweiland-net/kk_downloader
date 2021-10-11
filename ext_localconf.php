@@ -3,9 +3,8 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-call_user_func(function() {
+call_user_func(static function() {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig('options.saveDocNew.tx_kkdownloader_images = 1');
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig('options.saveDocNew.tx_kkdownloader_cat = 1');
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript(
         'kk_downloader',
@@ -43,6 +42,11 @@ tt_content.list.20.kkdownloader_pi1 = < plugin.tx_kkdownloader_pi1
         );
     }
 
-    // add kk_downloader plugin to new element wizard
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:kk_downloader/Configuration/TSconfig/ContentElementWizard.txt">');
+    // Add kk_downloader plugin to new element wizard
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:kk_downloader/Configuration/TSconfig/ContentElementWizard.txt">'
+    );
+
+    // Migrate kk_downloader categories to sys_category
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['kkMigrateCategories'] = \JWeiland\KkDownloader\Upgrade\MigrateCategoriesUpgrade::class;
 });

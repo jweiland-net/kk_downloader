@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\KkDownloader\Domain\Repository;
 
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -22,18 +23,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class DownloadRepository
 {
-    /**
-     * @var string
-     */
-    protected $tableName = 'tx_kkdownloader_images';
-
     public function getDownloadByUid(int $uid): array
     {
-        $queryBuilder = $this->getQueryBuilderForTable($this->tableName);
+        $queryBuilder = $this->getQueryBuilderForDownloads();
         $download = $queryBuilder
             ->andWhere(
                 $queryBuilder->expr()->eq(
-                    'uid',
+                    'i.uid',
                     $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
                 )
             )
@@ -53,30 +49,43 @@ class DownloadRepository
         string $orderBy = '',
         string $direction = 'ASC'
     ): array {
-        $queryBuilder = $this->getQueryBuilderForTable($this->tableName);
+        $queryBuilder = $this->getQueryBuilderForDownloads();
 
         if ($storageFolders !== []) {
             $queryBuilder->andWhere(
                 $queryBuilder->expr()->in(
-                    'pid',
+                    'i.pid',
                     $queryBuilder->createNamedParameter($storageFolders, Connection::PARAM_INT_ARRAY)
                 )
             );
         }
 
         if ($categoryUid > 0) {
-            $queryBuilder->andWhere(
-                $queryBuilder->expr()->inSet(
-                    'cat',
-                    $queryBuilder->quote($categoryUid)
+            $queryBuilder->join(
+                'i',
+                'sys_category_record_mm',
+                'sc_mm',
+                (string)$queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->eq(
+                        'i.uid',
+                        $queryBuilder->quoteIdentifier('sc_mm.uid_foreign')
+                    ),
+                    $queryBuilder->expr()->eq(
+                        'sc_mm.tablenames',
+                        $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
+                    ),
+                    $queryBuilder->expr()->eq(
+                        'sc_mm.fieldname',
+                        $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
+                    )
                 )
             );
         }
 
         if ($orderBy === '') {
-            $queryBuilder->orderBy('tx_kkdownloader_images.name', 'ASC');
+            $queryBuilder->orderBy('i.name', 'ASC');
         } else {
-            $queryBuilder->orderBy('tx_kkdownloader_images.' . $orderBy, $direction);
+            $queryBuilder->orderBy('i.' . $orderBy, $direction);
         }
 
         $statement = $queryBuilder->execute();
@@ -95,9 +104,9 @@ class DownloadRepository
 
         $amountOfDownloads = (int)$download['clicks'] + 1;
 
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_kkdownloader_images');
         $queryBuilder
-            ->update($this->tableName)
+            ->update('tx_kkdownloader_images')
             ->set('tx_kkdownloader_images.clicks', $amountOfDownloads)
             ->set('tx_kkdownloader_images.last_downloaded', date('U'))
             ->set('tx_kkdownloader_images.ip_last_download', $_SERVER['REMOTE_ADDR'])
@@ -110,36 +119,61 @@ class DownloadRepository
             ->execute();
     }
 
-    protected function getQueryBuilderForTable(string $table): QueryBuilder
+    protected function getQueryBuilderForDownloads(): QueryBuilder
     {
         // Column: sys_language_uid
-        $languageField = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+        $languageField = $GLOBALS['TCA']['tx_kkdownloader_images']['ctrl']['languageField'];
         // Column: l10n_parent
-        $transOrigPointerField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+        $transOrigPointerField = $GLOBALS['TCA']['tx_kkdownloader_images']['ctrl']['transOrigPointerField'];
 
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($table);
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_kkdownloader_images');
         $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
         $queryBuilder
-            ->select('*')
-            ->from($this->tableName)
+            ->select(...$this->getColumnsForDownloadTable())
+            ->from('tx_kkdownloader_images', 'i')
             ->andWhere(
                 $queryBuilder->expr()->in(
-                    $languageField,
+                    'i.' . $languageField,
                     [0, -1]
                 ),
                 $queryBuilder->expr()->eq(
-                    $transOrigPointerField,
+                    'i.' . $transOrigPointerField,
                     0
                 )
-            );
+            )
+            ->groupBy(...$this->getColumnsForDownloadTable()); // keep that because of category relation
 
-        if ($GLOBALS['TCA'][$table]['ctrl']['versioningWS']) {
+        if ($GLOBALS['TCA']['tx_kkdownloader_images']['ctrl']['versioningWS']) {
             $queryBuilder->andWhere(
-                $queryBuilder->expr()->eq('t3ver_oid', 0)
+                $queryBuilder->expr()->eq('i.t3ver_oid', 0)
             );
         }
 
         return $queryBuilder;
+    }
+
+    /**
+     * ->select() and ->groupBy() has to be the same in DB configuration
+     * where only_full_group_by is activated.
+     *
+     * @return array
+     */
+    protected function getColumnsForDownloadTable(): array
+    {
+        $columns = [];
+        $connection = $this->getConnectionPool()->getConnectionForTable('tx_kkdownloader_images');
+        if ($connection->getSchemaManager() instanceof AbstractSchemaManager) {
+            $columns = array_map(
+                static function ($column) {
+                    return 'i.' . $column;
+                },
+                array_keys(
+                    $connection->getSchemaManager()->listTableColumns('tx_kkdownloader_images') ?? []
+                )
+            );
+        }
+
+        return $columns;
     }
 
     protected function getConnectionPool(): ConnectionPool
