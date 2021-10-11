@@ -24,10 +24,10 @@ return [
         'iconfile' => 'EXT:kk_downloader/Resources/Public/Icons/tx_kkdownloader_images.gif',
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid,l18n_parent,l18n_diffsource,hidden,name,image,description,longdescription,clicks,cat'
+        'showRecordFieldList' => 'sys_language_uid,l18n_parent,l18n_diffsource,hidden,name,image,description,longdescription,clicks'
     ],
     'types' => [
-        '0' => ['showitem' => 'sys_language_uid;;;;1-1-1, l18n_parent, l18n_diffsource, hidden;;1, name, image, cat, imagepreview, downloaddescription, description,longdescription;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], clicks']
+        '0' => ['showitem' => 'sys_language_uid;;;;1-1-1, l18n_parent, l18n_diffsource, hidden;;1, name, image, imagepreview, downloaddescription, description,longdescription;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], clicks']
     ],
     'palettes' => [
         '1' => ['showitem' => '']
@@ -170,19 +170,6 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'default' => 0
-            ]
-        ],
-        'cat' => [
-            'exclude' => 1,
-            'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.cat',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingleBox',
-                'foreign_table' => 'tx_kkdownloader_cat',
-                'foreign_table_where' => 'AND tx_kkdownloader_cat.sys_language_uid IN (-1,0) ORDER BY tx_kkdownloader_cat.cat',
-                'size' => 4,
-                'minitems' => 0,
-                'maxitems' => 10,
             ]
         ],
         'last_downloaded' => [

@@ -41,13 +41,6 @@
 			<trans-unit id="tx_kkdownloader_images.imagedescription">
 				<source>Link description</source>
 			</trans-unit>
-
-			<trans-unit id="tx_kkdownloader_cat">
-				<source>Category</source>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader_cat.cat">
-				<source>Category</source>
-			</trans-unit>
 		</body>
 	</file>
 </xliff>

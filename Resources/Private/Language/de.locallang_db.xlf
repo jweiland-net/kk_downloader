@@ -53,15 +53,6 @@
 				<source>Link description</source>
 				<target>Link name</target>
 			</trans-unit>
-
-			<trans-unit id="tx_kkdownloader_cat">
-				<source>Category</source>
-				<target>Kategorie</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader_cat.cat">
-				<source>Category</source>
-				<target>Kategorie</target>
-			</trans-unit>
 		</body>
 	</file>
 </xliff>

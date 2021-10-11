@@ -57,9 +57,6 @@
 			<trans-unit id="tx_kkdownloader_conf">
 				<source>Settings</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader_cat_all">
-				<source>All categories</source>
-			</trans-unit>
 			<trans-unit id="tx_kkdownloader.layout">
 				<source>Layout</source>
 			</trans-unit>
