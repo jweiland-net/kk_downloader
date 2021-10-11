@@ -164,7 +164,7 @@ class KkDownloader extends AbstractPlugin
                 $download = $this->recordOverlay($download, 'tx_kkdownloader_images');
 
                 if ($this->settings['showCats']) {
-                    $download['categories'] = $this->completeCATs($download['cat']);
+                    $download['categories'] = $this->getCategoriesAsString((int)$download['uid']);
                 }
                 if ($this->settings['showImagePreview']) {
                     $download['previewImage'] = $this->createPreviewImage($download);
@@ -202,7 +202,7 @@ class KkDownloader extends AbstractPlugin
             foreach ($downloads as &$download) {
                 $download = $this->recordOverlay($download, 'tx_kkdownloader_images');
                 if ($this->settings['showCats']) {
-                    $download['categories'] = $this->completeCATs($download['cat']);
+                    $download['categories'] = $this->getCategoriesAsString((int)$download['uid']);
                 }
                 if ($this->settings['showImagePreview']) {
                     $download['previewImage'] = $this->createPreviewImage($download);
@@ -456,17 +456,18 @@ class KkDownloader extends AbstractPlugin
     }
 
     /**
-     * Format completeCats
+     * Get categories for download record
      *
-     * @param string $commaSeparatedCategories: Comma separated list of category UIDs
-     * @return string formated category-marker content
+     * @param int $downloadUid
+     * @return string comma separated list of category titles
      */
-    protected function completeCats(string $commaSeparatedCategories)
+    protected function getCategoriesAsString(int $downloadUid): string
     {
         $categories = [];
-        $fullCategories = $this->categoryRepository->getCategoriesByUids($commaSeparatedCategories);
-        foreach ($fullCategories as $fullCategory) {
-            $categories[] = $fullCategory['cat'];
+        $categoryRecords = $this->categoryRepository->getCategoriesByDownloadUid($downloadUid);
+        foreach ($categoryRecords as $categoryRecord) {
+            $categoryRecord = $this->recordOverlay($categoryRecord, 'sys_category');
+            $categories[] = $categoryRecord['title'];
         }
 
         return implode(', ', $categories);

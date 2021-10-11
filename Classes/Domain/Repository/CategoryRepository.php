@@ -11,8 +11,9 @@ declare(strict_types=1);
 
 namespace JWeiland\KkDownloader\Domain\Repository;
 
-use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /*
@@ -21,54 +22,75 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class CategoryRepository
 {
     /**
-     * TableName for categories
+     * Returns all categories by Download UID
      *
-     * @var string
-     */
-    protected $tableName = 'tx_kkdownloader_cat';
-
-    /**
-     * Returns all categories by UIDs
-     *
-     * @param string $commaSeparatedCategories
+     * @param int $downloadUid
      * @return array
      */
-    public function getCategoriesByUids(string $commaSeparatedCategories): array
+    public function getCategoriesByDownloadUid(int $downloadUid): array
     {
-        $categories = [];
-
-        if (empty($commaSeparatedCategories)) {
-            return $categories;
-        }
-
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
-        $categories = $queryBuilder
+        $queryBuilder = $this->getQueryBuilderForCategories();
+        $statement = $queryBuilder
             ->select('*')
-            ->from($this->tableName)
-            ->where(
-                $queryBuilder->expr()->in(
-                    'uid',
-                    $queryBuilder->createNamedParameter(
-                        GeneralUtility::intExplode(',', $commaSeparatedCategories, true),
-                        Connection::PARAM_INT_ARRAY
-                    )
+            ->andWhere(
+                $queryBuilder->expr()->eq(
+                    'sc_mm.uid_foreign',
+                    $queryBuilder->createNamedParameter($downloadUid, \PDO::PARAM_INT)
                 )
             )
-            ->execute()
-            ->fetchAll();
+            ->execute();
 
-        if ($categories === false) {
-            $categories = [];
+        $categories = [];
+        while ($category = $statement->fetch()) {
+            $categories[] = $category;
         }
 
         return $categories;
     }
 
-    /**
-     * Get TYPO3s Connection Pool
-     *
-     * @return ConnectionPool
-     */
+    protected function getQueryBuilderForCategories(): QueryBuilder
+    {
+        // Column: sys_language_uid
+        $languageField = $GLOBALS['TCA']['sys_category']['ctrl']['languageField'];
+        // Column: l10n_parent
+        $transOrigPointerField = $GLOBALS['TCA']['sys_category']['ctrl']['transOrigPointerField'];
+
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_category');
+        $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
+
+        return $queryBuilder
+            ->from('sys_category', 'sc')
+            ->leftJoin(
+                'sc',
+                'sys_category_record_mm',
+                'sc_mm',
+                (string)$queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->eq(
+                        'sc.uid',
+                        $queryBuilder->quoteIdentifier('sc_mm.uid_local')
+                    ),
+                    $queryBuilder->expr()->eq(
+                        'sc_mm.tablenames',
+                        $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
+                    ),
+                    $queryBuilder->expr()->eq(
+                        'sc_mm.fieldname',
+                        $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
+                    )
+                )
+            )
+            ->andWhere(
+                $queryBuilder->expr()->in(
+                    $languageField,
+                    [0, -1]
+                ),
+                $queryBuilder->expr()->eq(
+                    $transOrigPointerField,
+                    0
+                )
+            );
+    }
+
     protected function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);

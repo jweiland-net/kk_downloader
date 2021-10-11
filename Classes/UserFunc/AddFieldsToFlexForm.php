@@ -22,7 +22,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class AddFieldsToFlexForm
 {
     /**
-     * add fields to flexform
+     * Add fields to FlexForm
      *
      * @param array $config
      * @return array
@@ -37,7 +37,7 @@ class AddFieldsToFlexForm
             ]
         ];
 
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_kkdownloader_cat');
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_category');
         if (!empty($storagePid)) {
             $queryBuilder->where(
                 $queryBuilder->expr()->eq(
@@ -48,25 +48,22 @@ class AddFieldsToFlexForm
         }
 
         $statement = $queryBuilder
-            ->select('uid', 'cat')
-            ->from('tx_kkdownloader_cat')
+            ->select('uid', 'title')
+            ->from('sys_category')
             ->andWhere(
                 $queryBuilder->expr()->in(
                     'sys_language_uid',
                     $queryBuilder->createNamedParameter([-1, 0], Connection::PARAM_INT_ARRAY)
                 )
             )
-            ->orderBy('cat', 'ASC')
+            ->orderBy('title', 'ASC')
             ->execute();
 
         while ($row = $statement->fetch()) {
-            array_push(
-                $optionList,
-                [
-                    0 => $row['cat'],
-                    1 => $row['uid']
-                ]
-            );
+            $optionList[] = [
+                0 => $row['title'],
+                1 => $row['uid']
+            ];
         }
 
         $config['items'] = array_merge($config['items'], $optionList);
