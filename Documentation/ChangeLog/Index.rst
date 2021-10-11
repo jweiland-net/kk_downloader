@@ -7,6 +7,10 @@
 ChangeLog
 =========
 
+**Version 5.1.0**
+
+- Use categories of sys_category instead of our own cat table. Please use UpgradeWizard for migration
+
 **Version 5.0.1**
 
 - Typo in orderBy of DownloadRepository
