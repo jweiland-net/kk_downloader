@@ -52,7 +52,6 @@ KK Downloader
 .. toctree::
    :maxdepth: 3
 
-
    Introduction/Index
    User/Index
    Installation/Index

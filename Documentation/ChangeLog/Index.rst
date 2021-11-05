@@ -7,6 +7,14 @@
 ChangeLog
 =========
 
+**Version 5.2.0**
+
+- Migrate previewimage to FAL (Please execute UpdateWizard)
+- Migrate download files to FAL (Please execute UpdateWizard)
+- Repair date of last download in view
+- Rename a lot of variables/methods for better understanding
+- Repair workspace for category records
+
 **Version 5.1.0**
 
 - Use categories of sys_category instead of our own cat table. Please use UpgradeWizard for migration
