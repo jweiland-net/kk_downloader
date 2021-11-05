@@ -27,10 +27,10 @@ use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 /**
- * Upgrade wizard which goes through all files referenced in tx_kkdownloader_images::imagepreview
+ * Upgrade wizard which goes through all files referenced in tx_kkdownloader_images::image
  * and creates sys_file records as well as sys_file_reference records for each hit.
  */
-class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareInterface
+class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -51,7 +51,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
      *
      * @var string
      */
-    protected $fieldToMigrate = 'imagepreview';
+    protected $fieldToMigrate = 'image';
 
     /**
      * the source file resides here
@@ -73,7 +73,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
      */
     public function getIdentifier(): string
     {
-        return 'kkMigrateImagePreview';
+        return 'kkMigrateDownloads';
     }
 
     /**
@@ -81,7 +81,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
      */
     public function getTitle(): string
     {
-        return 'Migrate all file relations from tx_kkdownloader_images.imagepreview to sys_file_references';
+        return 'Migrate all file relations from tx_kkdownloader_images.image to sys_file_references';
     }
 
     /**
@@ -89,7 +89,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
      */
     public function getDescription(): string
     {
-        return 'This update wizard goes through all preview images that are referenced in the tx_kkdownloader_images.imagepreview'
+        return 'This update wizard goes through all downloads that are referenced in the tx_kkdownloader_images.image'
             . ' field and adds the files to the FAL File Index. It also moves the files from'
             . ' uploads/ to the fileadmin/_migrated/ path.';
     }
@@ -144,7 +144,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
     protected function getRecordsFromTable(): array
     {
         $statement = $this->getQueryBuilderForDownloads()
-            ->select('uid', 'pid', $this->fieldToMigrate)
+            ->select('uid', 'pid', 'downloaddescription', $this->fieldToMigrate)
             ->execute();
 
         $downloads = [];
@@ -187,6 +187,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
     protected function migrateField($row)
     {
         $fieldItems = GeneralUtility::trimExplode(',', $row[$this->fieldToMigrate], true);
+        $downloadDescriptions = GeneralUtility::trimExplode('<br />', nl2br($row['downloaddescription']), true);
         if (empty($fieldItems) || is_numeric($row[$this->fieldToMigrate])) {
             return;
         }
@@ -197,7 +198,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
 
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 
-        foreach ($fieldItems as $item) {
+        foreach ($fieldItems as $key => $item) {
             $fileUid = null;
             $sourcePath = Environment::getPublicPath() . '/' . $this->sourcePath . $item;
             $targetDirectory = Environment::getPublicPath() . '/' . $fileadminDirectory . $this->targetPath;
@@ -258,6 +259,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
 
             if ($fileUid > 0) {
                 $fields = [
+                    'title' => $downloadDescriptions[$key] ?: null,
                     'fieldname' => $this->fieldToMigrate,
                     'table_local' => 'sys_file',
                     'pid' => $this->table === 'pages' ? $row['uid'] : $row['pid'],

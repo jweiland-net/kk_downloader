@@ -17,7 +17,7 @@ use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Service\MarkerBasedTemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
@@ -136,7 +136,7 @@ class KkDownloader extends AbstractPlugin
 
         // if a download has happened
         if (!empty($this->download)) {
-            $this->downloadImage(basename($this->download), $this->did);
+            $this->startDownload(basename($this->download), $this->did);
         }
 
         // Template settings
@@ -160,21 +160,21 @@ class KkDownloader extends AbstractPlugin
         $view->setTemplatePathAndFilename($templateFile);
         if ($this->settings['whatToDisplay'] === 'SINGLE') {
             if (!empty($this->uidOfDownload)) {
-                $download = $this->downloadRepository->getDownloadByUid($this->uidOfDownload);
-                $download = $this->recordOverlay($download, 'tx_kkdownloader_images');
+                $downloadRecord = $this->downloadRepository->getDownloadByUid($this->uidOfDownload);
+                $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
 
                 if ($this->settings['showCats']) {
-                    $download['categories'] = $this->getCategoriesAsString((int)$download['uid']);
+                    $downloadRecord['categories'] = $this->getCategoriesAsString((int)$downloadRecord['uid']);
                 }
                 if ($this->settings['showImagePreview']) {
-                    $download['previewImage'] = $this->createPreviewImage($download);
+                    $downloadRecord['previewImage'] = $this->createPreviewImage($downloadRecord);
                 }
-                $download['fileItems'] = $this->generateDownloadLinks(
-                    (int)$download['uid'],
+                $downloadRecord['fileItems'] = $this->generateDownloadLinks(
+                    $downloadRecord,
                     (int)$this->conf['linkdescription']
                 );
 
-                $view->assign('download', $download);
+                $view->assign('download', $downloadRecord);
             } else {
                 $this->addFlashMessage(
                     LocalizationUtility::translate('error.callSingleViewWithoutUid.description', 'kkDownloader'),
@@ -199,20 +199,20 @@ class KkDownloader extends AbstractPlugin
                 $this->settings['orderBy'],
                 $this->settings['orderDirection']
             );
-            foreach ($downloads as &$download) {
-                $download = $this->recordOverlay($download, 'tx_kkdownloader_images');
+            foreach ($downloads as &$downloadRecord) {
+                $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
                 if ($this->settings['showCats']) {
-                    $download['categories'] = $this->getCategoriesAsString((int)$download['uid']);
+                    $downloadRecord['categories'] = $this->getCategoriesAsString((int)$downloadRecord['uid']);
                 }
                 if ($this->settings['showImagePreview']) {
-                    $download['previewImage'] = $this->createPreviewImage($download);
+                    $downloadRecord['previewImage'] = $this->createPreviewImage($downloadRecord);
                 }
-                $download['fileItems'] = $this->generateDownloadLinks(
-                    (int)$download['uid'],
+                $downloadRecord['fileItems'] = $this->generateDownloadLinks(
+                    $downloadRecord,
                     (int)$this->conf['linkdescription']
                 );
             }
-            unset($download);
+            unset($downloadRecord);
 
             $view->assign('downloads', $downloads);
 
@@ -240,19 +240,12 @@ class KkDownloader extends AbstractPlugin
         return $view->render();
     }
 
-    protected function createPreviewImage(array $download): string
+    protected function createPreviewImage(array $downloadRecord): string
     {
         $previewImageForDownload = '';
-        $allowedMimeTypes = [
-            'image/gif',
-            'image/jpeg',
-            'image/png',
-            'image/bmp',
-            'image/tiff',
-        ];
 
         // if download record contains a preview image
-        if (!empty($download['imagepreview'])) {
+        if (!empty($downloadRecord['imagepreview'])) {
             $imgConf = $this->conf['image.'];
             $imgConf['file.']['import.']['dataWrap'] = '{file:current:storage}:{file:current:identifier}';
             $imgConf['altText.']['data'] = 'file:current:title';
@@ -263,7 +256,7 @@ class KkDownloader extends AbstractPlugin
                 [
                     'references.' => [
                         'table' => 'tx_kkdownloader_images',
-                        'uid' => (int)$download['uid'],
+                        'uid' => (int)$downloadRecord['uid'],
                         'fieldName' => 'imagepreview'
                     ],
                     'begin' => 0,
@@ -273,26 +266,25 @@ class KkDownloader extends AbstractPlugin
                 ]
             );
         } else {
+            $allowedMimeTypes = [
+                'image/gif',
+                'image/jpeg',
+                'image/png',
+                'image/bmp',
+                'image/tiff',
+            ];
+
             // Loop throw download images and use first image with allowed mimetype as thumbnail
-            $images = GeneralUtility::trimExplode(',', $download['image'], true);
-            foreach ($images as $image) {
-                $filePath = $this->filebasepath . $image;
-                $imageExt = $this->getMimeTypeOfFile($filePath);
-
-                // create IMG-Tag, if image has allowed MimeType
-                if (in_array($imageExt, $allowedMimeTypes)) {
-                    $img = $this->conf['image.'];
-                    $img['file'] = $filePath;
-                    $previewImageForDownload = $this->cObj->cObjGetSingle('IMAGE', $img);
-                    break;
-                }
-
+            /** @var FileReference $fileReference */
+            foreach ($downloadRecord['files'] as $fileReference) {
                 // MimeType is not an image, check against 'pdf'
-                $fileInfo = GeneralUtility::split_fileref($image);
-                $fileExt = trim($fileInfo['fileext']);
-                if ($fileExt === 'pdf') {
+                // Create IMG-Tag, if image has allowed MimeType.
+                if (
+                    $fileReference->getExtension() === 'pdf'
+                    || in_array($fileReference->getMimeType(), $allowedMimeTypes)
+                ) {
                     $img = $this->conf['image.'];
-                    $img['file'] = $filePath;
+                    $img['file'] = $fileReference->getPublicUrl();
                     $previewImageForDownload = $this->cObj->cObjGetSingle('IMAGE', $img);
                     break;
                 }
@@ -362,34 +354,28 @@ class KkDownloader extends AbstractPlugin
     /**
      * Generates the download links
      *
-     * @param int $uid: The download uid
-     * @param int $downloadDescriptionType:1 = filename.fileextension, 2 = filename, 3 = fileextension
+     * @param array $downloadRecord The download record
+     * @param int $downloadDescriptionType 1 = filename.fileextension, 2 = filename, 3 = fileextension
      * @return string The generated links
      */
-    protected function generateDownloadLinks(int $uid, int $downloadDescriptionType = 1)
+    protected function generateDownloadLinks(array $downloadRecord, int $downloadDescriptionType = 1): string
     {
-        $download = $this->downloadRepository->getDownloadByUid($uid);
-        $images = GeneralUtility::trimExplode(',', $download['image'], true);
-        $downloadDescriptions = GeneralUtility::trimExplode(
-            '<br />',
-            nl2br($download['downloaddescription']),
-            true
-        );
         $content = '';
-        foreach ($images as $key => $image) {
-            $fileInfo = GeneralUtility::split_fileref($image);
-            $fileDescription = $downloadDescriptions[$key];
-            if (empty($row['downloaddescription'])) {
+
+        /** @var $fileReference FileReference */
+        foreach ($downloadRecord['files'] as $key => $fileReference) {
+            $fileDescription = $fileReference->getTitle();
+            if (empty($fileDescription)) {
                 // Set fileDescription as configured by Type
                 switch ($downloadDescriptionType) {
                     case 1:
-                        $fileDescription = $fileInfo['filebody'] . '.' . $fileInfo['fileext'];
+                        $fileDescription = $fileReference->getNameWithoutExtension() . '.' . $fileReference->getExtension();
                         break;
                     case 2:
-                        $fileDescription = $fileInfo['filebody'];
+                        $fileDescription = $fileReference->getNameWithoutExtension();
                         break;
                     case 3:
-                        $fileDescription = $fileInfo['fileext'];
+                        $fileDescription = $fileReference->getExtension();
                         break;
                 }
             }
@@ -398,11 +384,11 @@ class KkDownloader extends AbstractPlugin
             if (empty($this->conf['downloadIcon'])) {
                 // If DownloadIcon is not configured, we try to get Icon by file-ext
                 try {
-                    $fileObject = ResourceFactory::getInstance()->retrieveFileOrFolderObject(
-                        $this->filebasepath . $image
-                    );
                     $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
-                    $fileExtIcon = $iconFactory->getIconForResource($fileObject, Icon::SIZE_SMALL)->render();
+                    $fileExtIcon = $iconFactory->getIconForResource(
+                        $fileReference->getOriginalFile(),
+                        Icon::SIZE_SMALL
+                    )->render();
                 } catch (\Exception $e) {
                     $fileExtIcon = sprintf(
                         '<img src="%s" alt="allgemeine Datei-Ikone" />&nbsp;',
@@ -423,32 +409,28 @@ class KkDownloader extends AbstractPlugin
             // add the filesize block, if desired
             $formattedFileSize = '';
             if ($this->settings['showFileSize']) {
-                $downloadFile = $this->filebasepath . $image;
-                $fileSize = filesize($downloadFile);
                 $decimals = 2;
-                if ($fileSize < 1024) {
+                if ($fileReference->getSize() < 1024) {
                     $decimals = 0;
                 }
                 $formattedFileSize = sprintf(
                     '&nbsp;(%s)',
-                    $this->format_size($fileSize, $decimals)
+                    $this->format_size($fileReference->getSize(), $decimals)
                 );
             }
 
             // add the file date+time block, if desired
             $formattedFileMDate = '';
             if ($this->settings['showFileMDate']) {
-                $downloadFile = $this->filebasepath . $image;
-                $fileModificationTime = filemtime($downloadFile);
-                if ($this->settings['showFileMDate'] == '1') {
+                $dtf = $this->conf['datetimeformat'];
+                if ($this->settings['showFileMDate'] === '1') {
                     $dtf = $this->conf['dateformat'];
-                } else {
-                    $dtf = $this->conf['datetimeformat'];
                 }
                 if (empty($dtf)) {
                     $dtf = 'd.m.Y H:i';
                 }
-                $formattedFileDate = date($dtf, $fileModificationTime);
+
+                $formattedFileDate = date($dtf, $fileReference->getModificationTime());
                 $formattedFileMDate = sprintf(
                     '<dd>%s: %s</dd>',
                     LocalizationUtility::translate('fileMDate', 'kkDownloader'),
@@ -460,7 +442,13 @@ class KkDownloader extends AbstractPlugin
             $content .= sprintf(
                 '<dt>%s&nbsp;%s%s</dt>%s',
                 $fileExtIcon,
-                $this->pi_linkTP($fileDescription, $urlParameters= ['download' => $image, 'did' => $uid]),
+                $this->pi_linkTP(
+                    $fileDescription,
+                    [
+                        'download' => $fileReference->getName(),
+                        'did' => $downloadRecord['uid']
+                    ]
+                ),
                 $formattedFileSize,
                 $formattedFileMDate
             );
@@ -528,30 +516,26 @@ class KkDownloader extends AbstractPlugin
     }
 
     /**
-     * Download the file
+     * Start downloading the file
      *
-     * @param string $image: Name of download
-     * @param int $uid: download uid for click counter
+     * @param string $filename
+     * @param int $downloadUid
      */
-    protected function downloadImage(string $image, int $uid)
+    protected function startDownload(string $filename, int $downloadUid)
     {
-        $downloadfile = $this->filebasepath . $image;
-        if (!is_file($downloadfile)) {
-            exit;
+        $downloadRecord = $this->downloadRepository->getDownloadByUid($downloadUid);
+
+        /** @var FileReference $fileReference */
+        foreach ($downloadRecord['files'] as $fileReference) {
+            if ($fileReference->getName() === $filename) {
+                // SF: Update to streamFile when removing TYPO3 8 compatibility
+                $fileReference->getStorage()->dumpFileContents($fileReference->getOriginalFile(), true);
+
+                $this->downloadRepository->updateImageRecordAfterDownload($downloadRecord);
+
+                exit;
+            }
         }
-
-        $valfilesize = filesize($downloadfile);
-        $filename = $image;
-
-        // check Mimetype
-        $mimetype = $this->getMimeTypeOfFile($downloadfile);
-
-        header('Content-Type: ' . $mimetype);
-        header('Content-Disposition: attachment; filename=' . $filename);
-        header('Content-Length: ' . $valfilesize);
-        readfile($downloadfile);
-
-        $this->downloadRepository->updateImageRecordAfterDownload($uid);
 
         exit;
     }

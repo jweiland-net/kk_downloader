@@ -16,6 +16,7 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /*
@@ -26,7 +27,7 @@ class DownloadRepository
     public function getDownloadByUid(int $uid): array
     {
         $queryBuilder = $this->getQueryBuilderForDownloads();
-        $download = $queryBuilder
+        $downloadRecord = $queryBuilder
             ->andWhere(
                 $queryBuilder->expr()->eq(
                     'i.uid',
@@ -36,11 +37,13 @@ class DownloadRepository
             ->execute()
             ->fetch();
 
-        if ($download === false) {
-            $download = [];
+        if ($downloadRecord === false) {
+            $downloadRecord = [];
+        } else {
+            $this->attachDownloadFilesToDownloadRecord($downloadRecord);
         }
 
-        return $download;
+        return $downloadRecord;
     }
 
     public function getDownloads(
@@ -91,32 +94,64 @@ class DownloadRepository
         $statement = $queryBuilder->execute();
 
         $downloads = [];
-        while ($download = $statement->fetch()) {
-            $downloads[] = $download;
+        while ($downloadRecord = $statement->fetch()) {
+            $this->attachDownloadFilesToDownloadRecord($downloadRecord);
+            $downloads[] = $downloadRecord;
         }
 
         return $downloads;
     }
 
-    public function updateImageRecordAfterDownload(int $uid)
+    protected function attachDownloadFilesToDownloadRecord(array &$downloadRecord)
     {
-        $download = $this->getDownloadByUid($uid);
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_file_reference');
+        $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
 
-        $amountOfDownloads = (int)$download['clicks'] + 1;
-
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_kkdownloader_images');
-        $queryBuilder
-            ->update('tx_kkdownloader_images')
-            ->set('tx_kkdownloader_images.clicks', $amountOfDownloads)
-            ->set('tx_kkdownloader_images.last_downloaded', date('U'))
-            ->set('tx_kkdownloader_images.ip_last_download', $_SERVER['REMOTE_ADDR'])
+        $statement = $queryBuilder
+            ->select('uid')
+            ->from('sys_file_reference')
             ->where(
                 $queryBuilder->expr()->eq(
-                    'uid',
-                    $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
+                    'uid_foreign',
+                    $queryBuilder->createNamedParameter($downloadRecord['uid'], \PDO::PARAM_INT)
+                ),
+                $queryBuilder->expr()->eq(
+                    'tablenames',
+                    $queryBuilder->createNamedParameter('tx_kkdownloader_images')
+                ),
+                $queryBuilder->expr()->eq(
+                    'fieldname',
+                    $queryBuilder->createNamedParameter('image')
                 )
             )
             ->execute();
+
+        $downloadRecord['files'] = [];
+        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
+        while ($fileReferenceRecord = $statement->fetch()) {
+            try {
+                $fileReference = $resourceFactory->getFileReferenceObject((int)$fileReferenceRecord['uid']);
+            } catch (\Exception $e) {
+                continue;
+            }
+            $downloadRecord['files'][] = $fileReference;
+        }
+    }
+
+    public function updateImageRecordAfterDownload(array $downloadRecord)
+    {
+        $connection = $this->getConnectionPool()->getConnectionForTable('tx_kkdownloader_images');
+        $connection->update(
+            'tx_kkdownloader_images',
+            [
+                'clicks' => (int)$downloadRecord['clicks'] + 1,
+                'last_downloaded' => date('U'),
+                'ip_last_download' => $_SERVER['REMOTE_ADDR']
+            ],
+            [
+                'uid' => (int)$downloadRecord['uid']
+            ]
+        );
     }
 
     protected function getQueryBuilderForDownloads(): QueryBuilder
