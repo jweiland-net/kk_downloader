@@ -53,4 +53,7 @@ tt_content.list.20.kkdownloader_pi1 = < plugin.tx_kkdownloader_pi1
     // Migrate kk_downloader preview images to FAL
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['kkMigrateImagePreview']
         = \JWeiland\KkDownloader\Upgrade\MigratePreviewImageUpgrade::class;
+    // Migrate kk_downloader downloads to FAL
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['kkMigrateDownloads']
+        = \JWeiland\KkDownloader\Upgrade\MigrateDownloadsUpgrade::class;
 });

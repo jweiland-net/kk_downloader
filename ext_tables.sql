@@ -31,7 +31,6 @@ CREATE TABLE tx_kkdownloader_images (
 	imagepreview blob NOT NULL,
 	description text NOT NULL,
 	longdescription text NOT NULL,
-	downloaddescription text NOT NULL,
 	clicks int(10) DEFAULT '0' NOT NULL,
 	cat tinytext NOT NULL,
 	last_downloaded int(11) DEFAULT '0' NOT NULL,
