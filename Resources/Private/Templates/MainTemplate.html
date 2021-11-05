@@ -119,10 +119,10 @@
 <f:comment> <!-- I N T E R N A L   S E C T I O N S --> </f:comment>
 
 <f:section name="renderLastDownload">
-	<f:if condition="{download.last_download}">
+	<f:if condition="{settings.showDateLastDownload} && {download.last_downloaded}">
 		<div class="datetime">
 			{f:translate(key: 'lastDownload')}
-			{download.last_download->f:format.date(format: 'd.m.Y H:i')}
+			{download.last_downloaded -> f:format.date(format: 'd.m.Y H:i')}
 		</div>
 	</f:if>
 </f:section>
@@ -137,7 +137,7 @@
 	<f:if condition="{settings.creationDateType}">
 		<div class="datetime showCrDate">
 			{f:translate(key: 'crDate')}
-			<b>{download.crdate->f:format.date(format: '{settings.creationDateType}')}</b>
+			<b>{download.crdate -> f:format.date(format: '{settings.creationDateType}')}</b>
 		</div>
 	</f:if>
 </f:section>
@@ -146,16 +146,16 @@
 	<f:if condition="{settings.showEditDate}">
 		<div class="datetime">
 			{f:translate(key: 'lastEdit')}
-			{download.tstamp->f:format.date(format: 'd.m.Y')}
+			{download.tstamp -> f:format.date(format: 'd.m.Y')}
 		</div>
 	</f:if>
 </f:section>
 
 <f:section name="renderPagebrowser">
 	<div class="page-browser">
-		{linkPrev->f:format.raw()}
-		{pages->f:format.raw()}
-		{linkNext->f:format.raw()}
+		{linkPrev -> f:format.raw()}
+		{pages -> f:format.raw()}
+		{linkNext -> f:format.raw()}
 	</div>
 </f:section>
 </html>
