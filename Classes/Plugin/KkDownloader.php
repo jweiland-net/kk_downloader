@@ -253,11 +253,25 @@ class KkDownloader extends AbstractPlugin
 
         // if download record contains a preview image
         if (!empty($download['imagepreview'])) {
-            $preview = $download['imagepreview'];
-            $filePath = $this->filebasepath . $preview;
-            $img = $this->conf['image.'];
-            $img['file'] = $filePath;
-            $previewImageForDownload = $this->cObj->cObjGetSingle('IMAGE', $img);
+            $imgConf = $this->conf['image.'];
+            $imgConf['file.']['import.']['dataWrap'] = '{file:current:storage}:{file:current:identifier}';
+            $imgConf['altText.']['data'] = 'file:current:title';
+            $imgConf['titleText.']['data'] = 'file:current:title';
+
+            $previewImageForDownload = $this->cObj->cObjGetSingle(
+                'FILES',
+                [
+                    'references.' => [
+                        'table' => 'tx_kkdownloader_images',
+                        'uid' => (int)$download['uid'],
+                        'fieldName' => 'imagepreview'
+                    ],
+                    'begin' => 0,
+                    'maxItems' => 1,
+                    'renderObj' => 'IMAGE',
+                    'renderObj.' => $imgConf
+                ]
+            );
         } else {
             // Loop throw download images and use first image with allowed mimetype as thumbnail
             $images = GeneralUtility::trimExplode(',', $download['image'], true);

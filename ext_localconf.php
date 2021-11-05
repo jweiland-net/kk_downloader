@@ -48,5 +48,9 @@ tt_content.list.20.kkdownloader_pi1 = < plugin.tx_kkdownloader_pi1
     );
 
     // Migrate kk_downloader categories to sys_category
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['kkMigrateCategories'] = \JWeiland\KkDownloader\Upgrade\MigrateCategoriesUpgrade::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['kkMigrateCategories']
+        = \JWeiland\KkDownloader\Upgrade\MigrateCategoriesUpgrade::class;
+    // Migrate kk_downloader preview images to FAL
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['kkMigrateImagePreview']
+        = \JWeiland\KkDownloader\Upgrade\MigratePreviewImageUpgrade::class;
 });
