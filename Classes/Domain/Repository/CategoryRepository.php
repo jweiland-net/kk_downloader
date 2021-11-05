@@ -31,7 +31,7 @@ class CategoryRepository
     {
         $queryBuilder = $this->getQueryBuilderForCategories();
         $statement = $queryBuilder
-            ->select('*')
+            ->select('sc.*')
             ->andWhere(
                 $queryBuilder->expr()->eq(
                     'sc_mm.uid_foreign',
