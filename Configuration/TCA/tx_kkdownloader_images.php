@@ -109,19 +109,43 @@ return [
             ]
         ],
         'imagepreview' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:kk_downloader/Resources/Private/Language/locallang_db.xlf:tx_kkdownloader_images.imagepreview',
-            'config' => [
-                'type' => 'group',
-                'internal_type' => 'file',
-                'allowed' => 'jpg,gif,png',
-                'max_size' => 10000,
-                'uploadfolder' => 'uploads/tx_kkdownloader',
-                'show_thumbs' => 1,
-                'size' => 1,
-                'minitems' => 0,
-                'maxitems' => 1,
-            ]
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+                'imagepreview',
+                [
+                    'minitems' => 0,
+                    'maxitems' => 1,
+                    'foreign_match_fields' => [
+                        'fieldname' => 'imagepreview',
+                        'tablenames' => 'tx_kkdownloader_images',
+                        'table_local' => 'sys_file',
+                    ],
+                    'behaviour' => [
+                        'allowLanguageSynchronization' => true,
+                    ],
+                    'appearance' => [
+                        'showPossibleLocalizationRecords' => true,
+                        'showRemovedLocalizationRecords' => true,
+                        'showAllLocalizationLink' => true,
+                        'showSynchronizationLink' => true
+                    ],
+                    'overrideChildTca' => [
+                        'types' => [
+                            '0' => [
+                                'showitem' => '
+                                        --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                        --palette--;;filePalette'
+                            ],
+                            \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+                                'showitem' => '
+                                        --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                        --palette--;;filePalette'
+                            ],
+                        ],
+                    ],
+                ]
+            ),
         ],
         'description' => [
             'exclude' => 1,
