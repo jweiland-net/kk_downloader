@@ -706,8 +706,12 @@ class KkDownloader extends AbstractPlugin
      * @throws \InvalidArgumentException if the message body is no string
      * @see \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    public function addFlashMessage($messageBody, $messageTitle = '', $severity = \TYPO3\CMS\Core\Messaging\AbstractMessage::OK, $storeInSession = true)
-    {
+    public function addFlashMessage(
+        string $messageBody,
+        string $messageTitle = '',
+        int $severity = AbstractMessage::OK,
+        bool $storeInSession = true
+    ) {
         if (!is_string($messageBody)) {
             throw new \InvalidArgumentException('The message body must be of type string, "' . gettype($messageBody) . '" given.', 1243258395);
         }
