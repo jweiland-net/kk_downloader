@@ -28,10 +28,13 @@ return [
         'showRecordFieldList' => 'sys_language_uid,l18n_parent,l18n_diffsource,hidden,name,image,description,longdescription,clicks'
     ],
     'types' => [
-        '0' => ['showitem' => 'sys_language_uid;;;;1-1-1, l18n_parent, l18n_diffsource, hidden;;1, name, image, imagepreview, description,longdescription;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], clicks']
+        '0' => [
+            'showitem' => '--palette--;;language, --palette--;;nameHidden, image, imagepreview, description, longdescription, clicks'
+        ]
     ],
     'palettes' => [
-        '1' => ['showitem' => '']
+        'language' => ['showitem' => 'sys_language_uid, l18n_parent'],
+        'nameHidden' => ['showitem' => 'name, hidden'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -55,18 +58,12 @@ return [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'items' => [
-                    ['', 0],
-                ],
-                'foreign_table' => 'tx_kkdownloader_images',
-                'foreign_table_where' => 'AND tx_kkdownloader_images.pid=###CURRENT_PID### AND tx_kkdownloader_images.sys_language_uid IN (-1,0)',
-                'fieldWizard' => [
-                    'selectIcons' => [
-                        'disabled' => true,
-                    ],
-                ],
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tx_kkdownloader_images',
+                'size' => 1,
+                'maxitems' => 1,
+                'minitems' => 0,
                 'default' => 0,
             ]
         ],
@@ -206,19 +203,8 @@ return [
                 'type' => 'text',
                 'cols' => 30,
                 'rows' => 5,
-                'wizards' => [
-                    '_PADDING' => 2,
-                    'RTE' => [
-                        'notNewRecords' => 1,
-                        'RTEonly' => 1,
-                        'type' => 'script',
-                        'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
-                        'icon' => 'wizard_rte2.gif',
-                        'module' => [
-                            'name' => 'wizard_rte'
-                        ]
-                    ],
-                ],
+                'softref' => 'typolink_tag,images,email[subst],url',
+                'enableRichtext' => true,
             ]
         ],
         'clicks' => [
