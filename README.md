@@ -24,4 +24,4 @@ Many thanks to Kurt Kunig for his great work.
 * We have changed handling of TS-setting `downloadIcon`. If a path is set, it will be used for all download files.
   If it is not set (default) we will use TYPO3 internal icons to show file ext related icons. It's not possible
   to set downloadIcon to a Path anymore.
-* Please check `ChangeLog` in root-directory of this extension to see all changes.
+* Please check `Documentation/ChangeLog/Index.rst` to see all changes.
