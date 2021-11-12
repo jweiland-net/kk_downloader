@@ -6,15 +6,12 @@ $EM_CONF[$_EXTKEY] = [
     'category' => 'plugin',
     'version' => '5.2.0',
     'state' => 'stable',
-    'uploadfolder' => true,
-    'createDirs' => '',
-    'clearcacheonload' => false,
     'author' => 'Stefan Froemken',
     'author_email' => 'projects@jweiland.net',
     'author_company' => 'jweiland.net',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.14-9.5.99',
+            'typo3' => '9.5.29-10.4.99',
         ],
         'conflicts' => [
         ],

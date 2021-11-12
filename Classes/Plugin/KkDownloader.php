@@ -13,6 +13,7 @@ namespace JWeiland\KkDownloader\Plugin;
 
 use JWeiland\KkDownloader\Domain\Repository\CategoryRepository;
 use JWeiland\KkDownloader\Domain\Repository\DownloadRepository;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
@@ -311,7 +312,7 @@ class KkDownloader extends AbstractPlugin
         return $previewImageForDownload;
     }
 
-    protected function initialize()
+    protected function initialize(): void
     {
         $this->initializeLanguage();
         $this->settings = $this->getFlexFormSettings();
@@ -321,14 +322,11 @@ class KkDownloader extends AbstractPlugin
         $this->templateService = GeneralUtility::makeInstance(MarkerBasedTemplateService::class);
     }
 
-    /**
-     * Collect language information
-     */
-    protected function initializeLanguage()
+    protected function initializeLanguage(): void
     {
         if (is_object($this->getTypoScriptFrontendController())) {
-            $this->languageUid = (int)$this->getTypoScriptFrontendController()->sys_language_content;
-            $this->languageOverlayMode = $this->getTypoScriptFrontendController()->sys_language_contentOL ?: false;
+            $this->languageUid = (int)GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'contentId');
+            $this->languageOverlayMode = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'legacyOverlayType') ?: false;
         }
     }
 
@@ -540,15 +538,14 @@ class KkDownloader extends AbstractPlugin
     /**
      * Start downloading the file
      */
-    protected function startDownload(string $filename, int $downloadUid)
+    protected function startDownload(string $filename, int $downloadUid): void
     {
         $downloadRecord = $this->downloadRepository->getDownloadByUid($downloadUid);
 
         /** @var FileReference $fileReference */
         foreach ($downloadRecord['files'] as $fileReference) {
             if ($fileReference->getName() === $filename) {
-                // SF: Update to streamFile when removing TYPO3 8 compatibility
-                $fileReference->getStorage()->dumpFileContents($fileReference->getOriginalFile(), true);
+                $fileReference->getStorage()->streamFile($fileReference->getOriginalFile(), true);
 
                 $this->downloadRepository->updateImageRecordAfterDownload($downloadRecord);
 
@@ -562,7 +559,7 @@ class KkDownloader extends AbstractPlugin
     /**
      * Add variables to view
      */
-    protected function addPageBrowserSettingsToView(StandaloneView $view)
+    protected function addPageBrowserSettingsToView(StandaloneView $view): void
     {
         $amountOfDownloads = $this->internal['res_count'];
         $beginAt = (int)$this->piVars['pointer'] * $this->internal['results_at_a_time'];
@@ -673,6 +670,7 @@ class KkDownloader extends AbstractPlugin
 
     protected function recordOverlay(array $row, string $tableName)
     {
+        // SF: Move PageRepo to core while removing TYPO3 9 compatibility
         $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
 
         // Workspace overlay

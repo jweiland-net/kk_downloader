@@ -24,8 +24,7 @@ class CategoryRepository
     /**
      * Returns all categories by Download UID
      *
-     * @param int $downloadUid
-     * @return array
+     * @return array[]
      */
     public function getCategoriesByDownloadUid(int $downloadUid): array
     {
