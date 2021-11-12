@@ -15,6 +15,7 @@ use JWeiland\KkDownloader\Domain\Repository\CategoryRepository;
 use JWeiland\KkDownloader\Domain\Repository\DownloadRepository;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Resource\FileReference;
@@ -61,12 +62,19 @@ class KkDownloader extends AbstractPlugin
      */
     public $extKey = 'kk_downloader';
 
-    public $pi_checkCHash = true;
+    /**
+     * @var string
+     */
     public $filebasepath = 'uploads/tx_kkdownloader/';
+
+    /**
+     * @var string
+     */
     public $defaultTemplate = 'EXT:kk_downloader/Resources/Private/Templates/MainTemplate.html';
 
-    public $showCats;
-    public $template;
+    /**
+     * @var string[]|null[]|int[]
+     */
     public $internal = [];
 
     /**
@@ -95,7 +103,14 @@ class KkDownloader extends AbstractPlugin
      */
     protected $settings = [];
 
+    /**
+     * @var int
+     */
     protected $languageUid = 0;
+
+    /**
+     * @var bool
+     */
     protected $languageOverlayMode = false;
 
     /**
@@ -140,7 +155,7 @@ class KkDownloader extends AbstractPlugin
         }
 
         // Template settings
-        $templateFile = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'template_file', 'sDEF'));
+        $templateFile = $this->getFlexFormValue('template_file');
         $templateFile = $templateFile ?: $this->conf['templateFile'];
         if (empty($templateFile)) {
             $templateFile = $this->defaultTemplate;
@@ -151,9 +166,9 @@ class KkDownloader extends AbstractPlugin
             $defaultDownloadPid = 'all';
         }
 
-        $this->internal['results_at_a_time'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'results_at_a_time', 'sDEF');
+        $this->internal['results_at_a_time'] = $this->getFlexFormValue('results_at_a_time');
         $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? (int)($this->internal['results_at_a_time']) : (int)($this->conf['results_at_a_time']);
-        $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? (int)($this->internal['results_at_a_time']) : 1001;
+        $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? $this->internal['results_at_a_time'] : 1001;
         $this->internal['maxPages'] = $this->conf['pageBrowser.']['maxPages'] > 0 ? (int)($this->conf['pageBrowser.']['maxPages']) : 10;
 
         $view = $this->getView();
@@ -187,12 +202,14 @@ class KkDownloader extends AbstractPlugin
             if (!$storageFoldersForDownloads) {
                 $storageFoldersForDownloads = $defaultDownloadPid;
             }
+
             if (
                 !empty($storageFoldersForDownloads)
                 && strtolower(trim($storageFoldersForDownloads)) === 'all'
             ) {
                 $storageFoldersForDownloads = '';
             }
+
             $downloads = $this->downloadRepository->getDownloads(
                 GeneralUtility::intExplode(',', $storageFoldersForDownloads, true),
                 $this->settings['categoryUid'],
@@ -204,14 +221,17 @@ class KkDownloader extends AbstractPlugin
                 if ($this->settings['showCats']) {
                     $downloadRecord['categories'] = $this->getCategoriesAsString((int)$downloadRecord['uid']);
                 }
+
                 if ($this->settings['showImagePreview']) {
                     $downloadRecord['previewImage'] = $this->createPreviewImage($downloadRecord);
                 }
+
                 $downloadRecord['fileItems'] = $this->generateDownloadLinks(
                     $downloadRecord,
                     (int)$this->conf['linkdescription']
                 );
             }
+
             unset($downloadRecord);
 
             $view->assign('downloads', $downloads);
@@ -223,12 +243,9 @@ class KkDownloader extends AbstractPlugin
                 if (!$this->conf['pageBrowser.']['showPBrowserText']) {
                     $this->LOCAL_LANG[$this->LLkey]['pi_list_browseresults_page'] = '';
                 }
-
                 $this->addPageBrowserSettingsToView($view);
-            } else {
-                if ($this->conf['pageBrowser.']['showResultCount']) {
-                    $this->addPageBrowserSettingsToView($view);
-                }
+            } elseif ($this->conf['pageBrowser.']['showResultCount']) {
+                $this->addPageBrowserSettingsToView($view);
             }
         }
 
@@ -316,28 +333,30 @@ class KkDownloader extends AbstractPlugin
     }
 
     /**
-     * load all FLEXFORM data fields into variables for further use:
+     * Load all FLEXFORM data fields into variables
+     *
+     * @return array<string, mixed>
      */
     protected function getFlexFormSettings(): array
     {
         $settings = [];
-        $settings['categoryUid'] = (int)$this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'dynField', 'sDEF');
-        $settings['showCats'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showCats', 'sDEF');
-        $settings['orderBy'] = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'orderby', 'sDEF'));
-        $settings['orderDirection'] = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'ascdesc', 'sDEF'));
+        $settings['categoryUid'] = (int)$this->getFlexFormValue('dynField');
+        $settings['showCats'] = $this->getFlexFormValue('showCats');
+        $settings['orderBy'] = $this->getFlexFormValue('orderby');
+        $settings['orderDirection'] = $this->getFlexFormValue('ascdesc');
         $settings['orderDirection'] = $settings['orderDirection'] ?: 'ASC';
-        $settings['showFileSize'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'filesize', 'sDEF');
-        $settings['showPagebrowser'] = (bool)$this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showPagebrowser', 'sDEF');
-        $settings['showImagePreview'] = (bool)$this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'imagepreview', 'sDEF');
-        $settings['showDownloadsCount'] = (bool)$this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'downloads', 'sDEF');
-        $settings['showEditDate'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showEditDate', 'sDEF');
-        $settings['showDateLastDownload'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showDateLastDownload', 'sDEF');
-        $settings['showIPLastDownload'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showIPLastDownload', 'sDEF');
-        $settings['showFileMDate'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showFileMDate', 'sDEF');
-        $settings['whatToDisplay'] = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'what_to_display', 'sDEF');
+        $settings['showFileSize'] = $this->getFlexFormValue('filesize');
+        $settings['showPagebrowser'] = (bool)$this->getFlexFormValue('showPagebrowser');
+        $settings['showImagePreview'] = (bool)$this->getFlexFormValue('imagepreview');
+        $settings['showDownloadsCount'] = (bool)$this->getFlexFormValue('downloads');
+        $settings['showEditDate'] = $this->getFlexFormValue('showEditDate');
+        $settings['showDateLastDownload'] = $this->getFlexFormValue('showDateLastDownload');
+        $settings['showIPLastDownload'] = $this->getFlexFormValue('showIPLastDownload');
+        $settings['showFileMDate'] = $this->getFlexFormValue('showFileMDate');
+        $settings['whatToDisplay'] = $this->getFlexFormValue('what_to_display');
 
         // special handling for creation date
-        $creationDateType = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'showCRDate', 'sDEF'));
+        $creationDateType = $this->getFlexFormValue('showCRDate');
         $settings['creationDateType'] = '';
         if (!empty($creationDateType)) {
             if ($creationDateType === '1') {
@@ -345,10 +364,16 @@ class KkDownloader extends AbstractPlugin
             } else {
                 $dtf = $this->conf['datetimeformat'] ?: 'd.m.Y H:i';
             }
+
             $settings['creationDateType'] = $dtf;
         }
 
         return $settings;
+    }
+
+    protected function getFlexFormValue(string $field, $sheet = 'sDEF'): string
+    {
+        return trim((string)$this->pi_getFFvalue($this->cObj->data['pi_flexform'], $field, $sheet));
     }
 
     /**
@@ -363,7 +388,7 @@ class KkDownloader extends AbstractPlugin
         $content = '';
 
         /** @var $fileReference FileReference */
-        foreach ($downloadRecord['files'] as $key => $fileReference) {
+        foreach ($downloadRecord['files'] as $fileReference) {
             $fileDescription = $fileReference->getTitle();
             if (empty($fileDescription)) {
                 // Set fileDescription as configured by Type
@@ -389,7 +414,7 @@ class KkDownloader extends AbstractPlugin
                         $fileReference->getOriginalFile(),
                         Icon::SIZE_SMALL
                     )->render();
-                } catch (\Exception $e) {
+                } catch (\Exception $exception) {
                     $fileExtIcon = sprintf(
                         '<img src="%s" alt="allgemeine Datei-Ikone" />&nbsp;',
                         PathUtility::getAbsoluteWebPath(
@@ -460,7 +485,6 @@ class KkDownloader extends AbstractPlugin
     /**
      * Get categories for download record
      *
-     * @param int $downloadUid
      * @return string comma separated list of category titles
      */
     protected function getCategoriesAsString(int $downloadUid): string
@@ -486,7 +510,8 @@ class KkDownloader extends AbstractPlugin
     {
         //Size must be bytes!
         $sizes = [' Bytes', ' kB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
-        for ($i = 0; $size > 1024 && $i < count($sizes) - 1; $i++) {
+        $sizesCount = count($sizes);
+        for ($i = 0; $size > 1024 && $i < $sizesCount - 1; $i++) {
             $size /= 1024;
         }
 
@@ -495,9 +520,6 @@ class KkDownloader extends AbstractPlugin
 
     /**
      * Get mime type of file
-     *
-     * @param string $file
-     * @return string
      */
     protected function getMimeTypeOfFile(string $file): string
     {
@@ -517,9 +539,6 @@ class KkDownloader extends AbstractPlugin
 
     /**
      * Start downloading the file
-     *
-     * @param string $filename
-     * @param int $downloadUid
      */
     protected function startDownload(string $filename, int $downloadUid)
     {
@@ -542,8 +561,6 @@ class KkDownloader extends AbstractPlugin
 
     /**
      * Add variables to view
-     *
-     * @param StandaloneView $view
      */
     protected function addPageBrowserSettingsToView(StandaloneView $view)
     {
@@ -573,6 +590,7 @@ class KkDownloader extends AbstractPlugin
             );
             $view->assign('linkPrev', $this->cObj->stdWrap($prev_link, $this->conf['pageBrowser.']['previous_stdWrap.']));
         }
+
         $pages = ceil($amountOfDownloads / $this->internal['results_at_a_time']);
         $actualPage = floor($beginAt / $this->internal['results_at_a_time']);
 
@@ -615,6 +633,7 @@ class KkDownloader extends AbstractPlugin
                 $pages .= $this->cObj->stdWrap($link, $this->conf['pageBrowser.']['page_stdWrap.']);
             }
         }
+
         $view->assign('pages', $pages);
 
         $end_at = ($beginAt + $this->internal['results_at_a_time']);
@@ -632,11 +651,12 @@ class KkDownloader extends AbstractPlugin
             } else {
                 $pageResultCount = LocalizationUtility::translate('pi_list_browseresults_noResults', 'kkDownloader');
             }
+
             $view->assign('resultCount', $pageResultCount);
         }
     }
 
-    protected function getView()
+    protected function getView(): StandaloneView
     {
         $view = GeneralUtility::makeInstance(StandaloneView::class);
 
@@ -645,7 +665,7 @@ class KkDownloader extends AbstractPlugin
             $view->getRequest()->setControllerExtensionName('kkDownloader');
             // needed as identifier part for FlashMessageService
             $view->getRequest()->setPluginName('Pi1');
-        } catch (InvalidExtensionNameException $e) {
+        } catch (InvalidExtensionNameException $invalidExtensionNameException) {
         }
 
         return $view;
@@ -691,11 +711,11 @@ class KkDownloader extends AbstractPlugin
         if (!is_string($messageBody)) {
             throw new \InvalidArgumentException('The message body must be of type string, "' . gettype($messageBody) . '" given.', 1243258395);
         }
-        /** @var \TYPO3\CMS\Core\Messaging\FlashMessage $flashMessage */
-        $flashMessage = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Messaging\FlashMessage::class,
-            (string)$messageBody,
-            (string)$messageTitle,
+
+        $flashMessage = GeneralUtility::makeInstance(
+            FlashMessage::class,
+            $messageBody,
+            $messageTitle,
             $severity,
             $storeInSession
         );
@@ -705,9 +725,6 @@ class KkDownloader extends AbstractPlugin
         $flashMessageQueue->enqueue($flashMessage);
     }
 
-    /**
-     * @return mixed|\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-     */
     protected function getTypoScriptFrontendController(): TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
