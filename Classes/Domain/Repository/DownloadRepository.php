@@ -13,7 +13,6 @@ namespace JWeiland\KkDownloader\Domain\Repository;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -22,7 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /*
  * Repository for all download records
  */
-class DownloadRepository
+class DownloadRepository extends AbstractRepository
 {
     /**
      * @return array[]
@@ -43,6 +42,7 @@ class DownloadRepository
         if ($downloadRecord === false) {
             $downloadRecord = [];
         } else {
+            $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
             $this->attachDownloadFilesToDownloadRecord($downloadRecord);
         }
 
@@ -101,6 +101,7 @@ class DownloadRepository
 
         $downloads = [];
         while ($downloadRecord = $statement->fetch()) {
+            $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
             $this->attachDownloadFilesToDownloadRecord($downloadRecord);
             $downloads[] = $downloadRecord;
         }
@@ -215,10 +216,5 @@ class DownloadRepository
         }
 
         return $columns;
-    }
-
-    protected function getConnectionPool(): ConnectionPool
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }
