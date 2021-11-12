@@ -24,8 +24,7 @@ class AddFieldsToFlexForm
     /**
      * Add fields to FlexForm
      *
-     * @param array $config
-     * @return array
+     * @return mixed[]
      */
     public function addFields(array $config): array
     {
@@ -96,11 +95,6 @@ class AddFieldsToFlexForm
         return (int)$TSconfig['_STORAGE_PID'];
     }
 
-    /**
-     * Get TYPO3s Connection Pool
-     *
-     * @return ConnectionPool
-     */
     protected function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);

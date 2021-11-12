@@ -3,7 +3,7 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-call_user_func(static function() {
+call_user_func(static function(): void {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig('options.saveDocNew.tx_kkdownloader_images = 1');
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript(

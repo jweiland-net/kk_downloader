@@ -13,6 +13,7 @@ namespace JWeiland\KkDownloader\Plugin;
 
 use JWeiland\KkDownloader\Domain\Repository\CategoryRepository;
 use JWeiland\KkDownloader\Domain\Repository\DownloadRepository;
+use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
@@ -26,7 +27,6 @@ use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use TYPO3\CMS\Frontend\Page\PageRepository;
 use TYPO3\CMS\Frontend\Plugin\AbstractPlugin;
 
 /*
@@ -104,16 +104,6 @@ class KkDownloader extends AbstractPlugin
     protected $settings = [];
 
     /**
-     * @var int
-     */
-    protected $languageUid = 0;
-
-    /**
-     * @var bool
-     */
-    protected $languageOverlayMode = false;
-
-    /**
      * @var DownloadRepository
      */
     protected $downloadRepository;
@@ -166,7 +156,6 @@ class KkDownloader extends AbstractPlugin
         if ($this->settings['whatToDisplay'] === 'SINGLE') {
             if (!empty($this->uidOfDownload)) {
                 $downloadRecord = $this->downloadRepository->getDownloadByUid($this->uidOfDownload);
-                $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
 
                 if ($this->settings['showCats']) {
                     $downloadRecord['categories'] = $this->getCategoriesAsString((int)$downloadRecord['uid']);
@@ -207,7 +196,6 @@ class KkDownloader extends AbstractPlugin
                 $this->settings['orderDirection']
             );
             foreach ($downloads as &$downloadRecord) {
-                $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
                 if ($this->settings['showCats']) {
                     $downloadRecord['categories'] = $this->getCategoriesAsString((int)$downloadRecord['uid']);
                 }
@@ -301,25 +289,13 @@ class KkDownloader extends AbstractPlugin
         return $previewImageForDownload;
     }
 
-    protected function initialize()
+    protected function initialize(): void
     {
-        $this->initializeLanguage();
         $this->settings = $this->getFlexFormSettings();
 
         $this->downloadRepository = GeneralUtility::makeInstance(DownloadRepository::class);
         $this->categoryRepository = GeneralUtility::makeInstance(CategoryRepository::class);
         $this->templateService = GeneralUtility::makeInstance(MarkerBasedTemplateService::class);
-    }
-
-    /**
-     * Collect language information
-     */
-    protected function initializeLanguage()
-    {
-        if (is_object($this->getTypoScriptFrontendController())) {
-            $this->languageUid = (int)$this->getTypoScriptFrontendController()->sys_language_content;
-            $this->languageOverlayMode = $this->getTypoScriptFrontendController()->sys_language_contentOL ?: false;
-        }
     }
 
     /**
@@ -492,8 +468,8 @@ class KkDownloader extends AbstractPlugin
     /**
      * Format FileSize
      *
-     * @param int $size: size of file in bytes
-     * @param int $round: filesize: true/false
+     * @param int $size size of file in bytes
+     * @param int $round filesize: true/false
      * @return string return formatted FileSize
      */
     protected function format_size(int $size, int $round = 0): string
@@ -508,41 +484,19 @@ class KkDownloader extends AbstractPlugin
         return round($size, $round) . $sizes[$i];
     }
 
-    /**
-     * Get mime type of file
-     */
-    protected function getMimeTypeOfFile(string $file): string
-    {
-        $mimeType = '';
-        if (function_exists('mime_content_type')) {
-            $mimeType = mime_content_type($file);
-        } else {
-            // @ToDo: SF: Hopefully I will find a better method to extract the mimetype instead of using image functions
-            $imageInfos = getimagesize($file);
-            if (array_key_exists(2, $imageInfos)) {
-                $mimeType = image_type_to_mime_type($imageInfos[2]);
-            }
-        }
-
-        return $mimeType ?: 'application/octet-stream';
-    }
-
-    /**
-     * Start downloading the file
-     */
-    protected function startDownload(string $filename, int $downloadUid)
+    protected function startDownload(string $filename, int $downloadUid): void
     {
         $downloadRecord = $this->downloadRepository->getDownloadByUid($downloadUid);
 
         /** @var FileReference $fileReference */
         foreach ($downloadRecord['files'] as $fileReference) {
             if ($fileReference->getName() === $filename) {
-                // SF: Update to streamFile when removing TYPO3 8 compatibility
-                $fileReference->getStorage()->dumpFileContents($fileReference->getOriginalFile(), true);
-
                 $this->downloadRepository->updateImageRecordAfterDownload($downloadRecord);
 
-                exit;
+                throw new ImmediateResponseException(
+                    $fileReference->getStorage()->streamFile($fileReference->getOriginalFile(), true),
+                    1636732392
+                );
             }
         }
 
@@ -552,7 +506,7 @@ class KkDownloader extends AbstractPlugin
     /**
      * Add variables to view
      */
-    protected function addPageBrowserSettingsToView(StandaloneView $view)
+    protected function addPageBrowserSettingsToView(StandaloneView $view): void
     {
         $amountOfDownloads = $this->internal['res_count'];
         $beginAt = (int)$this->piVars['pointer'] * $this->internal['results_at_a_time'];
@@ -661,31 +615,6 @@ class KkDownloader extends AbstractPlugin
         return $view;
     }
 
-    protected function recordOverlay(array $row, string $tableName)
-    {
-        $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
-
-        // Workspace overlay
-        $pageRepository->versionOL($tableName, $row);
-
-        // Language overlay
-        if (
-            isset($GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'])
-            && $row[$GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField']] > 0
-        ) {
-            //force overlay by faking default language record, as getRecordOverlay can only handle default language records
-            $row['uid'] = $row[$GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField']];
-            $row[$GLOBALS['TCA'][$tableName]['ctrl']['languageField']] = 0;
-        }
-
-        return $pageRepository->getRecordOverlay(
-            $tableName,
-            $row,
-            $this->languageUid,
-            (string)$this->languageOverlayMode
-        );
-    }
-
     /**
      * Creates a Message object and adds it to the FlashMessageQueue.
      *
@@ -701,7 +630,7 @@ class KkDownloader extends AbstractPlugin
         string $messageTitle = '',
         int $severity = AbstractMessage::OK,
         bool $storeInSession = true
-    ) {
+    ): void {
         if (!is_string($messageBody)) {
             throw new \InvalidArgumentException('The message body must be of type string, "' . gettype($messageBody) . '" given.', 1243258395);
         }

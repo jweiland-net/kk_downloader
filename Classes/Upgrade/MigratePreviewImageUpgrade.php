@@ -120,7 +120,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
             foreach ($records as $record) {
                 $this->migrateField($record);
             }
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             // Silently catch db errors
         }
         return true;
@@ -129,7 +129,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
     /**
      * Initialize the storage repository.
      */
-    protected function init()
+    protected function init(): void
     {
         $storages = GeneralUtility::makeInstance(StorageRepository::class)->findAll();
         $this->storage = $storages[0];
@@ -139,7 +139,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
      * Get records from table where the field to migrate is not empty (NOT NULL and != '')
      * and also not numeric (which means that it is migrated)
      *
-     * @return array
+     * @return array[]
      */
     protected function getRecordsFromTable(): array
     {
@@ -182,9 +182,9 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
     /**
      * Migrates a single field.
      *
-     * @param array $row
+     * @param mixed[] $row
      */
-    protected function migrateField($row)
+    protected function migrateField(array $row): void
     {
         $fieldItems = GeneralUtility::trimExplode(',', $row[$this->fieldToMigrate], true);
         if (empty($fieldItems) || is_numeric($row[$this->fieldToMigrate])) {
@@ -193,7 +193,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
         $fileadminDirectory = rtrim($GLOBALS['TYPO3_CONF_VARS']['BE']['fileadminDir'], '/') . '/';
         $i = 0;
 
-        $storageUid = (int)$this->storage->getUid();
+        $storageUid = $this->storage->getUid();
 
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 

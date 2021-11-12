@@ -120,7 +120,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
             foreach ($records as $record) {
                 $this->migrateField($record);
             }
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             // Silently catch db errors
         }
         return true;
@@ -129,7 +129,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
     /**
      * Initialize the storage repository.
      */
-    protected function init()
+    protected function init(): void
     {
         $storages = GeneralUtility::makeInstance(StorageRepository::class)->findAll();
         $this->storage = $storages[0];
@@ -139,7 +139,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
      * Get records from table where the field to migrate is not empty (NOT NULL and != '')
      * and also not numeric (which means that it is migrated)
      *
-     * @return array
+     * @return array[]
      */
     protected function getRecordsFromTable(): array
     {
@@ -182,9 +182,9 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
     /**
      * Migrates a single field.
      *
-     * @param array $row
+     * @param mixed[] $row
      */
-    protected function migrateField($row)
+    protected function migrateField(array $row): void
     {
         $fieldItems = GeneralUtility::trimExplode(',', $row[$this->fieldToMigrate], true);
         $downloadDescriptions = GeneralUtility::trimExplode('<br />', nl2br($row['downloaddescription']), true);
@@ -194,7 +194,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
         $fileadminDirectory = rtrim($GLOBALS['TYPO3_CONF_VARS']['BE']['fileadminDir'], '/') . '/';
         $i = 0;
 
-        $storageUid = (int)$this->storage->getUid();
+        $storageUid = $this->storage->getUid();
 
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 
@@ -243,7 +243,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
                     /** @var File $file */
                     $file = $this->storage->getFile($this->targetPath . $item);
                     $fileUid = $file->getUid();
-                } catch (\InvalidArgumentException $e) {
+                } catch (\InvalidArgumentException $exception) {
                     // no file found, no reference can be set
                     $this->logger->notice(
                         'File ' . $this->sourcePath . $item . ' does not exist. Reference was not migrated.',

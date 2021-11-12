@@ -43,6 +43,9 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
             'migrated kk_downloader categories afterwards.';
     }
 
+    /**
+     * @var int[]
+     */
     protected $migratedCategories = [];
 
     public function updateNecessary(): bool
@@ -203,7 +206,7 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
                     'data/sDEF/lDEF/dynField/vDEF',
                     implode(',', $newCategories)
                 );
-            } catch (\Exception $e) {
+            } catch (\Exception $exception) {
                 // Value does not exists
             }
 
@@ -226,7 +229,7 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
     /**
      * Get tt_content records with plugin kkdownloader_pi1
      *
-     * @return array
+     * @return array[]
      */
     protected function getTtContentRecordsWithKkDownloaderPlugin(): array
     {
@@ -326,9 +329,10 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
      * @param array $array Array with FlexForm data
      * @return string Input array converted to XML
      */
-    public function checkValue_flexArray2Xml($array): string
+    public function checkValue_flexArray2Xml(array $array): string
     {
         $flexObj = GeneralUtility::makeInstance(FlexFormTools::class);
+
         return $flexObj->flexArray2Xml($array, true);
     }
 

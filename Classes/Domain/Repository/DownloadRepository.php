@@ -13,7 +13,6 @@ namespace JWeiland\KkDownloader\Domain\Repository;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -22,8 +21,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /*
  * Repository for all download records
  */
-class DownloadRepository
+class DownloadRepository extends AbstractRepository
 {
+    /**
+     * @return array[]
+     */
     public function getDownloadByUid(int $uid): array
     {
         $queryBuilder = $this->getQueryBuilderForDownloads();
@@ -40,12 +42,16 @@ class DownloadRepository
         if ($downloadRecord === false) {
             $downloadRecord = [];
         } else {
+            $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
             $this->attachDownloadFilesToDownloadRecord($downloadRecord);
         }
 
         return $downloadRecord;
     }
 
+    /**
+     * @return array[]
+     */
     public function getDownloads(
         array $storageFolders = [],
         int $categoryUid = 0,
@@ -95,6 +101,7 @@ class DownloadRepository
 
         $downloads = [];
         while ($downloadRecord = $statement->fetch()) {
+            $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
             $this->attachDownloadFilesToDownloadRecord($downloadRecord);
             $downloads[] = $downloadRecord;
         }
@@ -102,7 +109,7 @@ class DownloadRepository
         return $downloads;
     }
 
-    protected function attachDownloadFilesToDownloadRecord(array &$downloadRecord)
+    protected function attachDownloadFilesToDownloadRecord(array &$downloadRecord): void
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_file_reference');
         $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
@@ -131,14 +138,14 @@ class DownloadRepository
         while ($fileReferenceRecord = $statement->fetch()) {
             try {
                 $fileReference = $resourceFactory->getFileReferenceObject((int)$fileReferenceRecord['uid']);
-            } catch (\Exception $e) {
+            } catch (\Exception $exception) {
                 continue;
             }
             $downloadRecord['files'][] = $fileReference;
         }
     }
 
-    public function updateImageRecordAfterDownload(array $downloadRecord)
+    public function updateImageRecordAfterDownload(array $downloadRecord): void
     {
         $connection = $this->getConnectionPool()->getConnectionForTable('tx_kkdownloader_images');
         $connection->update(
@@ -191,7 +198,7 @@ class DownloadRepository
      * ->select() and ->groupBy() has to be the same in DB configuration
      * where only_full_group_by is activated.
      *
-     * @return array
+     * @return string[]
      */
     protected function getColumnsForDownloadTable(): array
     {
@@ -199,7 +206,7 @@ class DownloadRepository
         $connection = $this->getConnectionPool()->getConnectionForTable('tx_kkdownloader_images');
         if ($connection->getSchemaManager() instanceof AbstractSchemaManager) {
             $columns = array_map(
-                static function ($column) {
+                static function ($column): string {
                     return 'i.' . $column;
                 },
                 array_keys(
@@ -209,10 +216,5 @@ class DownloadRepository
         }
 
         return $columns;
-    }
-
-    protected function getConnectionPool(): ConnectionPool
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }
