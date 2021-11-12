@@ -7,6 +7,15 @@
 ChangeLog
 =========
 
+**Version 5.2.2**
+
+- Change group type of template file in FlexForm to input type
+
+**Version 5.2.1**
+
+- Add renderType to FlexForm
+- add method getFlexFormValue to prevent return of NULL values
+
 **Version 5.2.0**
 
 - Migrate previewimage to FAL (Please execute UpdateWizard)
