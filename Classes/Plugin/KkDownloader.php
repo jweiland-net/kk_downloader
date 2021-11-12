@@ -145,7 +145,6 @@ class KkDownloader extends AbstractPlugin
         $this->did = (int)GeneralUtility::_GP('did');
         $this->uidOfDownload = (int)$this->piVars['uid'];
 
-        // flexform Integration
         $this->pi_initPIflexform(); // Init and get the flexform data of the plugin
         $this->initialize();
 
@@ -154,22 +153,13 @@ class KkDownloader extends AbstractPlugin
             $this->startDownload(basename($this->download), $this->did);
         }
 
-        // Template settings
-        $templateFile = $this->getFlexFormValue('template_file');
-        $templateFile = $templateFile ?: $this->conf['templateFile'];
-        if (empty($templateFile)) {
-            $templateFile = $this->defaultTemplate;
-        }
-
-        $defaultDownloadPid = $this->conf['defaultDownloadPid'];
-        if (empty($defaultDownloadPid)) {
-            $defaultDownloadPid = 'all';
-        }
-
         $this->internal['results_at_a_time'] = $this->getFlexFormValue('results_at_a_time');
         $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? (int)($this->internal['results_at_a_time']) : (int)($this->conf['results_at_a_time']);
         $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? $this->internal['results_at_a_time'] : 1001;
         $this->internal['maxPages'] = $this->conf['pageBrowser.']['maxPages'] > 0 ? (int)($this->conf['pageBrowser.']['maxPages']) : 10;
+
+        $templateFile = $this->getFlexFormValue('template_file') ?: $this->conf['templateFile'] ?: $this->defaultTemplate;
+        $defaultDownloadPid = $this->conf['defaultDownloadPid'] ?: 'all';
 
         $view = $this->getView();
         $view->setTemplatePathAndFilename($templateFile);

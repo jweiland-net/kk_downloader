@@ -7,6 +7,10 @@
 ChangeLog
 =========
 
+**Version 5.2.2**
+
+- Change group type of template file in FlexForm to input type
+
 **Version 5.2.1**
 
 - Add renderType to FlexForm
