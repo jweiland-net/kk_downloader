@@ -314,10 +314,8 @@ class KkDownloader extends AbstractPlugin
 
     protected function initializeLanguage(): void
     {
-        if (is_object($this->getTypoScriptFrontendController())) {
-            $this->languageUid = (int)GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'contentId');
-            $this->languageOverlayMode = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'legacyOverlayType') ?: false;
-        }
+        $this->languageUid = (int)GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'contentId');
+        $this->languageOverlayMode = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'legacyOverlayType') ?: false;
     }
 
     /**
