@@ -53,9 +53,10 @@ KK Downloader
    :maxdepth: 3
 
    Introduction/Index
-   User/Index
    Installation/Index
    Configuration/Index
+   User/Index
+   AdministratorManual/Index
    FAQ/Index
    ChangeLog/Index
    Links

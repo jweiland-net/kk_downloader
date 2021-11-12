@@ -27,7 +27,7 @@ ChangeLog
 **Version 5.0.0**
 
 - Extension key kk_downloader was transferred to jweiland.net
-- Update version number to 4.0.0
+- Update version number to 5.0.0
 - Change Template to Fluid
 - Move marker based logic to Fluid-Template
 - Change default template to EXT:kk_downloader/Resources/Private/Templates/MainTemplate.html
