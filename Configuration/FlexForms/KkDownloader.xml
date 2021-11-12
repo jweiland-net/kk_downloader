@@ -15,6 +15,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.what_to_display</label>
 							<config>
 								<type>select</type>
+								<renderType>selectMultipleSideBySide</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LIST</numIndex>
@@ -39,6 +40,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.selectCategory</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<itemsProcFunc>JWeiland\KkDownloader\UserFunc\AddFieldsToFlexForm->addFields</itemsProcFunc>
 							</config>
 						</TCEforms>
@@ -60,6 +62,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderby</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.orderbyTitle</numIndex>
@@ -101,6 +104,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.ascdesc</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.asc</numIndex>
@@ -165,6 +169,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showCRDate</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showCRDate.nodate</numIndex>
@@ -190,6 +195,7 @@
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileMDate</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showFileMDate.nodate</numIndex>
