@@ -7,6 +7,15 @@
 ChangeLog
 =========
 
+**Version 6.0.0**
+
+- Remove TYPO3 8.7 compatibility
+- Add TYPO3 10 compatibility
+- Replace git icons with svg
+- Restructure TCA fields
+- Repair record overlay
+- Remove TYPO3 columns from ext_tables.sql
+
 **Version 5.2.2**
 
 - Change group type of template file in FlexForm to input type
