@@ -19,7 +19,6 @@ TypoScript Setup Reference
    =========================== ===================================== ====================
    Property                    Data type                             Default
    =========================== ===================================== =========================================
-   debug_                      Boolean                               false
    linkdescription_            Integer                               1
    downloadIcon_               String                                1
    missingDownloadIcon_        String                                EXT:kk_downloader/pi1/images/download.gif
@@ -50,13 +49,6 @@ Property details
       :local:
       :depth: 1
 
-
-.. _debug:
-
-debug
------
-
-Prints of the Extension will appear on screen
 
 .. _linkdescription:
 
