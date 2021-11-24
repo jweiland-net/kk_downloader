@@ -30,7 +30,6 @@ TypoScript Setup Reference
    datetimeformat_             ->stdWrap
    imageDistance_              String                                5
    image_                      ->imgResource/->stdWrap
-   filesizeClass_              String                                empty
    parseFunc_                  Array                                 parseFunc_RTE
    results_at_a_time_          Integer                               25
    pageBrowser_                Array
@@ -180,18 +179,6 @@ image {
     JSwindow.expand = 17,20
   }
 }
-
-
-.. _filesizeClass:
-
-filesizeClass
--------------
-
-class for the display of the file-size
-
-e.g.
-
-filesizeClass = sb_filesize_class
 
 
 .. _parseFunc:
