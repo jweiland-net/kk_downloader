@@ -14,7 +14,7 @@ What does it do?
 ================
 
 Download system with many features. Displays downloads with short description, click counter, file size and image
-preview. It is possible to create a detail site of each download.
+preview. It is possible to create a detail site for each download record.
 
 Credits
 =======
