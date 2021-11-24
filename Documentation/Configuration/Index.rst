@@ -30,7 +30,6 @@ TypoScript Setup Reference
    datetimeformat_             ->stdWrap
    imageDistance_              String                                5
    image_                      ->imgResource/->stdWrap
-   fileMDateClass_             String                                empty
    filesizeClass_              String                                empty
    parseFunc_                  Array                                 parseFunc_RTE
    results_at_a_time_          Integer                               25
@@ -129,7 +128,7 @@ Please use `showCRDate` in FlexForm.
 dateformat
 ----------
 
-Here you can set the date formating for the template-marker: ###DATE###.
+Here you can set the date formatting for the template-marker: ###DATE###.
 
 **Example:**
 
@@ -163,7 +162,7 @@ Distance between Image and text
 image
 -----
 
-Configurates the image(s) in news items.
+Configures the image(s) in download items.
 
 **Example:**
 
@@ -181,18 +180,6 @@ image {
     JSwindow.expand = 17,20
   }
 }
-
-
-.. _fileMDateClass:
-
-fileMDateClass
---------------
-
-Span-class for LastMod-date of the download file
-
-e.g.
-
-fileMDateClass = sb_fileMDateClass
 
 
 .. _filesizeClass:
