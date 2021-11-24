@@ -11,10 +11,6 @@ plugin.tx_kkdownloader_pi1 {
     pi_list_browseresults_page = S
   }
 
-  # for a better transfomation of the content of the field "longdescription"
-  # not set, the standard parseFunc is taken
-  # parseFunc < lib.parseFunc_RTE
-
   # PID of the general download folder (if no page-"starting-point" is set)
   defaultDownloadPid = all
 

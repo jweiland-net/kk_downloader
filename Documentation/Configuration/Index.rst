@@ -30,9 +30,7 @@ TypoScript Setup Reference
    datetimeformat_             ->stdWrap
    imageDistance_              String                                5
    image_                      ->imgResource/->stdWrap
-   parseFunc_                  Array                                 parseFunc_RTE
    results_at_a_time_          Integer                               25
-   pageBrowser_                Array
    pageBrowser_                Array
    =========================== ===================================== =========================================
 
@@ -179,20 +177,6 @@ image {
     JSwindow.expand = 17,20
   }
 }
-
-
-.. _parseFunc:
-
-parseFunc
----------
-
-Render content of the field "longdescription", converts LINK-entries into a-tags
-
-e.g.
-
-parseFunc < lib.parseFunc
-
-parseFunc not set => Content will only be rendered with the php-method "nl2br()"
 
 
 .. _results_at_a_time:
