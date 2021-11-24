@@ -26,8 +26,8 @@ TypoScript Setup Reference
    defaultDownloadPid_         Integer/String                        all
    singlePID_                  Integer                               empty
    displayCreationDate_        Removed                               Removed
-   dateformat_                 ->stdWrap                             d.m.Y
-   datetimeformat_             ->stdWrap
+   dateformat_                 String                                d.m.Y
+   datetimeformat_             String                                d.m.Y H:i
    imageDistance_              String                                5
    image_                      ->imgResource/->stdWrap
    results_at_a_time_          Integer                               25
@@ -143,7 +143,7 @@ datetimeformat
 
 e.g. used for formatting the date-output of the download-file
 
-datetimeformat = d.m.Y H:m
+datetimeformat = d.m.Y H:i
 
 
 .. _imageDistance:
