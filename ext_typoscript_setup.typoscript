@@ -28,7 +28,4 @@ plugin.tx_kkdownloader_pi1 {
       JSwindow.expand = 17,20
     }
   }
-  # date and time by Kurt Kupix
-  # displayCreationDate (0 = no date & time, 1 = only date, 2 = date & time)
-  displayCreationDate = 1
 }
