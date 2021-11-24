@@ -24,11 +24,8 @@ plugin.tx_kkdownloader_pi1 {
   # download description (1 = filename.fileextension, 2 = filename, 3 = fileextension)
   linkdescription = 1
 
-  # date and time format
+  # date and time formats
   dateformat = d.m.y
-  timeformat = H:i
-
-  # used for download-file date & time
   datetimeformat = d.m.y H:i
 
   # download icon

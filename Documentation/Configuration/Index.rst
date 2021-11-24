@@ -28,7 +28,6 @@ TypoScript Setup Reference
    displayCreationDate_        Removed                               Removed
    dateformat_                 ->stdWrap                             d.m.Y
    datetimeformat_             ->stdWrap
-   timeformat_                 ->stdWrap
    imageDistance_              String                                5
    image_                      ->imgResource/->stdWrap
    fileMDateClass_             String                                empty
@@ -149,22 +148,6 @@ datetimeformat
 e.g. used for formatting the date-output of the download-file
 
 datetimeformat = d.m.Y H:m
-
-
-.. _timeformat:
-
-timeformat
-----------
-
-Here you can set the date formatting for the template-marker: ###DATE###.
-
-**Example:**
-
-plugin.tx_kkdownloader_pi1 {
-  timeformat= H:i
-}
-
-This will display the time in content elements like this: "12:03".
 
 
 .. _imageDistance:
