@@ -149,6 +149,10 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
                     continue;
                 }
 
+                if (!array_key_exists($oldCategory, $this->migratedCategories)) {
+                    continue;
+                }
+
                 $connection = $this->getConnectionPool()->getConnectionForTable('sys_category_record_mm');
                 $connection->insert(
                     'sys_category_record_mm',
