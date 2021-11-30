@@ -297,7 +297,7 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
             ->fetch();
 
         if (empty($sysCategory)) {
-            $connection = $this->getConnectionPool()->getConnectionForTable('sys_catgeory');
+            $connection = $this->getConnectionPool()->getConnectionForTable('sys_category');
             $connection->insert(
                 'sys_category',
                 [
