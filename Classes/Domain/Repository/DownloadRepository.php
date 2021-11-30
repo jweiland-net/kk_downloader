@@ -70,25 +70,32 @@ class DownloadRepository extends AbstractRepository
         }
 
         if ($categoryUid > 0) {
-            $queryBuilder->join(
-                'i',
-                'sys_category_record_mm',
-                'sc_mm',
-                (string)$queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq(
-                        'i.uid',
-                        $queryBuilder->quoteIdentifier('sc_mm.uid_foreign')
-                    ),
-                    $queryBuilder->expr()->eq(
-                        'sc_mm.tablenames',
-                        $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
-                    ),
-                    $queryBuilder->expr()->eq(
-                        'sc_mm.fieldname',
-                        $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
+            $queryBuilder
+                ->join(
+                    'i',
+                    'sys_category_record_mm',
+                    'sc_mm',
+                    (string)$queryBuilder->expr()->andX(
+                        $queryBuilder->expr()->eq(
+                            'i.uid',
+                            $queryBuilder->quoteIdentifier('sc_mm.uid_foreign')
+                        ),
+                        $queryBuilder->expr()->eq(
+                            'sc_mm.tablenames',
+                            $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
+                        ),
+                        $queryBuilder->expr()->eq(
+                            'sc_mm.fieldname',
+                            $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
+                        )
                     )
                 )
-            );
+                ->andWhere(
+                    $queryBuilder->expr()->eq(
+                        'sc_mm.uid_local',
+                        $queryBuilder->createNamedParameter($categoryUid, \PDO::PARAM_INT)
+                    )
+                );
         }
 
         if ($orderBy === '') {
