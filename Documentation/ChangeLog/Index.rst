@@ -7,6 +7,12 @@
 ChangeLog
 =========
 
+**Version 5.2.3**
+
+- Bugfix: Use correct table name in category upgrade
+- Bugfix: Do not migrate deleted categories
+- Bugfix: Add WHERE to select images by category
+
 **Version 5.2.2**
 
 - Change group type of template file in FlexForm to input type

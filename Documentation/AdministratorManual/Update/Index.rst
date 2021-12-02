@@ -6,6 +6,13 @@ Updating
 
 If you update EXT:kk_downloader to a newer version, please read this section carefully!
 
+Update to Version 5.2.3
+=======================
+
+There was a bug in CategoryUpgradeWizard since version 5.1.0. If you have problems after the upgrade, please restore
+a DB backup and execute the wizard again.
+
+
 Update to Version 5.2.0
 =======================
 
