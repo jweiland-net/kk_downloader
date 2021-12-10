@@ -13,6 +13,7 @@ namespace JWeiland\KkDownloader\Plugin;
 
 use JWeiland\KkDownloader\Domain\Repository\CategoryRepository;
 use JWeiland\KkDownloader\Domain\Repository\DownloadRepository;
+use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
@@ -537,12 +538,20 @@ class KkDownloader extends AbstractPlugin
         /** @var FileReference $fileReference */
         foreach ($downloadRecord['files'] as $fileReference) {
             if ($fileReference->getName() === $filename) {
-                // SF: Update to streamFile when removing TYPO3 8 compatibility
-                $fileReference->getStorage()->dumpFileContents($fileReference->getOriginalFile(), true);
-
                 $this->downloadRepository->updateImageRecordAfterDownload($downloadRecord);
 
-                exit;
+                if (version_compare(TYPO3_branch, '9.5', '<')) {
+                    // SF: Update to streamFile when removing TYPO3 8 compatibility
+                    $fileReference->getStorage()->dumpFileContents($fileReference->getOriginalFile(), true);
+
+                    exit;
+                }
+
+                // streamFile was implemented with TYPO3 9.5
+                throw new ImmediateResponseException(
+                    $fileReference->getStorage()->streamFile($fileReference->getOriginalFile(), true),
+                    1636732392
+                );
             }
         }
 

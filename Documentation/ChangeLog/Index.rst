@@ -7,6 +7,10 @@
 ChangeLog
 =========
 
+**Version 5.2.4**
+
+- Bugfix: Use streamFile for TYPO3 9.5
+
 **Version 5.2.3**
 
 - Bugfix: Use correct table name in category upgrade
