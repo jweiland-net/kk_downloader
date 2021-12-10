@@ -79,26 +79,6 @@
 				<source>Settings</source>
 				<target>Einstellungen</target>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.layout">
-				<source>Layout</source>
-				<target>Layout</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader.layout1">
-				<source>Image top</source>
-				<target>Bild oben</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader.layout2">
-				<source>Image right</source>
-				<target>Bild rechts</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader.layout3">
-				<source>Image left</source>
-				<target>Bild links</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader.layout4">
-				<source>Image bottom</source>
-				<target>Bild unten</target>
-			</trans-unit>
 			<trans-unit id="tx_kkdownloader.showclicks">
 				<source>Display counted clicks</source>
 				<target>Anzahl Downloads anzeigen</target>

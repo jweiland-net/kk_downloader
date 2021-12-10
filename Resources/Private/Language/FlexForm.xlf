@@ -60,21 +60,6 @@
 			<trans-unit id="tx_kkdownloader_conf">
 				<source>Settings</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.layout">
-				<source>Layout</source>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader.layout1">
-				<source>Image top</source>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader.layout2">
-				<source>Image right</source>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader.layout3">
-				<source>Image left</source>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader.layout4">
-				<source>Image bottom</source>
-			</trans-unit>
 			<trans-unit id="tx_kkdownloader.showclicks">
 				<source>Display counted clicks</source>
 			</trans-unit>
