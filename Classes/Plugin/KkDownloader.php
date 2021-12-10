@@ -397,19 +397,6 @@ class KkDownloader extends AbstractPlugin
                 );
             }
 
-            // add the filesize block, if desired
-            $formattedFileSize = '';
-            if ($this->settings['showFileSize']) {
-                $decimals = 2;
-                if ($fileReference->getSize() < 1024) {
-                    $decimals = 0;
-                }
-                $formattedFileSize = sprintf(
-                    '&nbsp;(%s)',
-                    $this->format_size($fileReference->getSize(), $decimals)
-                );
-            }
-
             // add the file date+time block, if desired
             $formattedFileMDate = '';
             if ($this->settings['showFileMDate']) {
@@ -440,12 +427,28 @@ class KkDownloader extends AbstractPlugin
                         'did' => $downloadRecord['uid']
                     ]
                 ),
-                $formattedFileSize,
+                $this->getFormattedFilesize($fileReference->getSize()),
                 $formattedFileMDate
             );
         }
 
         return '<dl>' . $content . '</dl>';
+    }
+
+    protected function getFormattedFilesize(int $filesize): string
+    {
+        if (!$this->settings['showFileSize']) {
+            return '';
+        }
+
+        return sprintf(
+            '&nbsp;(%s)',
+            GeneralUtility::formatSize(
+                $filesize,
+                ' Bytes| kB| MB| GB| TB| PB| EB| ZB| YB',
+                1024
+            )
+        );
     }
 
     /**
@@ -463,25 +466,6 @@ class KkDownloader extends AbstractPlugin
         }
 
         return implode(', ', $categories);
-    }
-
-    /**
-     * Format FileSize
-     *
-     * @param int $size size of file in bytes
-     * @param int $round filesize: true/false
-     * @return string return formatted FileSize
-     */
-    protected function format_size(int $size, int $round = 0): string
-    {
-        //Size must be bytes!
-        $sizes = [' Bytes', ' kB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
-        $sizesCount = count($sizes);
-        for ($i = 0; $size > 1024 && $i < $sizesCount - 1; $i++) {
-            $size /= 1024;
-        }
-
-        return round($size, $round) . $sizes[$i];
     }
 
     protected function startDownload(string $filename, int $downloadUid): void
