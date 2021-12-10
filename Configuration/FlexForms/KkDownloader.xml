@@ -41,7 +41,13 @@
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
-								<itemsProcFunc>JWeiland\KkDownloader\UserFunc\AddFieldsToFlexForm->addFields</itemsProcFunc>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.selectCategory.all</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+								</items>
+								<itemsProcFunc>JWeiland\KkDownloader\UserFunc\ModifyCategorySelectorUserFunc->addCategoryItemsToSelector</itemsProcFunc>
 							</config>
 						</TCEforms>
 					</dynField>

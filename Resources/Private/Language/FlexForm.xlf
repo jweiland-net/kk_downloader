@@ -54,6 +54,9 @@
 			<trans-unit id="tx_kkdownloader.selectCategory">
 				<source>Select categories</source>
 			</trans-unit>
+			<trans-unit id="tx_kkdownloader.selectCategory.all">
+				<source>All</source>
+			</trans-unit>
 			<trans-unit id="tx_kkdownloader_conf">
 				<source>Settings</source>
 			</trans-unit>

@@ -14,29 +14,23 @@ namespace JWeiland\KkDownloader\UserFunc;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /*
- * UserFunc to add fields to FlexForm
+ * UserFunc to add items to category selector (FlexForm)
  */
-class AddFieldsToFlexForm
+class ModifyCategorySelectorUserFunc
 {
     /**
-     * Add fields to FlexForm
-     *
-     * @return mixed[]
+     * Add items to category selector in FlexForm
      */
-    public function addFields(array $config): array
+    public function addCategoryItemsToSelector(array &$parameters): void
     {
         $storagePid = $this->getStorageFolderPid();
-        $optionList = [
-            0 => [
-                0 => 'all',
-                1 => 0
-            ]
-        ];
 
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_category');
+        $queryBuilder = $this->getQueryBuilderForTable('sys_category');
         if (!empty($storagePid)) {
             $queryBuilder->where(
                 $queryBuilder->expr()->eq(
@@ -58,16 +52,15 @@ class AddFieldsToFlexForm
             ->orderBy('title', 'ASC')
             ->execute();
 
-        while ($row = $statement->fetch()) {
-            $optionList[] = [
-                0 => $row['title'],
-                1 => $row['uid']
+        $categoryItem = [];
+        while ($categoryRecord = $statement->fetch()) {
+            $categoryItem[] = [
+                0 => $categoryRecord['title'],
+                1 => $categoryRecord['uid']
             ];
         }
 
-        $config['items'] = array_merge($config['items'], $optionList);
-
-        return $config;
+        $parameters['items'] = array_merge($parameters['items'], $categoryItem);
     }
 
     /**
@@ -93,6 +86,17 @@ class AddFieldsToFlexForm
         $TSconfig = BackendUtility::getTCEFORM_TSconfig('pages', $row);
 
         return (int)$TSconfig['_STORAGE_PID'];
+    }
+
+    protected function getQueryBuilderForTable(string $table): QueryBuilder
+    {
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($table);
+        $queryBuilder
+            ->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+
+        return $queryBuilder;
     }
 
     protected function getConnectionPool(): ConnectionPool
