@@ -95,6 +95,16 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
     }
 
     /**
+     * @return string[] All new fields and tables must exist
+     */
+    public function getPrerequisites(): array
+    {
+        return [
+            DatabaseUpdatedPrerequisite::class
+        ];
+    }
+
+    /**
      * Checks if an update is needed
      *
      * @return bool TRUE if an update is needed, FALSE otherwise
@@ -288,16 +298,6 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
                 )
             )->set($this->fieldToMigrate, $i)->execute();
         }
-    }
-
-    /**
-     * @return string[] All new fields and tables must exist
-     */
-    public function getPrerequisites(): array
-    {
-        return [
-            DatabaseUpdatedPrerequisite::class
-        ];
     }
 
     protected function getConnectionPool(): ConnectionPool

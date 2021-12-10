@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  JWeiland\KkDownloader\:
+    resource: '../Classes/*'
+
+  JWeiland\KkDownloader\Upgrade\MigrateDynFieldToCategoryUpgrade:
+    public: true

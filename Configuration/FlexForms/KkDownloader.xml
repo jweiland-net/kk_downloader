@@ -35,22 +35,23 @@
 						</TCEforms>
 					</what_to_display>
 
-					<dynField>
+					<category>
 						<TCEforms>
-							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.selectCategory</label>
+							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.category</label>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.selectCategory.all</numIndex>
+										<numIndex index="0">LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.category.all</numIndex>
 										<numIndex index="1">0</numIndex>
 									</numIndex>
 								</items>
-								<itemsProcFunc>JWeiland\KkDownloader\UserFunc\ModifyCategorySelectorUserFunc->addCategoryItemsToSelector</itemsProcFunc>
+								<foreign_table>sys_category</foreign_table>
+								<foreign_table_where>AND ('###PAGE_TSCONFIG_IDLIST###' = '' OR sys_category.pid IN (###PAGE_TSCONFIG_IDLIST###)) ORDER BY sys_category.title</foreign_table_where>
 							</config>
 						</TCEforms>
-					</dynField>
+					</category>
 
 					<showCats>
 						<TCEforms>

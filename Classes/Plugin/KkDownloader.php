@@ -306,7 +306,7 @@ class KkDownloader extends AbstractPlugin
     protected function getFlexFormSettings(): array
     {
         $settings = [];
-        $settings['categoryUid'] = (int)$this->getFlexFormValue('dynField');
+        $settings['categoryUid'] = (int)$this->getFlexFormValue('category');
         $settings['showCats'] = $this->getFlexFormValue('showCats');
         $settings['orderBy'] = $this->getFlexFormValue('orderby');
         $settings['orderDirection'] = $this->getFlexFormValue('ascdesc');

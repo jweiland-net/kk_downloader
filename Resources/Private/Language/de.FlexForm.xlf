@@ -67,11 +67,11 @@
 				<source>Show Categories</source>
 				<target>Kategorien anzeigen</target>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.selectCategory">
+			<trans-unit id="tx_kkdownloader.category">
 				<source>Select a category</source>
 				<target>Wähle eine Kategorie aus</target>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.selectCategory.all">
+			<trans-unit id="tx_kkdownloader.category.all">
 				<source>All</source>
 				<target>Alle</target>
 			</trans-unit>

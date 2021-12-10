@@ -56,4 +56,7 @@ tt_content.list.20.kkdownloader_pi1 = < plugin.tx_kkdownloader_pi1
     // Migrate kk_downloader downloads to FAL
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['kkMigrateDownloads']
         = \JWeiland\KkDownloader\Upgrade\MigrateDownloadsUpgrade::class;
+    // Migrate FlexForm field dynField to category
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['kkMigrateDynField']
+        = \JWeiland\KkDownloader\Upgrade\MigrateDynFieldToCategoryUpgrade::class;
 });
