@@ -51,10 +51,10 @@
 			<trans-unit id="tx_kkdownloader.showCats">
 				<source>Show Categories</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.selectCategory">
+			<trans-unit id="tx_kkdownloader.category">
 				<source>Select categories</source>
 			</trans-unit>
-			<trans-unit id="tx_kkdownloader.selectCategory.all">
+			<trans-unit id="tx_kkdownloader.category.all">
 				<source>All</source>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader_conf">

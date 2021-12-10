@@ -95,6 +95,16 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
     }
 
     /**
+     * @return string[] All new fields and tables must exist
+     */
+    public function getPrerequisites(): array
+    {
+        return [
+            DatabaseUpdatedPrerequisite::class
+        ];
+    }
+
+    /**
      * Checks if an update is needed
      *
      * @return bool TRUE if an update is needed, FALSE otherwise
@@ -286,16 +296,6 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
                 )
             )->set($this->fieldToMigrate, $i)->execute();
         }
-    }
-
-    /**
-     * @return string[] All new fields and tables must exist
-     */
-    public function getPrerequisites(): array
-    {
-        return [
-            DatabaseUpdatedPrerequisite::class
-        ];
     }
 
     protected function getConnectionPool(): ConnectionPool

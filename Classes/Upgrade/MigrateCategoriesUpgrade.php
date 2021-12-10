@@ -48,9 +48,26 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
      */
     protected $migratedCategories = [];
 
+    /**
+     * @return string[]
+     */
+    public function getPrerequisites(): array
+    {
+        return [
+            DatabaseUpdatedPrerequisite::class
+        ];
+    }
+
     public function updateNecessary(): bool
     {
         $queryBuilder = $this->getQueryBuilderForKkDownloaderCategories();
+        $schemaManager = $queryBuilder->getConnection()->getSchemaManager();
+        if ($schemaManager === null) {
+            return false;
+        }
+        if (!$schemaManager->tablesExist('tx_kkdownloader_cat')) {
+            return false;
+        }
 
         return (bool)$queryBuilder
             ->select('*')
@@ -65,16 +82,6 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
         $this->migrateCatInFlexForm();
 
         return true;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getPrerequisites(): array
-    {
-        return [
-            DatabaseUpdatedPrerequisite::class
-        ];
     }
 
     protected function migrateCategories(): void
