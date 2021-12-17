@@ -105,7 +105,16 @@ class MigrateDynFieldToCategoryUpgrade implements UpgradeWizardInterface, Chatty
     public function executeUpdate(): bool
     {
         $upgradeWizardsService = GeneralUtility::makeInstance(UpgradeWizardsService::class);
-        if ($upgradeWizardsService->getWizardInformationByIdentifier('kkMigrateCategories')['shouldRenderWizard']) {
+        if (version_compare(TYPO3_branch, '9.5', '<=')) {
+            $wizards = array_filter($upgradeWizardsService->getUpgradeWizardsList(), static function ($wizard) {
+                return $wizard['identifier'] === 'kkMigrateCategories' && $wizard['shouldRenderWizard'] === true;
+            });
+            if ($wizards !== []) {
+                $this->output->writeln('Please execute kk_downloader UpgradeWizard to migrate categories first.');
+
+                return false;
+            }
+        } elseif ($upgradeWizardsService->getWizardInformationByIdentifier('kkMigrateCategories')['shouldRenderWizard']) {
             $this->output->writeln('Please execute kk_downloader UpgradeWizard to migrate categories first.');
 
             return false;
