@@ -30,19 +30,9 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 class MigrateDynFieldToCategoryUpgrade implements UpgradeWizardInterface, ChattyInterface
 {
     /**
-     * @var UpgradeWizardsService
-     */
-    protected $upgradeWizardsService;
-
-    /**
      * @var OutputInterface
      */
     protected $output;
-
-    public function __construct(UpgradeWizardsService $upgradeWizardsService)
-    {
-        $this->upgradeWizardsService = $upgradeWizardsService;
-    }
 
     public function getIdentifier(): string
     {
@@ -114,7 +104,8 @@ class MigrateDynFieldToCategoryUpgrade implements UpgradeWizardInterface, Chatty
      */
     public function executeUpdate(): bool
     {
-        if ($this->upgradeWizardsService->getWizardInformationByIdentifier('kkMigrateCategories')['shouldRenderWizard']) {
+        $upgradeWizardsService = GeneralUtility::makeInstance(UpgradeWizardsService::class);
+        if ($upgradeWizardsService->getWizardInformationByIdentifier('kkMigrateCategories')['shouldRenderWizard']) {
             $this->output->writeln('Please execute kk_downloader UpgradeWizard to migrate categories first.');
 
             return false;
