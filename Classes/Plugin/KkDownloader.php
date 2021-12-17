@@ -461,7 +461,6 @@ class KkDownloader extends AbstractPlugin
         $categories = [];
         $categoryRecords = $this->categoryRepository->getCategoriesByDownloadUid($downloadUid);
         foreach ($categoryRecords as $categoryRecord) {
-            $categoryRecord = $this->recordOverlay($categoryRecord, 'sys_category');
             $categories[] = $categoryRecord['title'];
         }
 
