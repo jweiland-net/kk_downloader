@@ -6,6 +6,3 @@ services:
 
   JWeiland\KkDownloader\:
     resource: '../Classes/*'
-
-  JWeiland\KkDownloader\Upgrade\MigrateDynFieldToCategoryUpgrade:
-    public: true
