@@ -239,27 +239,15 @@ class KkDownloader extends AbstractPlugin
     {
         $previewImageForDownload = '';
 
-        // if download record contains a preview image
-        if (!empty($downloadRecord['imagepreview'])) {
-            $imgConf = $this->conf['image.'];
-            $imgConf['file.']['import.']['dataWrap'] = '{file:current:storage}:{file:current:identifier}';
-            $imgConf['altText.']['data'] = 'file:current:title';
-            $imgConf['titleText.']['data'] = 'file:current:title';
-
-            $previewImageForDownload = $this->cObj->cObjGetSingle(
-                'FILES',
-                [
-                    'references.' => [
-                        'table' => 'tx_kkdownloader_images',
-                        'uid' => (int)$downloadRecord['uid'],
-                        'fieldName' => 'imagepreview'
-                    ],
-                    'begin' => 0,
-                    'maxItems' => 1,
-                    'renderObj' => 'IMAGE',
-                    'renderObj.' => $imgConf
-                ]
-            );
+        if (
+            $downloadRecord['imagepreview'] !== []
+            && ($fileReference = reset($downloadRecord['imagepreview']))
+            && $fileReference instanceof FileReference
+        ) {
+            // if download record contains a preview image
+            $img = $this->conf['image.'];
+            $img['file'] = $fileReference->getPublicUrl();
+            $previewImageForDownload = $this->cObj->cObjGetSingle('IMAGE', $img);
         } else {
             $allowedMimeTypes = [
                 'image/gif',
@@ -271,7 +259,7 @@ class KkDownloader extends AbstractPlugin
 
             // Loop throw download images and use first image with allowed mimetype as thumbnail
             /** @var FileReference $fileReference */
-            foreach ($downloadRecord['files'] as $fileReference) {
+            foreach ($downloadRecord['image'] as $fileReference) {
                 // MimeType is not an image, check against 'pdf'
                 // Create IMG-Tag, if image has allowed MimeType.
                 if (
@@ -354,7 +342,7 @@ class KkDownloader extends AbstractPlugin
         $content = '';
 
         /** @var $fileReference FileReference */
-        foreach ($downloadRecord['files'] as $fileReference) {
+        foreach ($downloadRecord['image'] as $fileReference) {
             $fileDescription = $fileReference->getTitle();
             if (empty($fileDescription)) {
                 // Set fileDescription as configured by Type
@@ -472,7 +460,7 @@ class KkDownloader extends AbstractPlugin
         $downloadRecord = $this->downloadRepository->getDownloadByUid($downloadUid);
 
         /** @var FileReference $fileReference */
-        foreach ($downloadRecord['files'] as $fileReference) {
+        foreach ($downloadRecord['image'] as $fileReference) {
             if ($fileReference->getName() === $filename) {
                 $this->downloadRepository->updateImageRecordAfterDownload($downloadRecord);
 

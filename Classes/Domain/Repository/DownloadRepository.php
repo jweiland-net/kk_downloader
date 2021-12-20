@@ -17,6 +17,7 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Resource\FileCollector;
 
 /*
  * Repository for all download records
@@ -43,7 +44,8 @@ class DownloadRepository extends AbstractRepository
             $downloadRecord = [];
         } else {
             $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
-            $this->attachDownloadFilesToDownloadRecord($downloadRecord);
+            $this->attachFilesToDownloadRecord($downloadRecord, 'image');
+            $this->attachFilesToDownloadRecord($downloadRecord, 'imagepreview');
         }
 
         return $downloadRecord;
@@ -109,47 +111,23 @@ class DownloadRepository extends AbstractRepository
         $downloads = [];
         while ($downloadRecord = $statement->fetch()) {
             $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
-            $this->attachDownloadFilesToDownloadRecord($downloadRecord);
+            $this->attachFilesToDownloadRecord($downloadRecord, 'image');
+            $this->attachFilesToDownloadRecord($downloadRecord, 'imagepreview');
             $downloads[] = $downloadRecord;
         }
 
         return $downloads;
     }
 
-    protected function attachDownloadFilesToDownloadRecord(array &$downloadRecord): void
+    protected function attachFilesToDownloadRecord(array &$downloadRecord, string $column): void
     {
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_file_reference');
-        $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
-
-        $statement = $queryBuilder
-            ->select('uid')
-            ->from('sys_file_reference')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'uid_foreign',
-                    $queryBuilder->createNamedParameter($downloadRecord['uid'], \PDO::PARAM_INT)
-                ),
-                $queryBuilder->expr()->eq(
-                    'tablenames',
-                    $queryBuilder->createNamedParameter('tx_kkdownloader_images')
-                ),
-                $queryBuilder->expr()->eq(
-                    'fieldname',
-                    $queryBuilder->createNamedParameter('image')
-                )
-            )
-            ->execute();
-
-        $downloadRecord['files'] = [];
-        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
-        while ($fileReferenceRecord = $statement->fetch()) {
-            try {
-                $fileReference = $resourceFactory->getFileReferenceObject((int)$fileReferenceRecord['uid']);
-            } catch (\Exception $exception) {
-                continue;
-            }
-            $downloadRecord['files'][] = $fileReference;
-        }
+        $fileCollector = GeneralUtility::makeInstance(FileCollector::class);
+        $fileCollector->addFilesFromRelation(
+            'tx_kkdownloader_images',
+            $column,
+            $downloadRecord
+        );
+        $downloadRecord[$column] = $fileCollector->getFiles();
     }
 
     public function updateImageRecordAfterDownload(array $downloadRecord): void
