@@ -154,19 +154,22 @@ class KkDownloader extends AbstractPlugin
         if ($this->settings['whatToDisplay'] === 'SINGLE') {
             if (!empty($this->uidOfDownload)) {
                 $downloadRecord = $this->downloadRepository->getDownloadByUid($this->uidOfDownload);
+                if ($downloadRecord === []) {
+                    $view->assign('download', '');
+                } else {
+                    if ($this->settings['showCats']) {
+                        $downloadRecord['categories'] = $this->getCategoriesAsString((int)$downloadRecord['uid']);
+                    }
+                    if ($this->settings['showImagePreview']) {
+                        $downloadRecord['previewImage'] = $this->createPreviewImage($downloadRecord);
+                    }
+                    $downloadRecord['fileItems'] = $this->generateDownloadLinks(
+                        $downloadRecord,
+                        (int)$this->conf['linkdescription']
+                    );
 
-                if ($this->settings['showCats']) {
-                    $downloadRecord['categories'] = $this->getCategoriesAsString((int)$downloadRecord['uid']);
+                    $view->assign('download', $downloadRecord);
                 }
-                if ($this->settings['showImagePreview']) {
-                    $downloadRecord['previewImage'] = $this->createPreviewImage($downloadRecord);
-                }
-                $downloadRecord['fileItems'] = $this->generateDownloadLinks(
-                    $downloadRecord,
-                    (int)$this->conf['linkdescription']
-                );
-
-                $view->assign('download', $downloadRecord);
             } else {
                 $this->addFlashMessage(
                     LocalizationUtility::translate('error.callSingleViewWithoutUid.description', 'kkDownloader'),

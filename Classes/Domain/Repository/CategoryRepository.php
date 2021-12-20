@@ -40,7 +40,10 @@ class CategoryRepository extends AbstractRepository
 
         $categories = [];
         while ($category = $statement->fetch()) {
-            $categories[] = $this->recordOverlay($category, 'sys_category');
+            $category = $this->recordOverlay($category, 'sys_category');
+            if ($category !== null) {
+                $categories[] = $category;
+            }
         }
 
         return $categories;

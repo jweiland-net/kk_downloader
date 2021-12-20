@@ -44,11 +44,13 @@ class DownloadRepository extends AbstractRepository
             $downloadRecord = [];
         } else {
             $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
-            $this->attachFilesToDownloadRecord($downloadRecord, 'image');
-            $this->attachFilesToDownloadRecord($downloadRecord, 'imagepreview');
+            if ($downloadRecord !== null) {
+                $this->attachFilesToDownloadRecord($downloadRecord, 'image');
+                $this->attachFilesToDownloadRecord($downloadRecord, 'imagepreview');
+            }
         }
 
-        return $downloadRecord;
+        return $downloadRecord ?? [];
     }
 
     /**
@@ -111,9 +113,11 @@ class DownloadRepository extends AbstractRepository
         $downloads = [];
         while ($downloadRecord = $statement->fetch()) {
             $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
-            $this->attachFilesToDownloadRecord($downloadRecord, 'image');
-            $this->attachFilesToDownloadRecord($downloadRecord, 'imagepreview');
-            $downloads[] = $downloadRecord;
+            if ($downloadRecord !== null) {
+                $this->attachFilesToDownloadRecord($downloadRecord, 'image');
+                $this->attachFilesToDownloadRecord($downloadRecord, 'imagepreview');
+                $downloads[] = $downloadRecord;
+            }
         }
 
         return $downloads;

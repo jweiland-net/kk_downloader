@@ -18,7 +18,7 @@ use TYPO3\CMS\Frontend\Page\PageRepository;
 
 class AbstractRepository
 {
-    protected function recordOverlay(array $row, string $tableName)
+    protected function recordOverlay(array $row, string $tableName): ?array
     {
         $context = GeneralUtility::makeInstance(Context::class);
         $languageUid = (int)$context->getPropertyFromAspect('language', 'contentId');
