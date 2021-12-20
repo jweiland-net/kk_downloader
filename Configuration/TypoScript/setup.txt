@@ -25,7 +25,7 @@ plugin.tx_kkdownloader_pi1 {
   datetimeformat = d.m.y H:i
 
   # download icon
-  # leave empty to use Icons of TYPO3 (IconFactory)
+  # leave empty to use Icons of TYPO3 EXT:frontend FileIcons directory
   # If you set an IconPath, this icon will be used for all Downloads
   # Example: downloadIcon = EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
   downloadIcon =

@@ -14,8 +14,6 @@ namespace JWeiland\KkDownloader\Plugin;
 use JWeiland\KkDownloader\Domain\Repository\CategoryRepository;
 use JWeiland\KkDownloader\Domain\Repository\DownloadRepository;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
-use TYPO3\CMS\Core\Imaging\Icon;
-use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -362,15 +360,23 @@ class KkDownloader extends AbstractPlugin
             // Render DownloadIcon
             if (empty($this->conf['downloadIcon'])) {
                 // If DownloadIcon is not configured, we try to get Icon by file-ext
-                try {
-                    $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
-                    $fileExtIcon = $iconFactory->getIconForResource(
-                        $fileReference->getOriginalFile(),
-                        Icon::SIZE_SMALL
-                    )->render();
-                } catch (\Exception $exception) {
+                $fileExtension = strtolower($fileReference->getExtension());
+                $fileExtension = $fileExtension === 'jpeg' ? 'jpg' : $fileExtension;
+                $iconPath = GeneralUtility::getFileAbsFileName(sprintf(
+                    'EXT:%s/Resources/Public/Icons/FileIcons/%s.gif',
+                    'frontend',
+                    $fileExtension
+                ));
+
+                if (is_file($iconPath)) {
                     $fileExtIcon = sprintf(
-                        '<img src="%s" alt="allgemeine Datei-Ikone" />&nbsp;',
+                        '<img src="%s" alt="%s-file" />&nbsp;',
+                        PathUtility::getAbsoluteWebPath($iconPath),
+                        $fileReference->getExtension()
+                    );
+                } else {
+                    $fileExtIcon = sprintf(
+                        '<img src="%s" alt="Fallback icon for files with unknown file extension" />&nbsp;',
                         PathUtility::getAbsoluteWebPath(
                             GeneralUtility::getFileAbsFileName($this->conf['missingDownloadIcon'])
                         )
@@ -378,7 +384,7 @@ class KkDownloader extends AbstractPlugin
                 }
             } else {
                 $fileExtIcon = sprintf(
-                    '<img src="%s" alt="File-Icon" />&nbsp;',
+                    '<img src="%s" alt="Default download icon" />&nbsp;',
                     PathUtility::getAbsoluteWebPath(
                         GeneralUtility::getFileAbsFileName($this->conf['downloadIcon'])
                     )

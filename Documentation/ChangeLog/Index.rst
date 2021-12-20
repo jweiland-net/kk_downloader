@@ -11,10 +11,11 @@ ChangeLog
 
 - Remove TYPO3 8.7 compatibility
 - Add TYPO3 10 compatibility
-- Replace git icons with svg
+- Replace extension icons from EXT:frontend
 - Restructure TCA fields
 - Repair record overlay
 - Remove TYPO3 columns from ext_tables.sql
+- Use FileCollection to get referenced file relations
 
 **Version 5.2.2**
 
