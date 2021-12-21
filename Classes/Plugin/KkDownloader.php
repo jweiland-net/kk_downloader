@@ -167,20 +167,22 @@ class KkDownloader extends AbstractPlugin
         if ($this->settings['whatToDisplay'] === 'SINGLE') {
             if (!empty($this->uidOfDownload)) {
                 $downloadRecord = $this->downloadRepository->getDownloadByUid($this->uidOfDownload);
-                $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
+                if ($downloadRecord === []) {
+                    $view->assign('download', '');
+                } else {
+                    if ($this->settings['showCats']) {
+                        $downloadRecord['categories'] = $this->getCategoriesAsString((int)$downloadRecord['uid']);
+                    }
+                    if ($this->settings['showImagePreview']) {
+                        $downloadRecord['previewImage'] = $this->createPreviewImage($downloadRecord);
+                    }
+                    $downloadRecord['fileItems'] = $this->generateDownloadLinks(
+                        $downloadRecord,
+                        (int)$this->conf['linkdescription']
+                    );
 
-                if ($this->settings['showCats']) {
-                    $downloadRecord['categories'] = $this->getCategoriesAsString((int)$downloadRecord['uid']);
+                    $view->assign('download', $downloadRecord);
                 }
-                if ($this->settings['showImagePreview']) {
-                    $downloadRecord['previewImage'] = $this->createPreviewImage($downloadRecord);
-                }
-                $downloadRecord['fileItems'] = $this->generateDownloadLinks(
-                    $downloadRecord,
-                    (int)$this->conf['linkdescription']
-                );
-
-                $view->assign('download', $downloadRecord);
             } else {
                 $this->addFlashMessage(
                     LocalizationUtility::translate('error.callSingleViewWithoutUid.description', 'kkDownloader'),
@@ -208,7 +210,6 @@ class KkDownloader extends AbstractPlugin
                 $this->settings['orderDirection']
             );
             foreach ($downloads as &$downloadRecord) {
-                $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
                 if ($this->settings['showCats']) {
                     $downloadRecord['categories'] = $this->getCategoriesAsString((int)$downloadRecord['uid']);
                 }
@@ -252,27 +253,15 @@ class KkDownloader extends AbstractPlugin
     {
         $previewImageForDownload = '';
 
-        // if download record contains a preview image
-        if (!empty($downloadRecord['imagepreview'])) {
-            $imgConf = $this->conf['image.'];
-            $imgConf['file.']['import.']['dataWrap'] = '{file:current:storage}:{file:current:identifier}';
-            $imgConf['altText.']['data'] = 'file:current:title';
-            $imgConf['titleText.']['data'] = 'file:current:title';
-
-            $previewImageForDownload = $this->cObj->cObjGetSingle(
-                'FILES',
-                [
-                    'references.' => [
-                        'table' => 'tx_kkdownloader_images',
-                        'uid' => (int)$downloadRecord['uid'],
-                        'fieldName' => 'imagepreview'
-                    ],
-                    'begin' => 0,
-                    'maxItems' => 1,
-                    'renderObj' => 'IMAGE',
-                    'renderObj.' => $imgConf
-                ]
-            );
+        if (
+            $downloadRecord['imagepreview'] !== []
+            && ($fileReference = reset($downloadRecord['imagepreview']))
+            && $fileReference instanceof FileReference
+        ) {
+            // if download record contains a preview image
+            $img = $this->conf['image.'];
+            $img['file'] = $fileReference->getPublicUrl();
+            $previewImageForDownload = $this->cObj->cObjGetSingle('IMAGE', $img);
         } else {
             $allowedMimeTypes = [
                 'image/gif',
@@ -284,7 +273,7 @@ class KkDownloader extends AbstractPlugin
 
             // Loop throw download images and use first image with allowed mimetype as thumbnail
             /** @var FileReference $fileReference */
-            foreach ($downloadRecord['files'] as $fileReference) {
+            foreach ($downloadRecord['image'] as $fileReference) {
                 // MimeType is not an image, check against 'pdf'
                 // Create IMG-Tag, if image has allowed MimeType.
                 if (
@@ -379,7 +368,7 @@ class KkDownloader extends AbstractPlugin
         $content = '';
 
         /** @var $fileReference FileReference */
-        foreach ($downloadRecord['files'] as $fileReference) {
+        foreach ($downloadRecord['image'] as $fileReference) {
             $fileDescription = $fileReference->getTitle();
             if (empty($fileDescription)) {
                 // Set fileDescription as configured by Type
@@ -483,7 +472,6 @@ class KkDownloader extends AbstractPlugin
         $categories = [];
         $categoryRecords = $this->categoryRepository->getCategoriesByDownloadUid($downloadUid);
         foreach ($categoryRecords as $categoryRecord) {
-            $categoryRecord = $this->recordOverlay($categoryRecord, 'sys_category');
             $categories[] = $categoryRecord['title'];
         }
 
@@ -536,7 +524,7 @@ class KkDownloader extends AbstractPlugin
         $downloadRecord = $this->downloadRepository->getDownloadByUid($downloadUid);
 
         /** @var FileReference $fileReference */
-        foreach ($downloadRecord['files'] as $fileReference) {
+        foreach ($downloadRecord['image'] as $fileReference) {
             if ($fileReference->getName() === $filename) {
                 $this->downloadRepository->updateImageRecordAfterDownload($downloadRecord);
 
@@ -668,31 +656,6 @@ class KkDownloader extends AbstractPlugin
         }
 
         return $view;
-    }
-
-    protected function recordOverlay(array $row, string $tableName)
-    {
-        $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
-
-        // Workspace overlay
-        $pageRepository->versionOL($tableName, $row);
-
-        // Language overlay
-        if (
-            isset($GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'])
-            && $row[$GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField']] > 0
-        ) {
-            //force overlay by faking default language record, as getRecordOverlay can only handle default language records
-            $row['uid'] = $row[$GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField']];
-            $row[$GLOBALS['TCA'][$tableName]['ctrl']['languageField']] = 0;
-        }
-
-        return $pageRepository->getRecordOverlay(
-            $tableName,
-            $row,
-            $this->languageUid,
-            (string)$this->languageOverlayMode
-        );
     }
 
     /**

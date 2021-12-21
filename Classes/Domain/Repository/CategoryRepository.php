@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace JWeiland\KkDownloader\Domain\Repository;
 
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -19,13 +18,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /*
  * Repository for kk_downloader categories
  */
-class CategoryRepository
+class CategoryRepository extends AbstractRepository
 {
     /**
      * Returns all categories by Download UID
      *
-     * @param int $downloadUid
-     * @return array
+     * @return array[]
      */
     public function getCategoriesByDownloadUid(int $downloadUid): array
     {
@@ -42,7 +40,10 @@ class CategoryRepository
 
         $categories = [];
         while ($category = $statement->fetch()) {
-            $categories[] = $category;
+            $category = $this->recordOverlay($category, 'sys_category');
+            if ($category !== null) {
+                $categories[] = $category;
+            }
         }
 
         return $categories;
@@ -89,10 +90,5 @@ class CategoryRepository
                     0
                 )
             );
-    }
-
-    protected function getConnectionPool(): ConnectionPool
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }
