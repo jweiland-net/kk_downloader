@@ -13,16 +13,15 @@ namespace JWeiland\KkDownloader\Domain\Repository;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Resource\FileCollector;
 
 /*
  * Repository for all download records
  */
-class DownloadRepository
+class DownloadRepository extends AbstractRepository
 {
     public function getDownloadByUid(int $uid): array
     {
@@ -40,10 +39,14 @@ class DownloadRepository
         if ($downloadRecord === false) {
             $downloadRecord = [];
         } else {
-            $this->attachDownloadFilesToDownloadRecord($downloadRecord);
+            $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
+            if ($downloadRecord !== null) {
+                $this->attachFilesToDownloadRecord($downloadRecord, 'image');
+                $this->attachFilesToDownloadRecord($downloadRecord, 'imagepreview');
+            }
         }
 
-        return $downloadRecord;
+        return $downloadRecord ?? [];
     }
 
     public function getDownloads(
@@ -102,47 +105,26 @@ class DownloadRepository
 
         $downloads = [];
         while ($downloadRecord = $statement->fetch()) {
-            $this->attachDownloadFilesToDownloadRecord($downloadRecord);
-            $downloads[] = $downloadRecord;
+            $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
+            if ($downloadRecord !== null) {
+                $this->attachFilesToDownloadRecord($downloadRecord, 'image');
+                $this->attachFilesToDownloadRecord($downloadRecord, 'imagepreview');
+                $downloads[] = $downloadRecord;
+            }
         }
 
         return $downloads;
     }
 
-    protected function attachDownloadFilesToDownloadRecord(array &$downloadRecord)
+    protected function attachFilesToDownloadRecord(array &$downloadRecord, string $column)
     {
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_file_reference');
-        $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
-
-        $statement = $queryBuilder
-            ->select('uid')
-            ->from('sys_file_reference')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'uid_foreign',
-                    $queryBuilder->createNamedParameter($downloadRecord['uid'], \PDO::PARAM_INT)
-                ),
-                $queryBuilder->expr()->eq(
-                    'tablenames',
-                    $queryBuilder->createNamedParameter('tx_kkdownloader_images')
-                ),
-                $queryBuilder->expr()->eq(
-                    'fieldname',
-                    $queryBuilder->createNamedParameter('image')
-                )
-            )
-            ->execute();
-
-        $downloadRecord['files'] = [];
-        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
-        while ($fileReferenceRecord = $statement->fetch()) {
-            try {
-                $fileReference = $resourceFactory->getFileReferenceObject((int)$fileReferenceRecord['uid']);
-            } catch (\Exception $e) {
-                continue;
-            }
-            $downloadRecord['files'][] = $fileReference;
-        }
+        $fileCollector = GeneralUtility::makeInstance(FileCollector::class);
+        $fileCollector->addFilesFromRelation(
+            'tx_kkdownloader_images',
+            $column,
+            $downloadRecord
+        );
+        $downloadRecord[$column] = $fileCollector->getFiles();
     }
 
     public function updateImageRecordAfterDownload(array $downloadRecord)
@@ -216,10 +198,5 @@ class DownloadRepository
         }
 
         return $columns;
-    }
-
-    protected function getConnectionPool(): ConnectionPool
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }
