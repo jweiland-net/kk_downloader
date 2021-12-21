@@ -7,6 +7,12 @@
 ChangeLog
 =========
 
+**Version 5.2.5**
+
+- Bugfix: Repair translation for strict mode
+- Use git file icons instead of IconFactory
+- Move recordOverlay into new AbstractRepository
+
 **Version 5.2.4**
 
 - Bugfix: Use streamFile for TYPO3 9.5
