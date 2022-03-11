@@ -131,6 +131,7 @@
 					<results_at_a_time>
 						<TCEforms>
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.results_at_a_time</label>
+							<description>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.results_at_a_time.description</description>
 							<config>
 								<type>input</type>
 								<size>3</size>
@@ -144,7 +145,7 @@
 							<config>
 								<type>check</type>
 								<renderType>checkboxToggle</renderType>
-								<default>0</default>
+								<default>1</default>
 							</config>
 						</TCEforms>
 					</showPagebrowser>
@@ -226,6 +227,7 @@
 					<showEditDate>
 						<TCEforms>
 							<label>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showEditDate</label>
+							<description>LLL:EXT:kk_downloader/Resources/Private/Language/FlexForm.xlf:tx_kkdownloader.showEditDate.description</description>
 							<config>
 								<type>check</type>
 								<renderType>checkboxToggle</renderType>

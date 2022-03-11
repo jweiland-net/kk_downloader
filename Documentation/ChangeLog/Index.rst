@@ -7,6 +7,12 @@
 ChangeLog
 =========
 
+**Version 6.1.0**
+
+- Add limit and offset to getDownloads query. This reduces the amount of records a lot.
+- Display pagebrowser is now activated by default
+- Add some more explanation to FlexForm fields
+
 **Version 6.0.1**
 
 - Update foreign_table_where to allow categories of all pages in FlexForm

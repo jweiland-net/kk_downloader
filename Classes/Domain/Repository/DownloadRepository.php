@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\KkDownloader\Domain\Repository;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
-use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -56,50 +56,16 @@ class DownloadRepository extends AbstractRepository
      * @return array[]
      */
     public function getDownloads(
-        array $storageFolders = [],
+        array $storagePages = [],
         int $categoryUid = 0,
         string $orderBy = '',
-        string $direction = 'ASC'
+        string $direction = 'ASC',
+        int $limit = 25,
+        int $offset = 0
     ): array {
         $queryBuilder = $this->getQueryBuilderForDownloads();
-
-        if ($storageFolders !== []) {
-            $queryBuilder->andWhere(
-                $queryBuilder->expr()->in(
-                    'i.pid',
-                    $queryBuilder->createNamedParameter($storageFolders, Connection::PARAM_INT_ARRAY)
-                )
-            );
-        }
-
-        if ($categoryUid > 0) {
-            $queryBuilder
-                ->join(
-                    'i',
-                    'sys_category_record_mm',
-                    'sc_mm',
-                    (string)$queryBuilder->expr()->andX(
-                        $queryBuilder->expr()->eq(
-                            'i.uid',
-                            $queryBuilder->quoteIdentifier('sc_mm.uid_foreign')
-                        ),
-                        $queryBuilder->expr()->eq(
-                            'sc_mm.tablenames',
-                            $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
-                        ),
-                        $queryBuilder->expr()->eq(
-                            'sc_mm.fieldname',
-                            $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
-                        )
-                    )
-                )
-                ->andWhere(
-                    $queryBuilder->expr()->eq(
-                        'sc_mm.uid_local',
-                        $queryBuilder->createNamedParameter($categoryUid, \PDO::PARAM_INT)
-                    )
-                );
-        }
+        $this->addStoragePagesToQueryBuilder($storagePages, $queryBuilder);
+        $this->addCategoryToQueryBuilder($categoryUid, $queryBuilder);
 
         if ($orderBy === '') {
             $queryBuilder->orderBy('i.name', 'ASC');
@@ -107,7 +73,10 @@ class DownloadRepository extends AbstractRepository
             $queryBuilder->orderBy('i.' . $orderBy, $direction);
         }
 
-        $statement = $queryBuilder->execute();
+        $statement = $queryBuilder
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->execute();
 
         $downloads = [];
         while ($downloadRecord = $statement->fetch()) {
@@ -120,6 +89,67 @@ class DownloadRepository extends AbstractRepository
         }
 
         return $downloads;
+    }
+
+    public function countDownloads(array $storagePages = [], int $categoryUid = 0): int
+    {
+        $queryBuilder = $this->getQueryBuilderForDownloads();
+        $this->addStoragePagesToQueryBuilder($storagePages, $queryBuilder);
+        $this->addCategoryToQueryBuilder($categoryUid, $queryBuilder);
+
+        return (int)$queryBuilder
+            ->resetQueryParts(['select', 'groupBy', 'orderBy'])
+            ->count('*')
+            ->execute()
+            ->fetchColumn();
+    }
+
+    protected function addStoragePagesToQueryBuilder(array $storagePages, QueryBuilder $queryBuilder): void
+    {
+        if ($storagePages === []) {
+            return;
+        }
+
+        $queryBuilder->andWhere(
+            $queryBuilder->expr()->in(
+                'i.pid',
+                $queryBuilder->createNamedParameter($storagePages, Connection::PARAM_INT_ARRAY)
+            )
+        );
+    }
+
+    protected function addCategoryToQueryBuilder(int $category, QueryBuilder $queryBuilder): void
+    {
+        if ($category === 0) {
+            return;
+        }
+
+        $queryBuilder
+            ->join(
+                'i',
+                'sys_category_record_mm',
+                'sc_mm',
+                (string)$queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->eq(
+                        'i.uid',
+                        $queryBuilder->quoteIdentifier('sc_mm.uid_foreign')
+                    ),
+                    $queryBuilder->expr()->eq(
+                        'sc_mm.tablenames',
+                        $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
+                    ),
+                    $queryBuilder->expr()->eq(
+                        'sc_mm.fieldname',
+                        $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
+                    )
+                )
+            )
+            ->andWhere(
+                $queryBuilder->expr()->eq(
+                    'sc_mm.uid_local',
+                    $queryBuilder->createNamedParameter($category, \PDO::PARAM_INT)
+                )
+            );
     }
 
     protected function attachFilesToDownloadRecord(array &$downloadRecord, string $column): void

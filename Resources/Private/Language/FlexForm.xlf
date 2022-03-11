@@ -10,10 +10,16 @@
 				<source>Image preview?</source>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader.results_at_a_time">
-				<source>No of items to show in one view before browsing</source>
+				<source>Max amount of records to show on list view</source>
+			</trans-unit>
+			<trans-unit id="tx_kkdownloader.results_at_a_time.description">
+				<source>If empty we will show value of TypoScript which is by default 25. If you want to show all records set this value high enough.</source>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader.showPagebrowser">
 				<source>Show pagebrowser</source>
+			</trans-unit>
+			<trans-unit id="tx_kkdownloader.showPagebrowser.description">
+				<source>Default on. If you deactivate this option and configure a low amount of records to show in list view, there is no possibility for the website visitor to navigate to the other records.</source>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader.showCRDate">
 				<source>Show creation date/time of the download item</source>
@@ -40,7 +46,10 @@
 				<source>Date and Time</source>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader.showEditDate">
-				<source>Show T3-object last edit date</source>
+				<source>Show modification date</source>
+			</trans-unit>
+			<trans-unit id="tx_kkdownloader.showEditDate.description">
+				<source>After activation, the modification date of the download data set is also displayed.</source>
 			</trans-unit>
 			<trans-unit id="tx_kkdownloader.showDateLastDownload">
 				<source>Show date of last download</source>

@@ -23,7 +23,7 @@ TypoScript Setup Reference
    downloadIcon_               String                                1
    missingDownloadIcon_        String                                EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
    templateFile_               String                                EXT:kk_downloader/Resources/Private/Templates/MainTemplate.html
-   defaultDownloadPid_         Integer/String                        all
+   defaultDownloadPid_         CSV INT values                        empty
    singlePID_                  Integer                               empty
    displayCreationDate_        Removed                               Removed
    dateformat_                 String                                d.m.Y
@@ -97,10 +97,9 @@ Path to template file
 defaultDownloadPid
 ------------------
 
-# PID of the general download folder (if no page-“starting-point” is set)
+# PID of the general download folder (if no page-"starting-point" is set)
 
-Integer: PID of a page-object
-String: "all" -> ALL downloads will be selected
+Comma seperated list of storage PIDs
 
 
 .. _singlePID:

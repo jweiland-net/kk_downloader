@@ -119,8 +119,8 @@ class KkDownloader extends AbstractPlugin
     /**
      * The main method of the PlugIn
      *
-     * @param string $content: The PlugIn content
-     * @param array $conf: The PlugIn configuration
+     * @param string $content The PlugIn content
+     * @param array $conf The PlugIn configuration
      * @return string The content that is displayed on the website
      */
     public function main(string $content, array $conf): string
@@ -143,11 +143,10 @@ class KkDownloader extends AbstractPlugin
 
         $this->internal['results_at_a_time'] = $this->getFlexFormValue('results_at_a_time');
         $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? (int)($this->internal['results_at_a_time']) : (int)($this->conf['results_at_a_time']);
-        $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? $this->internal['results_at_a_time'] : 1001;
+        $this->internal['results_at_a_time'] = $this->internal['results_at_a_time'] > 0 ? $this->internal['results_at_a_time'] : 25;
         $this->internal['maxPages'] = $this->conf['pageBrowser.']['maxPages'] > 0 ? (int)($this->conf['pageBrowser.']['maxPages']) : 10;
 
         $templateFile = $this->getFlexFormValue('template_file') ?: $this->conf['templateFile'] ?: $this->defaultTemplate;
-        $defaultDownloadPid = $this->conf['defaultDownloadPid'] ?: 'all';
 
         $view = $this->getView();
         $view->setTemplatePathAndFilename($templateFile);
@@ -178,24 +177,21 @@ class KkDownloader extends AbstractPlugin
                 );
             }
         } else {
-            $storageFoldersForDownloads = $this->cObj->data['pages'];
-            if (!$storageFoldersForDownloads) {
-                $storageFoldersForDownloads = $defaultDownloadPid;
-            }
-
-            if (
-                !empty($storageFoldersForDownloads)
-                && strtolower(trim($storageFoldersForDownloads)) === 'all'
-            ) {
-                $storageFoldersForDownloads = '';
-            }
+            $storagePages = GeneralUtility::intExplode(
+                ',',
+                $this->cObj->data['pages'] ?: $this->conf['defaultDownloadPid'],
+                true
+            );
 
             $downloads = $this->downloadRepository->getDownloads(
-                GeneralUtility::intExplode(',', $storageFoldersForDownloads, true),
+                $storagePages,
                 $this->settings['categoryUid'],
                 $this->settings['orderBy'],
-                $this->settings['orderDirection']
+                $this->settings['orderDirection'],
+                (int)$this->internal['results_at_a_time'],
+                (int)($this->piVars['pointer'] * $this->internal['results_at_a_time'])
             );
+
             foreach ($downloads as &$downloadRecord) {
                 if ($this->settings['showCats']) {
                     $downloadRecord['categories'] = $this->getCategoriesAsString((int)$downloadRecord['uid']);
@@ -210,15 +206,20 @@ class KkDownloader extends AbstractPlugin
                     (int)$this->conf['linkdescription']
                 );
             }
-
             unset($downloadRecord);
 
             $view->assign('downloads', $downloads);
 
             // Browse list items;
-            $this->internal['res_count'] = count($downloads);
+            $this->internal['res_count'] = $this->downloadRepository->countDownloads(
+                $storagePages,
+                $this->settings['categoryUid']
+            );
 
-            if ($this->internal['results_at_a_time'] > 0 && count($downloads) > $this->internal['results_at_a_time']) {
+            if (
+                $this->internal['results_at_a_time'] > 0
+                && $this->internal['res_count'] > $this->internal['results_at_a_time']
+            ) {
                 if (!$this->conf['pageBrowser.']['showPBrowserText']) {
                     $this->LOCAL_LANG[$this->LLkey]['pi_list_browseresults_page'] = '';
                 }
@@ -505,7 +506,7 @@ class KkDownloader extends AbstractPlugin
 
         // Make Previous link
         if ($beginAt) {
-            $prev = ($beginAt - $this->internal['results_at_a_time'] < 0)?0:$beginAt - $this->internal['results_at_a_time'];
+            $prev = ($beginAt - $this->internal['results_at_a_time'] < 0) ? 0 : $beginAt - $this->internal['results_at_a_time'];
             $prev = (int)($prev / $this->internal['results_at_a_time']);
             $params = ['pointer' => $prev];
             $prev_link = $this->pi_linkTP_keepPIvars(
@@ -518,20 +519,20 @@ class KkDownloader extends AbstractPlugin
         $pages = ceil($amountOfDownloads / $this->internal['results_at_a_time']);
         $actualPage = floor($beginAt / $this->internal['results_at_a_time']);
 
-        if (ceil($actualPage - $this->internal['maxPages']/2) > 0) {
+        if (ceil($actualPage - $this->internal['maxPages'] / 2) > 0) {
             $firstPage = ceil($actualPage - $this->internal['maxPages']/2);
             $addLast = 0;
         } else {
             $firstPage = 0;
-            $addLast = floor(($this->internal['maxPages']/2)-$actualPage);
+            $addLast = floor(($this->internal['maxPages'] / 2) - $actualPage);
         }
 
-        if (ceil($actualPage + $this->internal['maxPages']/2) <= $pages) {
-            $lastPage = ceil($actualPage + $this->internal['maxPages'] / 2) > 0 ? ceil($actualPage + $this->internal['maxPages']/2) : 0;
+        if (ceil($actualPage + $this->internal['maxPages'] / 2) <= $pages) {
+            $lastPage = ceil($actualPage + $this->internal['maxPages'] / 2) > 0 ? ceil($actualPage + $this->internal['maxPages'] / 2) : 0;
             $subFirst = 0;
         } else {
             $lastPage = $pages;
-            $subFirst = ceil($this->internal['maxPages']/2-($pages-$actualPage));
+            $subFirst = ceil($this->internal['maxPages'] / 2 - ($pages - $actualPage));
         }
 
         $firstPage = ($firstPage - $subFirst) > 0 ? ($firstPage - $subFirst) : $firstPage;

@@ -38,7 +38,7 @@ Standard **with** image preview:
    :width: 500px
    :alt: Screenshot with image preview
 
-Complete list of all downloads (no "starting point" selected and "plugin.tx_kkdownloader_pi1.defaultDownloadPid = all"
+Complete list of all downloads (no "starting point" selected and "plugin.tx_kkdownloader_pi1.defaultDownloadPid = "
 and a separate html-template selected in the TypoScript Setup):
 
 .. figure:: ../Images/Screenshots/ScreenshotAllDownloads.png
