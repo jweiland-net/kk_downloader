@@ -7,6 +7,10 @@
 ChangeLog
 =========
 
+**Version 6.0.1**
+
+- Update foreign_table_where to allow categories of all pages in FlexForm
+
 **Version 6.0.0**
 
 - Remove TYPO3 8.7 compatibility
