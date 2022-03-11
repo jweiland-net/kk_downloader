@@ -12,7 +12,7 @@ plugin.tx_kkdownloader_pi1 {
   }
 
   # PID of the general download folder (if no page-"starting-point" is set)
-  defaultDownloadPid = all
+  defaultDownloadPid =
 
   # PID of the page for a SINGLE view
   singlePID =
