@@ -48,7 +48,7 @@
 									</numIndex>
 								</items>
 								<foreign_table>sys_category</foreign_table>
-								<foreign_table_where>AND ('###PAGE_TSCONFIG_IDLIST###' = '' OR sys_category.pid IN (###PAGE_TSCONFIG_IDLIST###)) ORDER BY sys_category.title</foreign_table_where>
+								<foreign_table_where>AND ('###PAGE_TSCONFIG_IDLIST###' = '0' OR sys_category.pid IN (###PAGE_TSCONFIG_IDLIST###)) AND sys_category.sys_language_uid = 0 AND sys_category.l10n_parent = 0 ORDER BY sys_category.title</foreign_table_where>
 							</config>
 						</TCEforms>
 					</category>
