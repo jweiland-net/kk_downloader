@@ -7,6 +7,10 @@
 ChangeLog
 =========
 
+**Version 6.1.1**
+
+- Remove ".image img" CSS as it is not used anywhere
+
 **Version 6.1.0**
 
 - Add limit and offset to getDownloads query. This reduces the amount of records a lot.
