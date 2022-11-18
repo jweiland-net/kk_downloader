@@ -28,15 +28,6 @@
   margin-right: 15px;
 }
 
-.image img {
-  padding: 0;
-  margin: 0 10px 10px 0;
-  float: left;
-  width: 63px;
-  height: 63px;
-  border: 2px solid #D0EFED;
-}
-
 .kkdl_flex {
   padding: 5px;
   margin: 0px 3px 5px 0;
