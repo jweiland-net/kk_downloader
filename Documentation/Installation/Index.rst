@@ -1,7 +1,7 @@
-.. include:: ../Includes.txt
+..  include:: ../Includes.txt
 
 
-.. _installation:
+..  _installation:
 
 ============
 Installation
@@ -15,28 +15,28 @@ Composer
 
 You can install kk_downloader with following shell command:
 
-.. code-block:: bash
+..  code-block:: bash
 
-   composer req jweiland/kk-downloader
+    composer req jweiland/kk-downloader
 
 Extensionmanager
 """"""""""""""""
 
 If you want to install kk_downloader traditionally with Extensionmanager, follow these steps:
 
-#. Visit ExtensionManager
+#.  Visit ExtensionManager
 
-#. Switch over to `Get Extensions`
+#.  Switch over to `Get Extensions`
 
-#. Search for `kk_downloader`
+#.  Search for `kk_downloader`
 
-#. Install extension
+#.  Install extension
 
 DEV Version (GIT)
 """""""""""""""""
 
 You can install the latest DEV Version with following GIT command:
 
-.. code-block:: bash
+..  code-block:: bash
 
-   git clone https://github.com/jweiland-net/kk_downloader.git
+    git clone https://github.com/jweiland-net/kk_downloader.git

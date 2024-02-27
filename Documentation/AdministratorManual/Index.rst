@@ -1,16 +1,18 @@
-.. include:: ../Includes.txt
+..  include:: ../Includes.txt
 
-.. _admin-manual:
+
+..  _admin-manual:
 
 Administrator manual
 ====================
 
-.. only:: html
+..  only:: html
 
-   This chapter describes how to manage the extension from a superuser point of view.
+    This chapter describes how to manage the extension from a superuser
+    point of view.
 
-.. toctree::
-   :maxdepth: 2
-   :titlesonly:
+..  toctree::
+    :maxdepth: 2
+    :titlesonly:
 
-  Update/Index
+    Update/Index

@@ -1,7 +1,7 @@
-.. include:: ../Includes.txt
+..  include:: ../Includes.txt
 
 
-.. _configuration:
+..  _configuration:
 
 =============
 Configuration
@@ -9,43 +9,44 @@ Configuration
 
 **plugin_tx_kkdownloader_pi1.**
 
-.. _configuration-typoscript:
+
+..  _configuration-typoscript:
 
 TypoScript Setup Reference
 ==========================
 
-.. container:: ts-properties
+..  container:: ts-properties
 
-   =========================== ===================================== ====================
-   Property                    Data type                             Default
-   =========================== ===================================== =========================================
-   linkdescription_            Integer                               1
-   downloadIcon_               String                                1
-   missingDownloadIcon_        String                                EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
-   templateFile_               String                                EXT:kk_downloader/Resources/Private/Templates/MainTemplate.html
-   defaultDownloadPid_         CSV INT values                        empty
-   singlePID_                  Integer                               empty
-   displayCreationDate_        Removed                               Removed
-   dateformat_                 String                                d.m.Y
-   datetimeformat_             String                                d.m.Y H:i
-   imageDistance_              String                                5
-   image_                      ->imgResource/->stdWrap
-   results_at_a_time_          Integer                               25
-   pageBrowser_                Array
-   =========================== ===================================== =========================================
+    =========================== ===================================== ====================
+    Property                    Data type                             Default
+    =========================== ===================================== =========================================
+    linkdescription_            Integer                               1
+    downloadIcon_               String                                1
+    missingDownloadIcon_        String                                EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
+    templateFile_               String                                EXT:kk_downloader/Resources/Private/Templates/MainTemplate.html
+    defaultDownloadPid_         CSV INT values                        empty
+    singlePID_                  Integer                               empty
+    displayCreationDate_        Removed                               Removed
+    dateformat_                 String                                d.m.Y
+    datetimeformat_             String                                d.m.Y H:i
+    imageDistance_              String                                5
+    image_                      ->imgResource/->stdWrap
+    results_at_a_time_          Integer                               25
+    pageBrowser_                Array
+    =========================== ===================================== =========================================
 
 
 Property details
 ================
 
-.. only:: html
+..  only:: html
 
-   .. contents::
-      :local:
-      :depth: 1
+    ..  contents::
+        :local:
+        :depth: 1
 
 
-.. _linkdescription:
+..  _linkdescription:
 
 linkdescription
 ---------------
@@ -57,7 +58,7 @@ If no linktitle set:
 3 = fileextension
 
 
-.. _downloadIcon:
+..  _downloadIcon:
 
 downloadIcon
 ------------
@@ -75,7 +76,7 @@ corrosponding icons to the fileextension will be
 shown, just like “pdf.gif” e.g. - Kurt Kunig
 
 
-.. _missingDownloadIcon:
+..  _missingDownloadIcon:
 
 missingDownloadIcon
 -------------------
@@ -84,7 +85,7 @@ If the path is set typo3/gfx/fileicons/ you can set a default download icon
 if a icon is missing (e.g. for rar files)
 
 
-.. _templateFile:
+..  _templateFile:
 
 templateFile
 ------------
@@ -92,7 +93,7 @@ templateFile
 Path to template file
 
 
-.. _defaultDownloadPid:
+..  _defaultDownloadPid:
 
 defaultDownloadPid
 ------------------
@@ -102,7 +103,7 @@ defaultDownloadPid
 Comma seperated list of storage PIDs
 
 
-.. _singlePID:
+..  _singlePID:
 
 singlePID
 ---------
@@ -110,7 +111,7 @@ singlePID
 Pid of the detail page
 
 
-.. _displayCreationDate:
+..  _displayCreationDate:
 
 displayCreationDate
 -------------------
@@ -119,7 +120,7 @@ Property removed.
 Please use `showCRDate` in FlexForm.
 
 
-.. _dateformat:
+..  _dateformat:
 
 dateformat
 ----------
@@ -135,7 +136,7 @@ plugin.tx_kkdownloader_pi1 {
 This will display the date in content elements like this: "Monday, 31.03.2008".
 
 
-.. _datetimeformat:
+..  _datetimeformat:
 
 datetimeformat
 --------------
@@ -145,7 +146,7 @@ e.g. used for formatting the date-output of the download-file
 datetimeformat = d.m.Y H:i
 
 
-.. _imageDistance:
+..  _imageDistance:
 
 imageDistance
 -------------
@@ -153,7 +154,7 @@ imageDistance
 Distance between Image and text
 
 
-.. _image:
+..  _image:
 
 image
 -----
@@ -178,7 +179,7 @@ image {
 }
 
 
-.. _results_at_a_time:
+..  _results_at_a_time:
 
 results_at_a_time
 -----------------
@@ -187,7 +188,7 @@ limit of single items on one list-page used with LIST for page-browsing.
 Can be overwritten in flexform.
 
 
-.. _pageBrowser:
+..  _pageBrowser:
 
 pageBrowser
 -----------

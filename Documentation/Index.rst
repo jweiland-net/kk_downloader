@@ -1,62 +1,62 @@
-.. include:: Includes.txt
+..  include:: Includes.txt
 
 
-.. Every manual should have a start label for cross-referencing to
-.. start page. Do not remove this!
+..  Every manual should have a start label for cross-referencing to
+..  start page. Do not remove this!
 
-.. _start:
+..  _start:
 
 =============================================================
 KK Downloader
 =============================================================
 
-.. only:: html
+..  only:: html
 
-   :Classification:
-      kk_downloader
+    :Classification:
+        kk_downloader
 
-   :Version:
-      |release|
+    :Version:
+        |release|
 
-   :Language:
-      en
+    :Language:
+        en
 
-   :Description:
-      Manual covering TYPO3 extension kk_downloader
+    :Description:
+        Manual covering TYPO3 extension kk_downloader
 
-   :Keywords:
-      kurt kunig, download
+    :Keywords:
+        kurt kunig, download
 
-   :Copyright:
-      2013-2019
+    :Copyright:
+        2013-2019
 
-   :Author:
-      Stefan Froemken
+    :Author:
+        Stefan Froemken
 
-   :Email:
-      projects@jweiland.net
+    :Email:
+        projects@jweiland.net
 
-   :License:
-      This document is published under the Open Publication License
-      available from http://www.opencontent.org/openpub/
+    :License:
+        This document is published under the Open Publication License
+        available from http://www.opencontent.org/openpub/
 
-   :Rendered:
-      |today|
+    :Rendered:
+        |today|
 
-   The content of this document is related to TYPO3,
-   a GNU/GPL CMS/Framework available from `www.typo3.org <https://typo3.org/>`__.
+    The content of this document is related to TYPO3,
+    a GNU/GPL CMS/Framework available from `www.typo3.org <https://typo3.org/>`__.
 
 
-   **Table of Contents**
+    **Table of Contents**
 
-.. toctree::
-   :maxdepth: 3
+..  toctree::
+    :maxdepth: 3
 
-   Introduction/Index
-   Installation/Index
-   Configuration/Index
-   User/Index
-   AdministratorManual/Index
-   FAQ/Index
-   ChangeLog/Index
-   Links
+    Introduction/Index
+    Installation/Index
+    Configuration/Index
+    User/Index
+    AdministratorManual/Index
+    FAQ/Index
+    ChangeLog/Index
+    Links
