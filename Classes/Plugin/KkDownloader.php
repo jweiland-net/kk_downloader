@@ -13,6 +13,7 @@ namespace JWeiland\KkDownloader\Plugin;
 
 use JWeiland\KkDownloader\Domain\Repository\CategoryRepository;
 use JWeiland\KkDownloader\Domain\Repository\DownloadRepository;
+use JWeiland\KkDownloader\Traits\TypoScriptFrontendControllerTrait;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -27,11 +28,14 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\Plugin\AbstractPlugin;
 
-/*
- * Main Plugin class
+/**
+ * This is the main entrypoint of kk_downloader.
+ * It is based on the old pi_base class system of TYPO3.
  */
 class KkDownloader extends AbstractPlugin
 {
+    use TypoScriptFrontendControllerTrait;
+
     /**
      * Same as class name
      *
@@ -48,10 +52,8 @@ class KkDownloader extends AbstractPlugin
 
     /**
      * Path to extension
-     *
-     * @var string
      */
-    public $extPath = 'typo3conf/ext/kk_downloader/';
+    public string $extPath = 'typo3conf/ext/kk_downloader/';
 
     /**
      * The extension key
@@ -60,15 +62,7 @@ class KkDownloader extends AbstractPlugin
      */
     public $extKey = 'kk_downloader';
 
-    /**
-     * @var string
-     */
-    public $filebasepath = 'uploads/tx_kkdownloader/';
-
-    /**
-     * @var string
-     */
-    public $defaultTemplate = 'EXT:kk_downloader/Resources/Private/Templates/MainTemplate.html';
+    public string $defaultTemplate = 'EXT:kk_downloader/Resources/Private/Templates/MainTemplate.html';
 
     /**
      * @var string[]|null[]|int[]
@@ -77,44 +71,43 @@ class KkDownloader extends AbstractPlugin
 
     /**
      * Path to download ($_GET)
-     *
-     * @var string
      */
-    protected $download = '';
+    protected string $download = '';
 
-    /**
-     * @var int
-     */
-    protected $did = 0;
+    protected int $did = 0;
 
     /**
      * UID of download to show on detail page
-     *
-     * @var int
      */
-    protected $uidOfDownload = 0;
+    protected int $uidOfDownload = 0;
 
     /**
      * Contains settings of FlexForm
-     *
-     * @var array
      */
-    protected $settings = [];
+    protected array $settings = [];
 
-    /**
-     * @var DownloadRepository
-     */
-    protected $downloadRepository;
+    protected DownloadRepository $downloadRepository;
 
-    /**
-     * @var CategoryRepository
-     */
-    protected $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
     /**
      * @var MarkerBasedTemplateService
      */
     protected $templateService;
+
+    public function __construct(
+        CategoryRepository $categoryRepository,
+        DownloadRepository $downloadRepository,
+        MarkerBasedTemplateService $markerBasedTemplateService,
+        TypoScriptFrontendController $frontendController,
+        $_ = null
+    ) {
+        parent::__construct($_, $frontendController);
+
+        $this->categoryRepository = $categoryRepository;
+        $this->downloadRepository = $downloadRepository;
+        $this->templateService = $markerBasedTemplateService;
+    }
 
     /**
      * The main method of the PlugIn
@@ -129,12 +122,12 @@ class KkDownloader extends AbstractPlugin
         $this->pi_loadLL(); // Loading language-labels
         $this->pi_setPiVarDefaults(); // Set default piVars from TS
 
-        $this->download = GeneralUtility::_GP('download');
-        $this->did = (int)GeneralUtility::_GP('did');
-        $this->uidOfDownload = (int)$this->piVars['uid'];
+        $this->download = GeneralUtility::_GP('download') ?? '';
+        $this->did = (int)(GeneralUtility::_GP('did') ?? 0);
+        $this->uidOfDownload = (int)($this->piVars['uid'] ?? 0);
 
         $this->pi_initPIflexform(); // Init and get the flexform data of the plugin
-        $this->initialize();
+        $this->settings = $this->getFlexFormSettings();
 
         // if a download has happened
         if (!empty($this->download)) {
@@ -188,8 +181,8 @@ class KkDownloader extends AbstractPlugin
                 $this->settings['categoryUid'],
                 $this->settings['orderBy'],
                 $this->settings['orderDirection'],
-                (int)$this->internal['results_at_a_time'],
-                (int)($this->piVars['pointer'] * $this->internal['results_at_a_time'])
+                $this->internal['results_at_a_time'],
+                (int)($this->piVars['pointer'] ?? 0) * ($this->internal['results_at_a_time'] ?? 0)
             );
 
             foreach ($downloads as &$downloadRecord) {
@@ -279,19 +272,8 @@ class KkDownloader extends AbstractPlugin
         return $previewImageForDownload;
     }
 
-    protected function initialize(): void
-    {
-        $this->settings = $this->getFlexFormSettings();
-
-        $this->downloadRepository = GeneralUtility::makeInstance(DownloadRepository::class);
-        $this->categoryRepository = GeneralUtility::makeInstance(CategoryRepository::class);
-        $this->templateService = GeneralUtility::makeInstance(MarkerBasedTemplateService::class);
-    }
-
     /**
      * Load all FLEXFORM data fields into variables
-     *
-     * @return array<string, mixed>
      */
     protected function getFlexFormSettings(): array
     {
@@ -309,7 +291,12 @@ class KkDownloader extends AbstractPlugin
         $settings['showDateLastDownload'] = $this->getFlexFormValue('showDateLastDownload');
         $settings['showIPLastDownload'] = $this->getFlexFormValue('showIPLastDownload');
         $settings['showFileMDate'] = $this->getFlexFormValue('showFileMDate');
-        $settings['whatToDisplay'] = $this->getFlexFormValue('what_to_display');
+        $settings['whatToDisplay'] = GeneralUtility::trimExplode(
+            ',',
+            $this->getFlexFormValue('what_to_display'),
+            true,
+            1
+        );
 
         // special handling for creation date
         $creationDateType = $this->getFlexFormValue('showCRDate');
@@ -490,7 +477,7 @@ class KkDownloader extends AbstractPlugin
     protected function addPageBrowserSettingsToView(StandaloneView $view): void
     {
         $amountOfDownloads = $this->internal['res_count'];
-        $beginAt = (int)$this->piVars['pointer'] * $this->internal['results_at_a_time'];
+        $beginAt = (int)($this->piVars['pointer'] ?? 0) * ($this->internal['results_at_a_time'] ?? 0);
 
         // Make Next link
         if ($amountOfDownloads > $beginAt + $this->internal['results_at_a_time']) {
@@ -612,10 +599,6 @@ class KkDownloader extends AbstractPlugin
         int $severity = AbstractMessage::OK,
         bool $storeInSession = true
     ): void {
-        if (!is_string($messageBody)) {
-            throw new \InvalidArgumentException('The message body must be of type string, "' . gettype($messageBody) . '" given.', 1243258395);
-        }
-
         $flashMessage = GeneralUtility::makeInstance(
             FlashMessage::class,
             $messageBody,
@@ -627,10 +610,5 @@ class KkDownloader extends AbstractPlugin
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier('extbase.flashmessages.tx_kkdownloader_pi1');
         $flashMessageQueue->enqueue($flashMessage);
-    }
-
-    protected function getTypoScriptFrontendController(): TypoScriptFrontendController
-    {
-        return $GLOBALS['TSFE'];
     }
 }

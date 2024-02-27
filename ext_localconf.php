@@ -44,7 +44,7 @@ tt_content.list.20.kkdownloader_pi1 = < plugin.tx_kkdownloader_pi1
 
     // Add kk_downloader plugin to new element wizard
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:kk_downloader/Configuration/TSconfig/ContentElementWizard.txt">'
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:kk_downloader/Configuration/TSconfig/ContentElementWizard.tsconfig">'
     );
 
     // Migrate kk_downloader categories to sys_category

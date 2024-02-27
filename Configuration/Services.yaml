@@ -6,3 +6,15 @@ services:
 
   JWeiland\KkDownloader\:
     resource: '../Classes/*'
+
+  # Called by makeInstance in KkDownloader
+  JWeiland\KkDownloader\Domain\Repository\CategoryRepository:
+    public: true
+
+  # Called by makeInstance in KkDownloader
+  JWeiland\KkDownloader\Domain\Repository\DownloadRepository:
+    public: true
+
+  # Called by makeInstance from TypoScript USER in plugin.tx_kkdownloader_pi1
+  JWeiland\KkDownloader\Plugin\KkDownloader:
+    public: true

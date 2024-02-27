@@ -3,7 +3,7 @@ page.includeCSS {
 }
 
 plugin.tx_kkdownloader_pi1 {
-  # as an exsample for modifying items out of the locallang.xml:
+  # as an example for modifying items out of the locallang.xml:
   _LOCAL_LANG.default {
     pi_list_browseresults_page = P
   }

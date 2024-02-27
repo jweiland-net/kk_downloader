@@ -22,8 +22,6 @@ class CategoryRepository extends AbstractRepository
 {
     /**
      * Returns all categories by Download UID
-     *
-     * @return array[]
      */
     public function getCategoriesByDownloadUid(int $downloadUid): array
     {

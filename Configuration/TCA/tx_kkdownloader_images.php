@@ -23,10 +23,6 @@ return [
         'searchFields' => 'name,description,longdescription',
         'iconfile' => 'EXT:kk_downloader/Resources/Public/Icons/tx_kkdownloader_images.svg',
     ],
-    // SF: Was removed with 10.3. Remove while removing TYPO3 9.5 compatibility
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid,l18n_parent,l18n_diffsource,hidden,name,image,description,longdescription,clicks'
-    ],
     'types' => [
         '0' => [
             'showitem' => '--palette--;;language, --palette--;;nameHidden, image, imagepreview, description, longdescription, clicks'
