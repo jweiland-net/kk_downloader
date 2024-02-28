@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace JWeiland\KkDownloader\Traits;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
@@ -21,6 +20,6 @@ trait TypoScriptFrontendControllerTrait
 {
     protected function getTypoScriptFrontendController(): TypoScriptFrontendController
     {
-        return GeneralUtility::makeInstance(TypoScriptFrontendController::class);
+        return $GLOBALS['TSFE'];
     }
 }

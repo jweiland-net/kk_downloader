@@ -130,7 +130,7 @@ class KkDownloader extends AbstractPlugin
         $this->settings = $this->getFlexFormSettings();
 
         // if a download has happened
-        if (!empty($this->download)) {
+        if ($this->download !== '') {
             $this->startDownload(basename($this->download), $this->did);
         }
 
@@ -144,7 +144,7 @@ class KkDownloader extends AbstractPlugin
         $view = $this->getView();
         $view->setTemplatePathAndFilename($templateFile);
         if ($this->settings['whatToDisplay'] === 'SINGLE') {
-            if (!empty($this->uidOfDownload)) {
+            if ($this->uidOfDownload !== 0) {
                 $downloadRecord = $this->downloadRepository->getDownloadByUid($this->uidOfDownload);
                 if ($downloadRecord === []) {
                     $view->assign('download', '');
@@ -291,12 +291,7 @@ class KkDownloader extends AbstractPlugin
         $settings['showDateLastDownload'] = $this->getFlexFormValue('showDateLastDownload');
         $settings['showIPLastDownload'] = $this->getFlexFormValue('showIPLastDownload');
         $settings['showFileMDate'] = $this->getFlexFormValue('showFileMDate');
-        $settings['whatToDisplay'] = GeneralUtility::trimExplode(
-            ',',
-            $this->getFlexFormValue('what_to_display'),
-            true,
-            1
-        );
+        $settings['whatToDisplay'] = $this->getFlexFormValue('what_to_display');
 
         // special handling for creation date
         $creationDateType = $this->getFlexFormValue('showCRDate');
