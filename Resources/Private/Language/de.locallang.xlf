@@ -1,128 +1,128 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xliff version="1.0">
-	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader">
-		<header/>
-		<body>
-			<trans-unit id="title">
-				<source>Title</source>
-				<target>Titel</target>
-			</trans-unit>
-			<trans-unit id="categories">
-				<source>Categories</source>
-				<target>Kategorien</target>
-			</trans-unit>
-			<trans-unit id="links">
-				<source>Links</source>
-				<target>Links</target>
-			</trans-unit>
-			<trans-unit id="shortDescription">
-				<source>Short description</source>
-				<target>Kurzbeschreibung</target>
-			</trans-unit>
-			<trans-unit id="description">
-				<source>Description</source>
-				<target>Beschreibung</target>
-			</trans-unit>
-			<trans-unit id="image">
-				<source>Download object</source>
-				<target>Download-Objekt</target>
-			</trans-unit>
-			<trans-unit id="clicks">
-				<source>downloads</source>
-				<target>Downloads</target>
-			</trans-unit>
-			<trans-unit id="lastDownload">
-				<source>Date last download</source>
-				<target>zuletzt herunter geladen</target>
-			</trans-unit>
-			<trans-unit id="ipLastDownload">
-				<source>IP-address of last download</source>
-				<target>IP-Adresse des letzten Downloads</target>
-			</trans-unit>
-			<trans-unit id="date">
-				<source>since</source>
-				<target>seit</target>
-			</trans-unit>
-			<trans-unit id="crDate">
-				<source>Date file created</source>
-				<target>Erstell-Datum des Eintrags </target>
-			</trans-unit>
-			<trans-unit id="lastEdit">
-				<source>This record was last edited at</source>
-				<target>Datum der letzten Veränderung</target>
-			</trans-unit>
-			<trans-unit id="fileName">
-				<source>Download file name</source>
-				<target>Dateiname</target>
-			</trans-unit>
-			<trans-unit id="fileSize">
-				<source>Size of download-file</source>
-				<target>Dateigröße</target>
-			</trans-unit>
-			<trans-unit id="fileMDate">
-				<source>File date last changed</source>
-				<target>Dateidatum, letzte Änderung</target>
-			</trans-unit>
-			<trans-unit id="download">
-				<source>Download</source>
-				<target>Download</target>
-			</trans-unit>
-			<trans-unit id="downloads">
-				<source>Downloads</source>
-				<target>Downloads</target>
-			</trans-unit>
-			<trans-unit id="noValue">
-				<source>No data, possibly missing ID!?</source>
-				<target>Keine Daten vorhanden, es wurde wahrscheinlich keine ID übergeben!?</target>
-			</trans-unit>
-			<trans-unit id="noTemplate">
-				<source>No HTML-template. Neither in the flexform nor in the template-setup!?</source>
-				<target>Sie haben weder in der Flexform noch im Setup eine HTML-Schablone zugewiesen!?</target>
-			</trans-unit>
-			<trans-unit id="since">
-				<source>since</source>
-				<target>seit</target>
-			</trans-unit>
-			<trans-unit id="oclock">
-				<source>o´clock</source>
-				<target>Uhr</target>
-			</trans-unit>
-			<trans-unit id="more">
-				<source>[more]</source>
-				<target>[mehr]</target>
-			</trans-unit>
-			<trans-unit id="linkBack">
-				<source>Link back to previous page</source>
-				<target>Link zurück zur Herkunftsseite</target>
-			</trans-unit>
-			<trans-unit id="pi_list_browseresults_page">
-				<source>Page</source>
-				<target>Seite</target>
-			</trans-unit>
-			<trans-unit id="pi_list_browseresults_prev">
-				<source>Previous</source>
-				<target>zurück</target>
-			</trans-unit>
-			<trans-unit id="pi_list_browseresults_next">
-				<source>Next</source>
-				<target>weiter</target>
-			</trans-unit>
-			<trans-unit id="pi_list_browseresults_displays">
-				<source>Displaying results %s to %s out of %s</source>
-				<target>Download-Objekt %s bis %s von %s</target>
-			</trans-unit>
-			<trans-unit id="pi_list_browseresults_noResults">
-				<source>Sorry, no items were found.</source>
-				<target>Es wurden keine Einträge gefunden</target>
-			</trans-unit>
-			<trans-unit id="error.callSingleViewWithoutUid.title">
-				<source>No download UID found</source>
-				<target>Keine Download UID gefunden</target>
-			</trans-unit>
-			<trans-unit id="error.callSingleViewWithoutUid.description">
-				<source>Direct call of the single page without an item ID!?</source>
-				<target>Die Single-Seite wurde direkt aufgerufen ohne Übergabe einer ID!?</target>
-			</trans-unit>
-		</body>
-	</file>
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader" target-language="de">
+    <header/>
+    <body>
+      <trans-unit id="title">
+        <source>Title</source>
+        <target state="translated">Titel</target>
+      </trans-unit>
+      <trans-unit id="categories">
+        <source>Categories</source>
+        <target state="translated">Kategorien</target>
+      </trans-unit>
+      <trans-unit id="links">
+        <source>Links</source>
+        <target state="needs-translation">Links</target>
+      </trans-unit>
+      <trans-unit id="shortDescription">
+        <source>Short description</source>
+        <target state="translated">Kurzbeschreibung</target>
+      </trans-unit>
+      <trans-unit id="description">
+        <source>Description</source>
+        <target state="translated">Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="image">
+        <source>Download object</source>
+        <target state="translated">Download-Objekt</target>
+      </trans-unit>
+      <trans-unit id="clicks">
+        <source>downloads</source>
+        <target state="translated">Downloads</target>
+      </trans-unit>
+      <trans-unit id="lastDownload">
+        <source>Date last download</source>
+        <target state="translated">zuletzt herunter geladen</target>
+      </trans-unit>
+      <trans-unit id="ipLastDownload">
+        <source>IP-address of last download</source>
+        <target state="translated">IP-Adresse des letzten Downloads</target>
+      </trans-unit>
+      <trans-unit id="date">
+        <source>since</source>
+        <target state="translated">seit</target>
+      </trans-unit>
+      <trans-unit id="crDate">
+        <source>Date file created</source>
+        <target state="translated">Erstell-Datum des Eintrags </target>
+      </trans-unit>
+      <trans-unit id="lastEdit">
+        <source>This record was last edited at</source>
+        <target state="translated">Datum der letzten Veränderung</target>
+      </trans-unit>
+      <trans-unit id="fileName">
+        <source>Download file name</source>
+        <target state="translated">Dateiname</target>
+      </trans-unit>
+      <trans-unit id="fileSize">
+        <source>Size of download-file</source>
+        <target state="translated">Dateigröße</target>
+      </trans-unit>
+      <trans-unit id="fileMDate">
+        <source>File date last changed</source>
+        <target state="translated">Dateidatum, letzte Änderung</target>
+      </trans-unit>
+      <trans-unit id="download">
+        <source>Download</source>
+        <target state="needs-translation">Download</target>
+      </trans-unit>
+      <trans-unit id="downloads">
+        <source>Downloads</source>
+        <target state="needs-translation">Downloads</target>
+      </trans-unit>
+      <trans-unit id="noValue">
+        <source>No data, possibly missing ID!?</source>
+        <target state="translated">Keine Daten vorhanden, es wurde wahrscheinlich keine ID übergeben!?</target>
+      </trans-unit>
+      <trans-unit id="noTemplate">
+        <source>No HTML-template. Neither in the flexform nor in the template-setup!?</source>
+        <target state="translated">Sie haben weder in der Flexform noch im Setup eine HTML-Schablone zugewiesen!?</target>
+      </trans-unit>
+      <trans-unit id="since">
+        <source>since</source>
+        <target state="translated">seit</target>
+      </trans-unit>
+      <trans-unit id="oclock">
+        <source>o´clock</source>
+        <target state="translated">Uhr</target>
+      </trans-unit>
+      <trans-unit id="more">
+        <source>[more]</source>
+        <target state="translated">[mehr]</target>
+      </trans-unit>
+      <trans-unit id="linkBack">
+        <source>Link back to previous page</source>
+        <target state="translated">Link zurück zur Herkunftsseite</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_page">
+        <source>Page</source>
+        <target state="translated">Seite</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_prev">
+        <source>Previous</source>
+        <target state="translated">zurück</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_next">
+        <source>Next</source>
+        <target state="translated">weiter</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_displays">
+        <source>Displaying results %s to %s out of %s</source>
+        <target state="translated">Download-Objekt %s bis %s von %s</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_noResults">
+        <source>Sorry, no items were found.</source>
+        <target state="translated">Es wurden keine Einträge gefunden</target>
+      </trans-unit>
+      <trans-unit id="error.callSingleViewWithoutUid.title">
+        <source>No download UID found</source>
+        <target state="translated">Keine Download UID gefunden</target>
+      </trans-unit>
+      <trans-unit id="error.callSingleViewWithoutUid.description">
+        <source>Direct call of the single page without an item ID!?</source>
+        <target state="translated">Die Single-Seite wurde direkt aufgerufen ohne Übergabe einer ID!?</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
