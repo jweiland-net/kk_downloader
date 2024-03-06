@@ -1,4 +1,4 @@
-..  include:: ../Includes.txt
+..  include:: /Includes.rst.txt
 
 
 ..  _user-manual:
@@ -21,7 +21,7 @@ To setup and use the extension, you should do the following:
 
 
 Create the sites (data folder, …)
----------------------------------
+=================================
 
 You have to create several pages. The usual way is to create one sysfolder where the records and categories are
 saved in.It´s possible to create the extension records in normal sites but we recommend to use a new Storage
@@ -38,7 +38,7 @@ Folder because there can be many records and you can keep everything in one plac
 
 
 Configure the options: LIST View
---------------------------------
+================================
 
 After you create a page and add the plugin, you have to edit the Flexform to get
 the right settings.
@@ -49,7 +49,7 @@ the right settings.
 
 
 Flexform options
-----------------
+================
 
 New since version 1.2.0: browse max. X items per page
 
@@ -59,7 +59,7 @@ New since version 1.2.0: browse max. X items per page
 
 
 Configure the options: SINGLE View
-----------------------------------
+==================================
 
 The same as above, but choose SINGLE instead of LIST!
 
@@ -69,7 +69,7 @@ The same as above, but choose SINGLE instead of LIST!
 
 
 What you have to look for!
-##########################
+--------------------------
 
 Tell the plugin the ID of the page with the single view:
 
@@ -81,7 +81,7 @@ Put the marker ###MORE### into your HTML-template. This link will be inactive if
 #.  the correct singlePID-page has the hidden status.
 
 TYPO3 LiveSearch
-----------------
+================
 
 LiveSearch is the search form in the TYPO3 backend at the upper right corner.
 `kk_downloader` comes with an additional configuration to find download

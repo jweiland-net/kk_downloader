@@ -1,4 +1,4 @@
-..  include:: ../Includes.txt
+..  include:: /Includes.rst.txt
 
 
 ..  _configuration:
@@ -17,9 +17,9 @@ TypoScript Setup Reference
 
 ..  container:: ts-properties
 
-    =========================== ===================================== ====================
+    =========================== ===================================== ============================================================
     Property                    Data type                             Default
-    =========================== ===================================== =========================================
+    =========================== ===================================== ============================================================
     linkdescription_            Integer                               1
     downloadIcon_               String                                1
     missingDownloadIcon_        String                                EXT:kk_downloader/Resources/Public/Icons/MissingDownload.gif
@@ -33,7 +33,7 @@ TypoScript Setup Reference
     image_                      ->imgResource/->stdWrap
     results_at_a_time_          Integer                               25
     pageBrowser_                Array
-    =========================== ===================================== =========================================
+    =========================== ===================================== ============================================================
 
 
 Property details
@@ -194,56 +194,56 @@ pageBrowser
 -----------
 
 pageBrowser.maxPages
-####################
+~~~~~~~~~~~~~~~~~~~~
 
 Default: 10
 
 Maximum x pages will be shown
 
 pageBrowser.showPBrowserText
-############################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Default: true
 
 should pagebrowser-text be shown
 
 pageBrowser.showResultCount
-###########################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Default: true
 
 Should the list result (Item 1 to 5 of 23) be shown?
 
 pageBrowser.activepage_stdWrap.wrap
-###################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Default: <strong>|</strong>
 
 Wrapping the active page
 
 pageBrowser.page_stdWrap.wrap
-###################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Default: |
 
 Wrapping the active page
 
 pageBrowser.pagelink_stdWrap.wrap
-###################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Default: |
 
 Wrapping the active page
 
 pageBrowser.previous_stdWrap.wrap
-###################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Default: |
 
 Wrapping the active page
 
 pageBrowser.next_stdWrap.wrap
-###################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Default: |
 

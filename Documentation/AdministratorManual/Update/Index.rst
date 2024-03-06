@@ -1,4 +1,5 @@
-..  include:: ../../Includes.txt
+..  include:: /Includes.rst.txt
+
 
 ========
 Updating
@@ -6,7 +7,6 @@ Updating
 
 If you update `kk_downloader` to a newer version, please read this
 section carefully!
-
 
 Update to Version 7.0.0
 =======================
