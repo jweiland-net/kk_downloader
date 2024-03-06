@@ -18,6 +18,8 @@ Version 7.0.0
 *   Add trait to get TSFE
 *   Use DI where possible
 *   Remove `ext_typoscript_setup.typoscript` file
+*   Records can only be created on pages configures as storage folder
+*   Remove `ext_tables.php`
 
 Version 6.1.1
 =============

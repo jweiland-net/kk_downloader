@@ -22,6 +22,9 @@ value and store the plugin.
 We have removed the `ext_typoscript_setup.typoscript`. Please use a
 TypoScript +ext Template to add kk_downloader TypoScript where needed.
 
+It is not allowed to create download records on default pages anymore. Please
+mark page record as storage folder and store download records there.
+
 Update to Version 6.0.0
 =======================
 
