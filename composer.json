@@ -25,9 +25,6 @@
 		"friendsofphp/php-cs-fixer": "^3.0",
 		"nimut/testing-framework": "^5.0"
 	},
-	"replace": {
-		"typo3-ter/kk_downloader": "self.version"
-	},
 	"autoload": {
 		"psr-4": {
 			"JWeiland\\KkDownloader\\": "Classes"
@@ -37,6 +34,9 @@
 		"psr-4": {
 			"JWeiland\\KkDownloader\\Tests\\": "Tests"
 		}
+	},
+	"replace": {
+		"typo3-ter/kk_downloader": "self.version"
 	},
 	"config": {
 		"vendor-dir": ".build/vendor",
