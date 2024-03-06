@@ -18,14 +18,16 @@
         <td><strong>View</strong></td>
         <td>{pi_flexform_transformed.what_to_display}</td>
     </tr>
-    <tr>
-        <td><strong>Order By</strong></td>
-        <td>{pi_flexform_transformed.orderby}</td>
-    </tr>
-    <tr>
-        <td><strong>Order Dir.</strong></td>
-        <td>{pi_flexform_transformed.ascdesc}</td>
-    </tr>
+    <f:if condition="{pi_flexform_transformed.what_to_display} == 'LIST'">
+        <tr>
+            <td><strong>Order By</strong></td>
+            <td>{pi_flexform_transformed.orderby}</td>
+        </tr>
+        <tr>
+            <td><strong>Order Dir.</strong></td>
+            <td>{pi_flexform_transformed.ascdesc}</td>
+        </tr>
+    </f:if>
     </tbody>
 </table>
 </html>
