@@ -22,8 +22,8 @@
 		"typo3/cms-core": "^10.4.37 || ^11.5.35"
 	},
 	"require-dev": {
-		"friendsofphp/php-cs-fixer": "^3.0",
-		"nimut/testing-framework": "^5.0"
+		"friendsofphp/php-cs-fixer": "^3.4",
+		"nimut/testing-framework": "^6.0"
 	},
 	"autoload": {
 		"psr-4": {
