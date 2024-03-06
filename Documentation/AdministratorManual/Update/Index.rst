@@ -11,10 +11,16 @@ section carefully!
 Update to Version 7.0.0
 =======================
 
+We have removed TYPO3 9.6 compatibility.
+TYPO3 11.5 compatibility added.
+
 The selectbox side-by-side for `what_to_display` in plugin settings has never
 ever worked as this plugin can only display one view at once. We have migrated
 that box to a single selectbox. Please open your plugins, check and correct the
 value and store the plugin.
+
+We have removed the `ext_typoscript_setup.typoscript`. Please use a
+TypoScript +ext Template to add kk_downloader TypoScript where needed.
 
 Update to Version 6.0.0
 =======================

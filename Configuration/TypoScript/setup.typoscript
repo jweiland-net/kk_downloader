@@ -3,24 +3,22 @@ page.includeCSS {
 }
 
 plugin.tx_kkdownloader_pi1 {
-  # as an example for modifying items out of the locallang.xml:
-  _LOCAL_LANG.default {
-    pi_list_browseresults_page = P
-  }
-  _LOCAL_LANG.de {
-    pi_list_browseresults_page = S
-  }
+  # View
+  templateFile = EXT:kk_downloader/Resources/Private/Templates/MainTemplate.html
 
-  # PID of the general download folder (if no page-"starting-point" is set)
+  # Page UID which is configured as storage folder and contains the download records
   defaultDownloadPid =
 
-  # PID of the page for a SINGLE view
+  # Page UID with the plugin for SINGLE view
   singlePID =
 
-  # download description (1 = filename.fileextension, 2 = filename, 3 = fileextension)
+  # Download description:
+  # 1 = filename.fileExtension
+  # 2 = filename
+  # 3 = fileExtension
   linkdescription = 1
 
-  # date and time formats
+  # Date and time formats
   dateformat = d.m.y
   datetimeformat = d.m.y H:i
 
@@ -52,10 +50,6 @@ plugin.tx_kkdownloader_pi1 {
     next_stdWrap.wrap = |
   }
 
-  persistence {
-    storagePid = 1
-  }
-
   # image settings
   image {
     file.maxW = 160
@@ -72,5 +66,12 @@ plugin.tx_kkdownloader_pi1 {
       JSwindow.expand = 17,20
     }
   }
-}
 
+  # as an example for modifying items out of the locallang.xml:
+  _LOCAL_LANG.default {
+    pi_list_browseresults_page = P
+  }
+  _LOCAL_LANG.de {
+    pi_list_browseresults_page = S
+  }
+}

@@ -17,6 +17,7 @@ Version 7.0.0
 *   Add trait to access values from context API
 *   Add trait to get TSFE
 *   Use DI where possible
+*   Remove `ext_typoscript_setup.typoscript` file
 
 Version 6.1.1
 =============
