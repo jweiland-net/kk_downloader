@@ -79,3 +79,12 @@ Put the marker ###MORE### into your HTML-template. This link will be inactive if
 
 #.  the singlePID is not given or has a wrong UID or
 #.  the correct singlePID-page has the hidden status.
+
+TYPO3 LiveSearch
+----------------
+
+LiveSearch is the search form in the TYPO3 backend at the upper right corner.
+`kk_downloader` comes with an additional configuration to find download
+records much faster. In the world of LiveSearch it is called a "command". The
+command for kk_downloader records is `download`. Start your search
+with `#download:` and then add your search value. Example: `#download:map`.

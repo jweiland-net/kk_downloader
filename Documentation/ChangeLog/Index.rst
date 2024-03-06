@@ -21,6 +21,7 @@ Version 7.0.0
 *   Records can only be created on pages configures as storage folder
 *   Remove `ext_tables.php`
 *   Remove UserTSConfig: options.saveDocNew.tx_kkdownloader_images
+*   Add livesearch command to find download records much faster
 
 Version 6.1.1
 =============

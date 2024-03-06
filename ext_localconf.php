@@ -49,6 +49,9 @@ tt_content.list.20.kkdownloader_pi1 =< plugin.tx_kkdownloader_pi1
         "@import 'EXT:kk_downloader/Configuration/TSconfig/ContentElementWizard.tsconfig'>"
     );
 
+    // Add LiveSearch command for faster search of download records
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['livesearch']['download'] = 'tx_kkdownloader_images';
+
     // Migrate kk_downloader categories to sys_category
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['kkMigrateCategories']
         = \JWeiland\KkDownloader\Upgrade\MigrateCategoriesUpgrade::class;
