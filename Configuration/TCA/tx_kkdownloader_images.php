@@ -25,8 +25,8 @@ return [
     ],
     'types' => [
         '0' => [
-            'showitem' => '--palette--;;language, --palette--;;nameHidden, image, imagepreview, description, longdescription, clicks'
-        ]
+            'showitem' => '--palette--;;language, --palette--;;nameHidden, image, imagepreview, description, longdescription, clicks',
+        ],
     ],
     'palettes' => [
         'language' => ['showitem' => 'sys_language_uid, l18n_parent'],
@@ -48,7 +48,7 @@ return [
                     ],
                 ],
                 'default' => 0,
-            ]
+            ],
         ],
         'l18n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
@@ -61,21 +61,28 @@ return [
                 'maxitems' => 1,
                 'minitems' => 0,
                 'default' => 0,
-            ]
+            ],
         ],
         'l18n_diffsource' => [
             'config' => [
                 'type' => 'passthrough',
-                'default' => ''
-            ]
+                'default' => '',
+            ],
         ],
         'hidden' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
-                'default' => 0
-            ]
+                'renderType' => 'checkboxToggle',
+                'default' => 0,
+                'items' => [
+                    [
+                        0 => '',
+                        'invertStateDisplay' => true,
+                    ],
+                ],
+            ],
         ],
         'name' => [
             'exclude' => 1,
@@ -84,7 +91,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'required,trim',
-            ]
+            ],
         ],
         'image' => [
             'exclude' => true,
@@ -106,9 +113,9 @@ return [
                         'showPossibleLocalizationRecords' => true,
                         'showRemovedLocalizationRecords' => true,
                         'showAllLocalizationLink' => true,
-                        'showSynchronizationLink' => true
+                        'showSynchronizationLink' => true,
                     ],
-                ]
+                ],
             ),
         ],
         'imagepreview' => [
@@ -131,19 +138,19 @@ return [
                         'showPossibleLocalizationRecords' => true,
                         'showRemovedLocalizationRecords' => true,
                         'showAllLocalizationLink' => true,
-                        'showSynchronizationLink' => true
+                        'showSynchronizationLink' => true,
                     ],
                     'overrideChildTca' => [
                         'types' => [
                             '0' => [
                                 'showitem' => '
                                         --palette--;LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                                        --palette--;;filePalette'
+                                        --palette--;;filePalette',
                             ],
                             \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
                                 'showitem' => '
                                         --palette--;LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                                        --palette--;;filePalette'
+                                        --palette--;;filePalette',
                             ],
                         ],
                     ],
@@ -157,7 +164,7 @@ return [
                 'type' => 'text',
                 'cols' => 30,
                 'rows' => 3,
-            ]
+            ],
         ],
         'longdescription' => [
             'exclude' => 1,
@@ -168,7 +175,7 @@ return [
                 'rows' => 5,
                 'softref' => 'typolink_tag,email[subst],url',
                 'enableRichtext' => true,
-            ]
+            ],
         ],
         'clicks' => [
             'exclude' => 1,
@@ -176,18 +183,18 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'default' => 0
-            ]
+                'default' => 0,
+            ],
         ],
         'last_downloaded' => [
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
         'ip_last_download' => [
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
     ],
 ];
