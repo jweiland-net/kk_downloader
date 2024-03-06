@@ -25,6 +25,10 @@ TypoScript +ext Template to add kk_downloader TypoScript where needed.
 It is not allowed to create download records on default pages anymore. Please
 mark page record as storage folder and store download records there.
 
+We have removed the default UserTSConfig:
+`options.saveDocNew.tx_kkdownloader_images`. In newer TYPO3 versions a "new"
+button will already be shown in list-module.
+
 Update to Version 6.0.0
 =======================
 

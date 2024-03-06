@@ -20,6 +20,7 @@ Version 7.0.0
 *   Remove `ext_typoscript_setup.typoscript` file
 *   Records can only be created on pages configures as storage folder
 *   Remove `ext_tables.php`
+*   Remove UserTSConfig: options.saveDocNew.tx_kkdownloader_images
 
 Version 6.1.1
 =============
