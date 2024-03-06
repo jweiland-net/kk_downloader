@@ -166,7 +166,7 @@ return [
                 'type' => 'text',
                 'cols' => 30,
                 'rows' => 5,
-                'softref' => 'typolink_tag,images,email[subst],url',
+                'softref' => 'typolink_tag,email[subst],url',
                 'enableRichtext' => true,
             ]
         ],
