@@ -224,7 +224,7 @@ class KkDownloader extends AbstractPlugin
 
         $view->assignMultiple([
             'settings' => $this->settings,
-            'pidOfDetailPage' => $this->conf['singlePID'] ?: $this->getTypoScriptFrontendController()->id
+            'pidOfDetailPage' => $this->conf['singlePID'] ?: $this->getTypoScriptFrontendController()->id,
         ]);
 
         return $view->render();
@@ -404,7 +404,7 @@ class KkDownloader extends AbstractPlugin
                     $fileDescription,
                     [
                         'download' => $fileReference->getName(),
-                        'did' => $downloadRecord['uid']
+                        'did' => $downloadRecord['uid'],
                     ]
                 ),
                 $this->getFormattedFilesize($fileReference->getSize()),
@@ -476,7 +476,7 @@ class KkDownloader extends AbstractPlugin
 
         // Make Next link
         if ($amountOfDownloads > $beginAt + $this->internal['results_at_a_time']) {
-            $next = ($beginAt + $this->internal['results_at_a_time'] > $amountOfDownloads) ? $amountOfDownloads - $this->internal['results_at_a_time']:$beginAt + $this->internal['results_at_a_time'];
+            $next = ($beginAt + $this->internal['results_at_a_time'] > $amountOfDownloads) ? $amountOfDownloads - $this->internal['results_at_a_time'] : $beginAt + $this->internal['results_at_a_time'];
             $next = (int)($next / $this->internal['results_at_a_time']);
             $params = ['pointer' => $next];
             $next_link = $this->pi_linkTP_keepPIvars(
@@ -502,7 +502,7 @@ class KkDownloader extends AbstractPlugin
         $actualPage = floor($beginAt / $this->internal['results_at_a_time']);
 
         if (ceil($actualPage - $this->internal['maxPages'] / 2) > 0) {
-            $firstPage = ceil($actualPage - $this->internal['maxPages']/2);
+            $firstPage = ceil($actualPage - $this->internal['maxPages'] / 2);
             $addLast = 0;
         } else {
             $firstPage = 0;

@@ -165,10 +165,10 @@ class DownloadRepository extends AbstractRepository
             [
                 'clicks' => (int)$downloadRecord['clicks'] + 1,
                 'last_downloaded' => date('U'),
-                'ip_last_download' => $_SERVER['REMOTE_ADDR']
+                'ip_last_download' => $_SERVER['REMOTE_ADDR'],
             ],
             [
-                'uid' => (int)$downloadRecord['uid']
+                'uid' => (int)$downloadRecord['uid'],
             ]
         );
     }

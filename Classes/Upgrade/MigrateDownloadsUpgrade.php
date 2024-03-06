@@ -100,7 +100,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
     public function getPrerequisites(): array
     {
         return [
-            DatabaseUpdatedPrerequisite::class
+            DatabaseUpdatedPrerequisite::class,
         ];
     }
 
