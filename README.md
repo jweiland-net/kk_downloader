@@ -1,6 +1,13 @@
+[![Latest Stable Version](https://poser.pugx.org/jweiland/kk-downloader/v/stable.svg)](https://extensions.typo3.org/extension/kk_downloader/)
+[![TYPO3 11](https://img.shields.io/badge/TYPO3-11-orange.svg?style=flat-square)](https://get.typo3.org/version/11)
+[![TYPO3 10](https://img.shields.io/badge/TYPO3-10-orange.svg?style=flat-square)](https://get.typo3.org/version/10)
+[![Total Downloads](https://poser.pugx.org/jweiland/kk-downloader/d/total.svg)](https://packagist.org/packages/jweiland/kk_downloader)
+[![Monthly Downloads](https://poser.pugx.org/jweiland/kk-downloader/d/monthly)](https://packagist.org/packages/jweiland/kk_downloader)
+![Build Status](https://github.com/jweiland-net/kk_downloader/workflows/CI/badge.svg)
+
 # kk_downloader
 
-KK Downloader is a TYPO3 extensions which you can use as 
+KK Downloader is a TYPO3 extensions which you can use as
 Download system with counter, simple category management, sorting criteria and page browsing in the LIST-view.
 
 # New Extension Maintainer
@@ -11,7 +18,7 @@ Many thanks to Kurt Kunig for his great work.
 
 # Upgrade
 
-* We have moved the static extension TS-Template to new location: `Configuration/TypoScript`. That's why you have to 
+* We have moved the static extension TS-Template to new location: `Configuration/TypoScript`. That's why you have to
   set this TS-Template again in your TS-Template record.
 * We have changed Marker-based HTML-Template to Fluid. Please check your Template-Path and the Template itself.
   * In SingleView you can access download-record with `{download}`

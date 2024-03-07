@@ -1,62 +1,62 @@
-.. include:: Includes.txt
+..  include:: /Includes.rst.txt
 
-
-.. Every manual should have a start label for cross-referencing to
-.. start page. Do not remove this!
 
 .. _start:
 
-=============================================================
+=============
 KK Downloader
-=============================================================
+=============
 
-.. only:: html
+:Extension key:
+    kk_downloader
 
-   :Classification:
-      kk_downloader
+:Package name:
+    jweiland/kk-downloader
 
-   :Version:
-      |release|
+:Version:
+    |release|
 
-   :Language:
-      en
+:Language:
+    en
 
-   :Description:
-      Manual covering TYPO3 extension kk_downloader
+:Author:
+    Stefan Froemken
 
-   :Keywords:
-      kurt kunig, download
+:License:
+    This document is published under the
+    `Creative Commons BY 4.0 <https://creativecommons.org/licenses/by/4.0/>`__
+    license.
 
-   :Copyright:
-      2013-2019
+:Rendered:
+    |today|
 
-   :Author:
-      Stefan Froemken
+----
 
-   :Email:
-      projects@jweiland.net
+Download system with counter, simple category management, sorting criteria
+and page browsing in the LIST-view. Configuration via FlexForms and
+HTML template.
 
-   :License:
-      This document is published under the Open Publication License
-      available from http://www.opencontent.org/openpub/
+----
 
-   :Rendered:
-      |today|
+**Table of Contents:**
 
-   The content of this document is related to TYPO3,
-   a GNU/GPL CMS/Framework available from `www.typo3.org <https://typo3.org/>`__.
+..  toctree::
+    :maxdepth: 2
+    :titlesonly:
 
+    Introduction/Index
+    Installation/Index
+    Configuration/Index
+    User/Index
+    AdministratorManual/Index
+    FAQ/Index
+    ChangeLog/Index
+    Links
 
-   **Table of Contents**
+..  Meta Menu
 
-.. toctree::
-   :maxdepth: 3
+..  toctree::
+    :hidden:
 
-   Introduction/Index
-   Installation/Index
-   Configuration/Index
-   User/Index
-   AdministratorManual/Index
-   FAQ/Index
-   ChangeLog/Index
-   Links
+    Sitemap
+    genindex

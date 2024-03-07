@@ -54,7 +54,7 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
     public function getPrerequisites(): array
     {
         return [
-            DatabaseUpdatedPrerequisite::class
+            DatabaseUpdatedPrerequisite::class,
         ];
     }
 
@@ -123,7 +123,7 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
                     \PDO::PARAM_INT,
                     \PDO::PARAM_INT,
                     \PDO::PARAM_INT,
-                    \PDO::PARAM_STR
+                    \PDO::PARAM_STR,
                 ]
             );
 
@@ -171,7 +171,7 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
                         'uid_foreign' => $downloadRecord['uid'],
                         'tablenames' => 'tx_kkdownloader_images',
                         'fieldname' => 'categories',
-                        'sorting' => $sorting
+                        'sorting' => $sorting,
                     ]
                 );
                 $sorting++;
@@ -181,10 +181,10 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
             $connection->update(
                 'tx_kkdownloader_images',
                 [
-                    'categories' => $sorting
+                    'categories' => $sorting,
                 ],
                 [
-                    'uid' => $downloadRecord['uid']
+                    'uid' => $downloadRecord['uid'],
                 ]
             );
         }
@@ -225,13 +225,13 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
             $connection->update(
                 'tt_content',
                 [
-                    'pi_flexform' => $this->checkValue_flexArray2Xml($valueFromDatabase)
+                    'pi_flexform' => $this->checkValue_flexArray2Xml($valueFromDatabase),
                 ],
                 [
-                    'uid' => (int)$record['uid']
+                    'uid' => (int)$record['uid'],
                 ],
                 [
-                    'pi_flexform' => \PDO::PARAM_STR
+                    'pi_flexform' => \PDO::PARAM_STR,
                 ]
             );
         }

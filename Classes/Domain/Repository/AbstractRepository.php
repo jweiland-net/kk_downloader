@@ -11,21 +11,21 @@ declare(strict_types=1);
 
 namespace JWeiland\KkDownloader\Domain\Repository;
 
-use TYPO3\CMS\Core\Context\Context;
+use JWeiland\KkDownloader\Traits\ContextTrait;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\Page\PageRepository;
 
 class AbstractRepository
 {
+    use ContextTrait;
+
     protected function recordOverlay(array $row, string $tableName): ?array
     {
-        $context = GeneralUtility::makeInstance(Context::class);
-        $languageUid = (int)$context->getPropertyFromAspect('language', 'contentId');
-        $languageOverlayMode = (string)$context->getPropertyFromAspect('language', 'legacyOverlayType') ?: '';
+        $languageUid = $this->getLanguageUid();
+        $languageOverlayMode = $this->getLanguageOverlayMode();
 
-        // SF: Move PageRepo to core while removing TYPO3 9 compatibility
-        $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+        $pageRepository = $this->getPageRepository();
 
         // Workspace overlay
         $pageRepository->versionOL($tableName, $row);
@@ -51,5 +51,10 @@ class AbstractRepository
     protected function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);
+    }
+
+    protected function getPageRepository(): PageRepository
+    {
+        return GeneralUtility::makeInstance(PageRepository::class);
     }
 }

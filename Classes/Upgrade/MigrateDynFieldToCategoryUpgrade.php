@@ -60,7 +60,7 @@ class MigrateDynFieldToCategoryUpgrade implements UpgradeWizardInterface, Chatty
     public function getPrerequisites(): array
     {
         return [
-            DatabaseUpdatedPrerequisite::class
+            DatabaseUpdatedPrerequisite::class,
         ];
     }
 
@@ -133,13 +133,13 @@ class MigrateDynFieldToCategoryUpgrade implements UpgradeWizardInterface, Chatty
             $connection->update(
                 'tt_content',
                 [
-                    'pi_flexform' => $this->checkValue_flexArray2Xml($valueFromDatabase)
+                    'pi_flexform' => $this->checkValue_flexArray2Xml($valueFromDatabase),
                 ],
                 [
-                    'uid' => (int)$record['uid']
+                    'uid' => (int)$record['uid'],
                 ],
                 [
-                    'pi_flexform' => \PDO::PARAM_STR
+                    'pi_flexform' => \PDO::PARAM_STR,
                 ]
             );
         }
@@ -204,7 +204,7 @@ class MigrateDynFieldToCategoryUpgrade implements UpgradeWizardInterface, Chatty
             // Create base sheet, if not exist
             if (!array_key_exists($newSheet, $valueFromDatabase['data'])) {
                 $valueFromDatabase['data'][$newSheet] = [
-                    'lDEF' => []
+                    'lDEF' => [],
                 ];
             }
 

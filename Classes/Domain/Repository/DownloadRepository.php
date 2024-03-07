@@ -23,9 +23,6 @@ use TYPO3\CMS\Frontend\Resource\FileCollector;
  */
 class DownloadRepository extends AbstractRepository
 {
-    /**
-     * @return array[]
-     */
     public function getDownloadByUid(int $uid): array
     {
         $queryBuilder = $this->getQueryBuilderForDownloads();
@@ -52,9 +49,6 @@ class DownloadRepository extends AbstractRepository
         return $downloadRecord ?? [];
     }
 
-    /**
-     * @return array[]
-     */
     public function getDownloads(
         array $storagePages = [],
         int $categoryUid = 0,
@@ -171,10 +165,10 @@ class DownloadRepository extends AbstractRepository
             [
                 'clicks' => (int)$downloadRecord['clicks'] + 1,
                 'last_downloaded' => date('U'),
-                'ip_last_download' => $_SERVER['REMOTE_ADDR']
+                'ip_last_download' => $_SERVER['REMOTE_ADDR'],
             ],
             [
-                'uid' => (int)$downloadRecord['uid']
+                'uid' => (int)$downloadRecord['uid'],
             ]
         );
     }
@@ -215,8 +209,6 @@ class DownloadRepository extends AbstractRepository
     /**
      * ->select() and ->groupBy() has to be the same in DB configuration
      * where only_full_group_by is activated.
-     *
-     * @return string[]
      */
     protected function getColumnsForDownloadTable(): array
     {

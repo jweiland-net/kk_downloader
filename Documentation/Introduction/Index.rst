@@ -1,14 +1,14 @@
-.. include:: ../Includes.txt
+..  include:: /Includes.rst.txt
 
 
-.. _introduction:
+..  _introduction:
 
 ============
 Introduction
 ============
 
 
-.. _what-it-does:
+..  _what-it-does:
 
 What does it do?
 ================
@@ -28,20 +28,19 @@ Screenshots
 
 Standard **without** image preview:
 
-.. figure:: ../Images/Screenshots/ScreenshotWithoutImagePreview.png
-   :width: 500px
-   :alt: Screenshot without image preview
+..  figure:: ../Images/Screenshots/ScreenshotWithoutImagePreview.png
+    :width: 500px
+    :alt: Screenshot without image preview
 
 Standard **with** image preview:
 
-.. figure:: ../Images/Screenshots/ScreenshotWithImagePreview.png
-   :width: 500px
-   :alt: Screenshot with image preview
+..  figure:: ../Images/Screenshots/ScreenshotWithImagePreview.png
+    :width: 500px
+    :alt: Screenshot with image preview
 
 Complete list of all downloads (no "starting point" selected and "plugin.tx_kkdownloader_pi1.defaultDownloadPid = "
 and a separate html-template selected in the TypoScript Setup):
 
-.. figure:: ../Images/Screenshots/ScreenshotAllDownloads.png
-   :width: 500px
-   :alt: Screenshot with all Downloads
-
+..  figure:: ../Images/Screenshots/ScreenshotAllDownloads.png
+    :width: 500px
+    :alt: Screenshot with all Downloads
