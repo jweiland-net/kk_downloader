@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader" target-language="it">
+    <header/>
+    <body>
+      <trans-unit id="tt_content.list_type_pi1">
+        <source>KK Downloader</source>
+        <target state="needs-translation">KK Downloader</target>
+      </trans-unit>
+      <trans-unit id="plugin.kkdownloader.title">
+        <source>KK Downloader</source>
+        <target state="needs-translation">KK Downloader</target>
+      </trans-unit>
+      <trans-unit id="plugin.kkdownloader.description">
+        <source>Adds a plugin to list or show Downloads managed with KK Downloader.</source>
+        <target state="needs-translation">Adds a plugin to list or show Downloads managed with KK Downloader.</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images">
+        <source>Download</source>
+        <target state="needs-translation">Download</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.name">
+        <source>Download title</source>
+        <target state="needs-translation">Download title</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.image">
+        <source>File(s)</source>
+        <target state="needs-translation">File(s)</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.imagepreview">
+        <source>Preview image (optional)</source>
+        <target state="needs-translation">Preview image (optional)</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.description">
+        <source>Short description</source>
+        <target state="needs-translation">Short description</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.longdescription">
+        <source>Long description</source>
+        <target state="needs-translation">Long description</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.clicks">
+        <source>Clicks</source>
+        <target state="needs-translation">Clicks</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.cat">
+        <source>Category</source>
+        <target state="needs-translation">Category</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.imagedescription">
+        <source>Link description</source>
+        <target state="needs-translation">Link description</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
