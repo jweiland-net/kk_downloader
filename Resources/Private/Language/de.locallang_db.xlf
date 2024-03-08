@@ -5,51 +5,51 @@
     <body>
       <trans-unit id="tt_content.list_type_pi1">
         <source>KK Downloader</source>
-        <target state="needs-translation">KK Downloader</target>
+        <target state="translated">KK Downloader</target>
       </trans-unit>
       <trans-unit id="plugin.kkdownloader.title">
         <source>KK Downloader</source>
-        <target state="needs-translation">KK Downloader</target>
+        <target state="translated">KK Downloader</target>
       </trans-unit>
       <trans-unit id="plugin.kkdownloader.description">
         <source>Adds a plugin to list or show Downloads managed with KK Downloader.</source>
-        <target state="needs-translation">Adds a plugin to list or show Downloads managed with KK Downloader.</target>
+        <target state="translated">Fügt ein Plugin hinzu, um mit KK Downloader verwaltete Downloads aufzulisten oder anzuzeigen.</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images">
         <source>Download</source>
-        <target state="needs-translation">Download</target>
+        <target state="translated">Download</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.name">
         <source>Download title</source>
-        <target state="needs-translation">Download title</target>
+        <target state="translated">Download Name</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.image">
         <source>File(s)</source>
-        <target state="needs-translation">File(s)</target>
+        <target state="translated">Datei(en)</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.imagepreview">
         <source>Preview image (optional)</source>
-        <target state="needs-translation">Preview image (optional)</target>
+        <target state="translated">Vorschaubild (optional)</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.description">
         <source>Short description</source>
-        <target state="needs-translation">Short description</target>
+        <target state="translated">Kurzbeschreibung</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.longdescription">
         <source>Long description</source>
-        <target state="needs-translation">Long description</target>
+        <target state="translated">Ausführliche Beschreibung</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.clicks">
         <source>Clicks</source>
-        <target state="needs-translation">Clicks</target>
+        <target state="translated">Klicks</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.cat">
         <source>Category</source>
-        <target state="needs-translation">Category</target>
+        <target state="translated">Kategorie</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.imagedescription">
         <source>Link description</source>
-        <target state="needs-translation">Link description</target>
+        <target state="translated">Linkbeschreibung</target>
       </trans-unit>
     </body>
   </file>
