@@ -51,77 +51,77 @@
         <source>This record was last edited at</source>
         <target state="final">Datum der letzten Veränderung</target>
       </trans-unit>
-      <trans-unit id="fileName">
+      <trans-unit id="fileName" approved="yes">
         <source>Download file name</source>
-        <target state="translated">Dateiname</target>
+        <target state="final">Dateiname</target>
       </trans-unit>
-      <trans-unit id="fileSize">
+      <trans-unit id="fileSize" approved="yes">
         <source>Size of download-file</source>
-        <target state="translated">Dateigröße</target>
+        <target state="final">Dateigröße</target>
       </trans-unit>
-      <trans-unit id="fileMDate">
+      <trans-unit id="fileMDate" approved="yes">
         <source>File date last changed</source>
-        <target state="translated">Dateidatum, letzte Änderung</target>
+        <target state="final">Dateidatum, letzte Änderung</target>
       </trans-unit>
-      <trans-unit id="download">
+      <trans-unit id="download" approved="yes">
         <source>Download</source>
-        <target state="translated">Download</target>
+        <target state="final">Download</target>
       </trans-unit>
-      <trans-unit id="downloads">
+      <trans-unit id="downloads" approved="yes">
         <source>Downloads</source>
-        <target state="translated">Downloads</target>
+        <target state="final">Downloads</target>
       </trans-unit>
-      <trans-unit id="noValue">
+      <trans-unit id="noValue" approved="yes">
         <source>No data, possibly missing ID!?</source>
-        <target state="translated">Keine Daten vorhanden, es wurde wahrscheinlich keine ID übergeben!?</target>
+        <target state="final">Keine Daten vorhanden, es wurde wahrscheinlich keine ID übergeben!?</target>
       </trans-unit>
-      <trans-unit id="noTemplate">
+      <trans-unit id="noTemplate" approved="yes">
         <source>No HTML-template. Neither in the flexform nor in the template-setup!?</source>
-        <target state="translated">Sie haben weder in der Flexform noch im Setup eine HTML-Schablone zugewiesen!?</target>
+        <target state="final">Sie haben weder in der Flexform noch im Setup eine HTML-Schablone zugewiesen!?</target>
       </trans-unit>
-      <trans-unit id="since">
+      <trans-unit id="since" approved="yes">
         <source>since</source>
-        <target state="translated">seit</target>
+        <target state="final">seit</target>
       </trans-unit>
-      <trans-unit id="oclock">
+      <trans-unit id="oclock" approved="yes">
         <source>o´clock</source>
-        <target state="translated">Uhr</target>
+        <target state="final">Uhr</target>
       </trans-unit>
-      <trans-unit id="more">
+      <trans-unit id="more" approved="yes">
         <source>[more]</source>
-        <target state="translated">[mehr]</target>
+        <target state="final">[mehr]</target>
       </trans-unit>
-      <trans-unit id="linkBack">
+      <trans-unit id="linkBack" approved="yes">
         <source>Link back to previous page</source>
-        <target state="translated">Link zurück zur Herkunftsseite</target>
+        <target state="final">Link zurück zur Herkunftsseite</target>
       </trans-unit>
-      <trans-unit id="pi_list_browseresults_page">
+      <trans-unit id="pi_list_browseresults_page" approved="yes">
         <source>Page</source>
-        <target state="translated">Seite</target>
+        <target state="final">Seite</target>
       </trans-unit>
-      <trans-unit id="pi_list_browseresults_prev">
+      <trans-unit id="pi_list_browseresults_prev" approved="yes">
         <source>Previous</source>
-        <target state="translated">zurück</target>
+        <target state="final">zurück</target>
       </trans-unit>
-      <trans-unit id="pi_list_browseresults_next">
+      <trans-unit id="pi_list_browseresults_next" approved="yes">
         <source>Next</source>
-        <target state="translated">weiter</target>
+        <target state="final">weiter</target>
       </trans-unit>
-      <trans-unit id="pi_list_browseresults_displays">
+      <trans-unit id="pi_list_browseresults_displays" approved="yes">
         <source>Displaying results %s to %s out of %s</source>
-        <target state="translated">Download-Objekt %s bis %s von %s</target>
+        <target state="final">Download-Objekt %s bis %s von %s</target>
       </trans-unit>
-      <trans-unit id="pi_list_browseresults_noResults">
+      <trans-unit id="pi_list_browseresults_noResults" approved="yes">
         <source>Sorry, no items were found.</source>
-        <target state="translated">Es wurden keine Einträge gefunden</target>
+        <target state="final">Es wurden keine Einträge gefunden</target>
       </trans-unit>
-      <trans-unit id="error.callSingleViewWithoutUid.title">
+      <trans-unit id="error.callSingleViewWithoutUid.title" approved="yes">
         <source>No download UID found</source>
-        <target state="translated">Keine Download UID gefunden</target>
+        <target state="final">Keine Download UID gefunden</target>
       </trans-unit>
-      <trans-unit id="error.callSingleViewWithoutUid.description">
+      <trans-unit id="error.callSingleViewWithoutUid.description" approved="yes">
         <source>Direct call of the single page without an item ID!?</source>
-        <target state="translated">Die Single-Seite wurde direkt aufgerufen ohne Übergabe einer ID!?</target>
+        <target state="final">Die Single-Seite wurde direkt aufgerufen ohne Übergabe einer ID!?</target>
       </trans-unit>
     </body>
   </file>
