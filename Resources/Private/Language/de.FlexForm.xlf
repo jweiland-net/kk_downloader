@@ -3,149 +3,149 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader" target-language="de">
     <header/>
     <body>
-      <trans-unit id="tx_kkdownloader.filesize">
+      <trans-unit id="tx_kkdownloader.filesize" approved="yes">
         <source>Show filesize</source>
-        <target state="needs-translation">Show filesize</target>
+        <target state="final">Dateigröße anzeigen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.imagepreview">
+      <trans-unit id="tx_kkdownloader.imagepreview" approved="yes">
         <source>Image preview?</source>
-        <target state="needs-translation">Image preview?</target>
+        <target state="final">Bildvorschau?</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.results_at_a_time">
+      <trans-unit id="tx_kkdownloader.results_at_a_time" approved="yes">
         <source>Max amount of records to show on list view</source>
-        <target state="needs-translation">Max amount of records to show on list view</target>
+        <target state="final">Maximale Anzahl an Datensätzen in der Listenansicht</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.results_at_a_time.description">
+      <trans-unit id="tx_kkdownloader.results_at_a_time.description" approved="yes">
         <source>If empty we will show value of TypoScript which is by default 25. If you want to show all records set this value high enough.</source>
-        <target state="needs-translation">If empty we will show value of TypoScript which is by default 25. If you want to show all records set this value high enough.</target>
+        <target state="final">Wenn dieser Wert leer gelassen wird, verwenden wir den Wert aus dem TypoScript, der standardmäßig auf 25 eingestellt ist. Wenn Sie alle Datensätze anzeigen wollen, dann setzen Sie den Wert hier hoch genug.</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showPagebrowser">
+      <trans-unit id="tx_kkdownloader.showPagebrowser" approved="yes">
         <source>Show pagebrowser</source>
-        <target state="needs-translation">Show pagebrowser</target>
+        <target state="final">Seiten-Browser anzeigen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showPagebrowser.description">
+      <trans-unit id="tx_kkdownloader.showPagebrowser.description" approved="yes">
         <source>Default on. If you deactivate this option and configure a low amount of records to show in list view, there is no possibility for the website visitor to navigate to the other records.</source>
-        <target state="needs-translation">Default on. If you deactivate this option and configure a low amount of records to show in list view, there is no possibility for the website visitor to navigate to the other records.</target>
+        <target state="final">Standardmäßig an. Wenn Sie diese Option deaktivieren und die max. Anzahl Datensätze für die Listenansicht zu gering setzen, dann hat der Webseitenbesucher keine Möglichkeit, die weiteren Datensätzen zu erreichen.</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showCRDate">
+      <trans-unit id="tx_kkdownloader.showCRDate" approved="yes">
         <source>Show creation date/time of the download item</source>
-        <target state="needs-translation">Show creation date/time of the download item</target>
+        <target state="final">Datum/Zeit der Erstellung des Eintrags anzeigen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showCRDate.nodate">
+      <trans-unit id="tx_kkdownloader.showCRDate.nodate" approved="yes">
         <source>No date/time</source>
-        <target state="needs-translation">No date/time</target>
+        <target state="final">Kein Datum/Uhrzeit</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showCRDate.date">
+      <trans-unit id="tx_kkdownloader.showCRDate.date" approved="yes">
         <source>Only date</source>
-        <target state="needs-translation">Only date</target>
+        <target state="final">Nur Datum</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showCRDate.datetime">
+      <trans-unit id="tx_kkdownloader.showCRDate.datetime" approved="yes">
         <source>Date and Time</source>
-        <target state="needs-translation">Date and Time</target>
+        <target state="final">Datum und Uhrzeit</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showFileMDate">
+      <trans-unit id="tx_kkdownloader.showFileMDate" approved="yes">
         <source>Show file last edit date</source>
-        <target state="needs-translation">Show file last edit date</target>
+        <target state="final">Datum der letzten Bearbeitung der Datei anzeigen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showFileMDate.nodate">
+      <trans-unit id="tx_kkdownloader.showFileMDate.nodate" approved="yes">
         <source>No date/time</source>
-        <target state="needs-translation">No date/time</target>
+        <target state="final">Kein Datum/Uhrzeit</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showFileMDate.date">
+      <trans-unit id="tx_kkdownloader.showFileMDate.date" approved="yes">
         <source>Only date</source>
-        <target state="needs-translation">Only date</target>
+        <target state="final">Nur Datum</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showFileMDate.datetime">
+      <trans-unit id="tx_kkdownloader.showFileMDate.datetime" approved="yes">
         <source>Date and Time</source>
-        <target state="needs-translation">Date and Time</target>
+        <target state="final">Datum und Uhrzeit</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showEditDate">
+      <trans-unit id="tx_kkdownloader.showEditDate" approved="yes">
         <source>Show modification date</source>
-        <target state="needs-translation">Show modification date</target>
+        <target state="final">Änderungsdatum anzeigen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showEditDate.description">
+      <trans-unit id="tx_kkdownloader.showEditDate.description" approved="yes">
         <source>After activation, the modification date of the download data set is also displayed.</source>
-        <target state="needs-translation">After activation, the modification date of the download data set is also displayed.</target>
+        <target state="final">Nach Aktivierung wird zusätzlich das Änderungsdatum des Downloaddatensatzes angezeigt.</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showDateLastDownload">
+      <trans-unit id="tx_kkdownloader.showDateLastDownload" approved="yes">
         <source>Show date of last download</source>
-        <target state="needs-translation">Show date of last download</target>
+        <target state="final">Datum des letzten Downloads anzeigen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showIPLastDownload">
+      <trans-unit id="tx_kkdownloader.showIPLastDownload" approved="yes">
         <source>Show IP-address of last download</source>
-        <target state="needs-translation">Show IP-address of last download</target>
+        <target state="final">IP-Adresse des letzten Downloads anzeigen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showCats">
+      <trans-unit id="tx_kkdownloader.showCats" approved="yes">
         <source>Show Categories</source>
-        <target state="needs-translation">Show Categories</target>
+        <target state="final">Kategorien anzeigen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.category">
+      <trans-unit id="tx_kkdownloader.category" approved="yes">
         <source>Select categories</source>
-        <target state="needs-translation">Select categories</target>
+        <target state="final">Kategorien auswählen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.category.all">
+      <trans-unit id="tx_kkdownloader.category.all" approved="yes">
         <source>All</source>
-        <target state="needs-translation">All</target>
+        <target state="final">Alle</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader_conf">
+      <trans-unit id="tx_kkdownloader_conf" approved="yes">
         <source>Settings</source>
-        <target state="needs-translation">Settings</target>
+        <target state="final">Einstellungen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.showclicks">
+      <trans-unit id="tx_kkdownloader.showclicks" approved="yes">
         <source>Display counted clicks</source>
-        <target state="needs-translation">Display counted clicks</target>
+        <target state="final">Anzahl Downloads anzeigen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.what_to_display">
+      <trans-unit id="tx_kkdownloader.what_to_display" approved="yes">
         <source>View</source>
-        <target state="needs-translation">View</target>
+        <target state="final">Ansicht</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.template_file">
+      <trans-unit id="tx_kkdownloader.template_file" approved="yes">
         <source>Template file</source>
-        <target state="needs-translation">Template file</target>
+        <target state="final">Templatedatei</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.orderby">
+      <trans-unit id="tx_kkdownloader.orderby" approved="yes">
         <source>Sort (only View = "LIST")</source>
-        <target state="needs-translation">Sort (only View = "LIST")</target>
+        <target state="final">Sortieren (nur Ansicht = "LIST")</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.orderbyTitle">
+      <trans-unit id="tx_kkdownloader.orderbyTitle" approved="yes">
         <source>by title</source>
-        <target state="needs-translation">by title</target>
+        <target state="final">nach Titel</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.orderbyFilename">
+      <trans-unit id="tx_kkdownloader.orderbyFilename" approved="yes">
         <source>by file-name</source>
-        <target state="needs-translation">by file-name</target>
+        <target state="final">nach Dateinamen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.orderbyCrDate">
+      <trans-unit id="tx_kkdownloader.orderbyCrDate" approved="yes">
         <source>by creation date</source>
-        <target state="needs-translation">by creation date</target>
+        <target state="final">nach Erstellungsdatum</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.orderbyLastModified">
+      <trans-unit id="tx_kkdownloader.orderbyLastModified" approved="yes">
         <source>by date last modified</source>
-        <target state="needs-translation">by date last modified</target>
+        <target state="final">nach Datum der letzten Änderung</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.orderbyCategory">
+      <trans-unit id="tx_kkdownloader.orderbyCategory" approved="yes">
         <source>by category</source>
-        <target state="needs-translation">by category</target>
+        <target state="final">nach Kategorie</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.orderbyDateLastDownloaded">
+      <trans-unit id="tx_kkdownloader.orderbyDateLastDownloaded" approved="yes">
         <source>by date last downloaded</source>
-        <target state="needs-translation">by date last downloaded</target>
+        <target state="final">nach Datum zuletzt heruntergeladen</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.orderbySorting">
+      <trans-unit id="tx_kkdownloader.orderbySorting" approved="yes">
         <source>by sorting in sysfolder</source>
-        <target state="needs-translation">by sorting in sysfolder</target>
+        <target state="final">nach Sortierung im Download-Ordner</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.ascdesc">
+      <trans-unit id="tx_kkdownloader.ascdesc" approved="yes">
         <source>Ascending/Descending</source>
-        <target state="needs-translation">Ascending/Descending</target>
+        <target state="final">Aufsteigend/Absteigend</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.asc">
+      <trans-unit id="tx_kkdownloader.asc" approved="yes">
         <source>Ascending</source>
-        <target state="needs-translation">Ascending</target>
+        <target state="final">Aufsteigend</target>
       </trans-unit>
-      <trans-unit id="tx_kkdownloader.desc">
+      <trans-unit id="tx_kkdownloader.desc" approved="yes">
         <source>Descending</source>
-        <target state="needs-translation">Descending</target>
+        <target state="final">Absteigend</target>
       </trans-unit>
     </body>
   </file>
