@@ -3,53 +3,53 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader" target-language="de">
     <header/>
     <body>
-      <trans-unit id="title">
+      <trans-unit id="title" approved="yes">
         <source>Title</source>
-        <target state="translated">Titel</target>
+        <target state="final">Titel</target>
       </trans-unit>
-      <trans-unit id="categories">
+      <trans-unit id="categories" approved="yes">
         <source>Categories</source>
-        <target state="translated">Kategorien</target>
+        <target state="final">Kategorien</target>
       </trans-unit>
-      <trans-unit id="links">
+      <trans-unit id="links" approved="yes">
         <source>Links</source>
-        <target state="needs-translation">Links</target>
+        <target state="final">Links</target>
       </trans-unit>
-      <trans-unit id="shortDescription">
+      <trans-unit id="shortDescription" approved="yes">
         <source>Short description</source>
-        <target state="translated">Kurzbeschreibung</target>
+        <target state="final">Kurzbeschreibung</target>
       </trans-unit>
-      <trans-unit id="description">
+      <trans-unit id="description" approved="yes">
         <source>Description</source>
-        <target state="translated">Beschreibung</target>
+        <target state="final">Beschreibung</target>
       </trans-unit>
-      <trans-unit id="image">
+      <trans-unit id="image" approved="yes">
         <source>Download object</source>
-        <target state="translated">Download-Objekt</target>
+        <target state="final">Download-Objekt</target>
       </trans-unit>
-      <trans-unit id="clicks">
+      <trans-unit id="clicks" approved="yes">
         <source>downloads</source>
-        <target state="translated">Downloads</target>
+        <target state="final">Downloads</target>
       </trans-unit>
-      <trans-unit id="lastDownload">
+      <trans-unit id="lastDownload" approved="yes">
         <source>Date last download</source>
-        <target state="translated">zuletzt herunter geladen</target>
+        <target state="final">zuletzt herunter geladen</target>
       </trans-unit>
-      <trans-unit id="ipLastDownload">
+      <trans-unit id="ipLastDownload" approved="yes">
         <source>IP-address of last download</source>
-        <target state="translated">IP-Adresse des letzten Downloads</target>
+        <target state="final">IP-Adresse des letzten Downloads</target>
       </trans-unit>
-      <trans-unit id="date">
+      <trans-unit id="date" approved="yes">
         <source>since</source>
-        <target state="translated">seit</target>
+        <target state="final">seit</target>
       </trans-unit>
-      <trans-unit id="crDate">
+      <trans-unit id="crDate" approved="yes">
         <source>Date file created</source>
-        <target state="translated">Erstell-Datum des Eintrags </target>
+        <target state="final">Erstell-Datum des Eintrags </target>
       </trans-unit>
-      <trans-unit id="lastEdit">
+      <trans-unit id="lastEdit" approved="yes">
         <source>This record was last edited at</source>
-        <target state="translated">Datum der letzten Veränderung</target>
+        <target state="final">Datum der letzten Veränderung</target>
       </trans-unit>
       <trans-unit id="fileName">
         <source>Download file name</source>
@@ -65,11 +65,11 @@
       </trans-unit>
       <trans-unit id="download">
         <source>Download</source>
-        <target state="needs-translation">Download</target>
+        <target state="translated">Download</target>
       </trans-unit>
       <trans-unit id="downloads">
         <source>Downloads</source>
-        <target state="needs-translation">Downloads</target>
+        <target state="translated">Downloads</target>
       </trans-unit>
       <trans-unit id="noValue">
         <source>No data, possibly missing ID!?</source>
