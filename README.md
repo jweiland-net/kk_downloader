@@ -32,3 +32,9 @@ Many thanks to Kurt Kunig for his great work.
   If it is not set (default) we will use TYPO3 internal icons to show file ext related icons. It's not possible
   to set downloadIcon to a Path anymore.
 * Please check `Documentation/ChangeLog/Index.rst` to see all changes.
+
+## Support
+
+Free Support is available via [Github Issue Tracker](https://github.com/jweiland-net/kk_downloader/issues).
+
+For commercial support, please contact us at [support@jweiland.net](support@jweiland.net).
