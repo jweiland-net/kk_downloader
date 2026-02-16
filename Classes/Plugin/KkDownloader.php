@@ -166,7 +166,7 @@ class KkDownloader extends AbstractPlugin
                 $this->addFlashMessage(
                     LocalizationUtility::translate('error.callSingleViewWithoutUid.description', 'kkDownloader'),
                     LocalizationUtility::translate('error.callSingleViewWithoutUid.title', 'kkDownloader'),
-                    FlashMessage::ERROR
+                    AbstractMessage::ERROR
                 );
             }
         } else {

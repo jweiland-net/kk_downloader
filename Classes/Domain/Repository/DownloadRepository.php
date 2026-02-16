@@ -92,9 +92,7 @@ class DownloadRepository extends AbstractRepository
         $this->addCategoryToQueryBuilder($categoryUid, $queryBuilder);
 
         return (int)$queryBuilder
-            ->resetQueryParts(['select', 'groupBy', 'orderBy'])
-            ->count('*')
-            ->execute()
+            ->resetQueryParts(['select', 'groupBy', 'orderBy'])->count('*')->executeQuery()
             ->fetchColumn();
     }
 
@@ -123,20 +121,16 @@ class DownloadRepository extends AbstractRepository
                 'i',
                 'sys_category_record_mm',
                 'sc_mm',
-                (string)$queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq(
-                        'i.uid',
-                        $queryBuilder->quoteIdentifier('sc_mm.uid_foreign')
-                    ),
-                    $queryBuilder->expr()->eq(
-                        'sc_mm.tablenames',
-                        $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
-                    ),
-                    $queryBuilder->expr()->eq(
-                        'sc_mm.fieldname',
-                        $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
-                    )
-                )
+                (string)$queryBuilder->expr()->and($queryBuilder->expr()->eq(
+                    'i.uid',
+                    $queryBuilder->quoteIdentifier('sc_mm.uid_foreign')
+                ), $queryBuilder->expr()->eq(
+                    'sc_mm.tablenames',
+                    $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
+                ), $queryBuilder->expr()->eq(
+                    'sc_mm.fieldname',
+                    $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
+                ))
             )
             ->andWhere(
                 $queryBuilder->expr()->eq(

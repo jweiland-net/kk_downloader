@@ -27,14 +27,10 @@ class CategoryRepository extends AbstractRepository
     {
         $queryBuilder = $this->getQueryBuilderForCategories();
         $statement = $queryBuilder
-            ->select('sc.*')
-            ->andWhere(
-                $queryBuilder->expr()->eq(
-                    'sc_mm.uid_foreign',
-                    $queryBuilder->createNamedParameter($downloadUid, \PDO::PARAM_INT)
-                )
-            )
-            ->execute();
+            ->select('sc.*')->andWhere($queryBuilder->expr()->eq(
+            'sc_mm.uid_foreign',
+            $queryBuilder->createNamedParameter($downloadUid, \PDO::PARAM_INT)
+        ))->executeQuery();
 
         $categories = [];
         while ($category = $statement->fetch()) {
@@ -63,20 +59,16 @@ class CategoryRepository extends AbstractRepository
                 'sc',
                 'sys_category_record_mm',
                 'sc_mm',
-                (string)$queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq(
-                        'sc.uid',
-                        $queryBuilder->quoteIdentifier('sc_mm.uid_local')
-                    ),
-                    $queryBuilder->expr()->eq(
-                        'sc_mm.tablenames',
-                        $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
-                    ),
-                    $queryBuilder->expr()->eq(
-                        'sc_mm.fieldname',
-                        $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
-                    )
-                )
+                (string)$queryBuilder->expr()->and($queryBuilder->expr()->eq(
+                    'sc.uid',
+                    $queryBuilder->quoteIdentifier('sc_mm.uid_local')
+                ), $queryBuilder->expr()->eq(
+                    'sc_mm.tablenames',
+                    $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
+                ), $queryBuilder->expr()->eq(
+                    'sc_mm.fieldname',
+                    $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
+                ))
             )
             ->andWhere(
                 $queryBuilder->expr()->in(

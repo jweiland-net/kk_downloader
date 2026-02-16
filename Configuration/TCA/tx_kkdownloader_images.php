@@ -5,8 +5,6 @@ return [
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
-        'dividers2tabs' => true,
         'sortby' => 'sorting',
         'default_sortby' => 'ORDER BY name',
         'versioningWS' => true,
@@ -36,26 +34,13 @@ return [
         'sys_language_uid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple'
-                    ],
-                ],
-                'default' => 0,
-            ],
+            'config' => ['type' => 'language'],
         ],
         'l18n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'tx_kkdownloader_images',
                 'size' => 1,
                 'maxitems' => 1,
@@ -78,7 +63,7 @@ return [
                 'default' => 0,
                 'items' => [
                     [
-                        0 => '',
+                        'label' => '',
                         'invertStateDisplay' => true,
                     ],
                 ],
@@ -90,7 +75,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'required,trim',
+                'eval' => 'trim',
+                'required' => true,
             ],
         ],
         'image' => [
@@ -104,7 +90,6 @@ return [
                     'foreign_match_fields' => [
                         'fieldname' => 'image',
                         'tablenames' => 'tx_kkdownloader_images',
-                        'table_local' => 'sys_file',
                     ],
                     'behaviour' => [
                         'allowLanguageSynchronization' => true,
@@ -129,7 +114,6 @@ return [
                     'foreign_match_fields' => [
                         'fieldname' => 'imagepreview',
                         'tablenames' => 'tx_kkdownloader_images',
-                        'table_local' => 'sys_file',
                     ],
                     'behaviour' => [
                         'allowLanguageSynchronization' => true,

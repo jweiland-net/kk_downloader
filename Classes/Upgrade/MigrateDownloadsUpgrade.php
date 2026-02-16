@@ -111,9 +111,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
      */
     public function updateNecessary(): bool
     {
-        return (bool)$this->getQueryBuilderForDownloads()
-            ->count('*')
-            ->execute()
+        return (bool)$this->getQueryBuilderForDownloads()->count('*')->executeQuery()
             ->fetchColumn();
     }
 
@@ -153,9 +151,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
      */
     protected function getRecordsFromTable(): array
     {
-        $statement = $this->getQueryBuilderForDownloads()
-            ->select('uid', 'pid', 'downloaddescription', $this->fieldToMigrate)
-            ->execute();
+        $statement = $this->getQueryBuilderForDownloads()->select('uid', 'pid', 'downloaddescription', $this->fieldToMigrate)->executeQuery();
 
         $downloads = [];
         while ($download = $statement->fetch()) {
@@ -225,16 +221,13 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
 
                 $queryBuilder = $connectionPool->getQueryBuilderForTable('sys_file');
                 $queryBuilder->getRestrictions()->removeAll();
-                $existingFileRecord = $queryBuilder->select('uid')->from('sys_file')->where(
-                    $queryBuilder->expr()->eq(
-                        'sha1',
-                        $queryBuilder->createNamedParameter($fileSha1, \PDO::PARAM_STR)
-                    ),
-                    $queryBuilder->expr()->eq(
-                        'storage',
-                        $queryBuilder->createNamedParameter($storageUid, \PDO::PARAM_INT)
-                    )
-                )->execute()->fetch();
+                $existingFileRecord = $queryBuilder->select('uid')->from('sys_file')->where($queryBuilder->expr()->eq(
+                    'sha1',
+                    $queryBuilder->createNamedParameter($fileSha1, \PDO::PARAM_STR)
+                ), $queryBuilder->expr()->eq(
+                    'storage',
+                    $queryBuilder->createNamedParameter($storageUid, \PDO::PARAM_INT)
+                ))->executeQuery()->fetch();
 
                 // the file exists, the file does not have to be moved again
                 if (is_array($existingFileRecord)) {
@@ -282,7 +275,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
                 ];
 
                 $queryBuilder = $connectionPool->getQueryBuilderForTable('sys_file_reference');
-                $queryBuilder->insert('sys_file_reference')->values($fields)->execute();
+                $queryBuilder->insert('sys_file_reference')->values($fields)->executeStatement();
                 ++$i;
             }
         }
@@ -296,7 +289,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
                     'uid',
                     $queryBuilder->createNamedParameter($row['uid'], \PDO::PARAM_INT)
                 )
-            )->set($this->fieldToMigrate, $i)->execute();
+            )->set($this->fieldToMigrate, $i)->executeStatement();
         }
     }
 

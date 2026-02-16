@@ -69,9 +69,7 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
             return false;
         }
 
-        return (bool)$queryBuilder
-            ->select('*')
-            ->execute()
+        return (bool)$queryBuilder->select('*')->executeQuery()
             ->fetchColumn(0);
     }
 
@@ -88,9 +86,7 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
     {
         $rootSysCategoryUid = $this->getUidOfRootSysCategory();
         $queryBuilder = $this->getQueryBuilderForKkDownloaderCategories();
-        $statement = $queryBuilder
-            ->select('*')
-            ->execute();
+        $statement = $queryBuilder->select('*')->executeQuery();
 
         while ($kkDownloaderCategory = $statement->fetch()) {
             $l18nParent = $kkDownloaderCategory['l18n_parent'];
@@ -139,17 +135,12 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
 
         $statement = $queryBuilder
             ->select('uid', 'cat')
-            ->from('tx_kkdownloader_images')
-            ->orWhere(
-                $queryBuilder->expr()->neq(
-                    'cat',
-                    $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)
-                ),
-                $queryBuilder->expr()->isNotNull(
-                    'cat'
-                )
-            )
-            ->execute();
+            ->from('tx_kkdownloader_images')->orWhere($queryBuilder->expr()->neq(
+            'cat',
+            $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)
+        ), $queryBuilder->expr()->isNotNull(
+            'cat'
+        ))->executeQuery();
 
         while ($downloadRecord = $statement->fetch()) {
             $sorting = 0;
@@ -250,18 +241,13 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
 
         $statement = $queryBuilder
             ->select('uid', 'pi_flexform')
-            ->from('tt_content')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'CType',
-                    $queryBuilder->createNamedParameter('list', \PDO::PARAM_STR)
-                ),
-                $queryBuilder->expr()->eq(
-                    'list_type',
-                    $queryBuilder->createNamedParameter('kkdownloader_pi1', \PDO::PARAM_STR)
-                )
-            )
-            ->execute();
+            ->from('tt_content')->where($queryBuilder->expr()->eq(
+            'CType',
+            $queryBuilder->createNamedParameter('list', \PDO::PARAM_STR)
+        ), $queryBuilder->expr()->eq(
+            'list_type',
+            $queryBuilder->createNamedParameter('kkdownloader_pi1', \PDO::PARAM_STR)
+        ))->executeQuery();
 
         $records = [];
         while ($record = $statement->fetch()) {
@@ -293,18 +279,13 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
 
         $sysCategory = $queryBuilder
             ->select('uid')
-            ->from('sys_category')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'title',
-                    $queryBuilder->createNamedParameter('KK Downloader', \PDO::PARAM_STR)
-                ),
-                $queryBuilder->expr()->eq(
-                    'parent',
-                    $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
-                )
-            )
-            ->execute()
+            ->from('sys_category')->where($queryBuilder->expr()->eq(
+            'title',
+            $queryBuilder->createNamedParameter('KK Downloader', \PDO::PARAM_STR)
+        ), $queryBuilder->expr()->eq(
+            'parent',
+            $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
+        ))->executeQuery()
             ->fetch();
 
         if (empty($sysCategory)) {
