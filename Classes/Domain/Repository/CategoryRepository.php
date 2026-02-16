@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\KkDownloader\Domain\Repository;
 
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -29,11 +30,11 @@ class CategoryRepository extends AbstractRepository
         $statement = $queryBuilder
             ->select('sc.*')->andWhere($queryBuilder->expr()->eq(
             'sc_mm.uid_foreign',
-            $queryBuilder->createNamedParameter($downloadUid, \PDO::PARAM_INT)
+            $queryBuilder->createNamedParameter($downloadUid, Connection::PARAM_INT)
         ))->executeQuery();
 
         $categories = [];
-        while ($category = $statement->fetch()) {
+        while ($category = $statement->fetchAssociative()) {
             $category = $this->recordOverlay($category, 'sys_category');
             if ($category !== null) {
                 $categories[] = $category;
@@ -64,10 +65,10 @@ class CategoryRepository extends AbstractRepository
                     $queryBuilder->quoteIdentifier('sc_mm.uid_local')
                 ), $queryBuilder->expr()->eq(
                     'sc_mm.tablenames',
-                    $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
+                    $queryBuilder->createNamedParameter('tx_kkdownloader_images')
                 ), $queryBuilder->expr()->eq(
                     'sc_mm.fieldname',
-                    $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
+                    $queryBuilder->createNamedParameter('categories')
                 ))
             )
             ->andWhere(

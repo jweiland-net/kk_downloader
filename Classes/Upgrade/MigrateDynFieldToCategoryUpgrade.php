@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\KkDownloader\Upgrade;
 
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
@@ -140,7 +141,7 @@ class MigrateDynFieldToCategoryUpgrade implements UpgradeWizardInterface, Chatty
                     'uid' => (int)$record['uid'],
                 ],
                 [
-                    'pi_flexform' => \PDO::PARAM_STR,
+                    'pi_flexform' => Connection::PARAM_STR,
                 ]
             );
         }
@@ -160,14 +161,14 @@ class MigrateDynFieldToCategoryUpgrade implements UpgradeWizardInterface, Chatty
             ->select('uid', 'pi_flexform')
             ->from('tt_content')->where($queryBuilder->expr()->eq(
             'CType',
-            $queryBuilder->createNamedParameter('list', \PDO::PARAM_STR)
+            $queryBuilder->createNamedParameter('list')
         ), $queryBuilder->expr()->eq(
             'list_type',
-            $queryBuilder->createNamedParameter('kkdownloader_pi1', \PDO::PARAM_STR)
+            $queryBuilder->createNamedParameter('kkdownloader_pi1')
         ))->executeQuery();
 
         $records = [];
-        while ($record = $statement->fetch()) {
+        while ($record = $statement->fetchAssociative()) {
             $records[] = $record;
         }
 

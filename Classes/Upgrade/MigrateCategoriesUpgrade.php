@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\KkDownloader\Upgrade;
 
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
@@ -48,16 +49,6 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
      */
     protected $migratedCategories = [];
 
-    /**
-     * @return string[]
-     */
-    public function getPrerequisites(): array
-    {
-        return [
-            DatabaseUpdatedPrerequisite::class,
-        ];
-    }
-
     public function updateNecessary(): bool
     {
         $queryBuilder = $this->getQueryBuilderForKkDownloaderCategories();
@@ -70,7 +61,7 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
         }
 
         return (bool)$queryBuilder->select('*')->executeQuery()
-            ->fetchColumn(0);
+            ->fetchOne();
     }
 
     public function executeUpdate(): bool
@@ -88,7 +79,7 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
         $queryBuilder = $this->getQueryBuilderForKkDownloaderCategories();
         $statement = $queryBuilder->select('*')->executeQuery();
 
-        while ($kkDownloaderCategory = $statement->fetch()) {
+        while ($kkDownloaderCategory = $statement->fetchAssociative()) {
             $l18nParent = $kkDownloaderCategory['l18n_parent'];
             if (array_key_exists($l18nParent, $this->migratedCategories)) {
                 $l18nParent = $this->migratedCategories[$l18nParent];
@@ -110,16 +101,16 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
                     'title' => $kkDownloaderCategory['cat'],
                 ],
                 [
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_STR,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_STR,
                 ]
             );
 
@@ -137,12 +128,12 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
             ->select('uid', 'cat')
             ->from('tx_kkdownloader_images')->orWhere($queryBuilder->expr()->neq(
             'cat',
-            $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)
+            $queryBuilder->createNamedParameter('', Connection::PARAM_STR)
         ), $queryBuilder->expr()->isNotNull(
             'cat'
         ))->executeQuery();
 
-        while ($downloadRecord = $statement->fetch()) {
+        while ($downloadRecord = $statement->fetchAssociative()) {
             $sorting = 0;
             $oldCategories = GeneralUtility::intExplode(',', $downloadRecord['cat'], true);
             foreach ($oldCategories as $oldCategory) {
@@ -222,7 +213,7 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
                     'uid' => (int)$record['uid'],
                 ],
                 [
-                    'pi_flexform' => \PDO::PARAM_STR,
+                    'pi_flexform' => Connection::PARAM_STR,
                 ]
             );
         }
@@ -243,14 +234,14 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
             ->select('uid', 'pi_flexform')
             ->from('tt_content')->where($queryBuilder->expr()->eq(
             'CType',
-            $queryBuilder->createNamedParameter('list', \PDO::PARAM_STR)
+            $queryBuilder->createNamedParameter('list', Connection::PARAM_STR)
         ), $queryBuilder->expr()->eq(
             'list_type',
-            $queryBuilder->createNamedParameter('kkdownloader_pi1', \PDO::PARAM_STR)
+            $queryBuilder->createNamedParameter('kkdownloader_pi1', Connection::PARAM_STR)
         ))->executeQuery();
 
         $records = [];
-        while ($record = $statement->fetch()) {
+        while ($record = $statement->fetchAssociative()) {
             $records[] = $record;
         }
 
@@ -279,16 +270,21 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
 
         $sysCategory = $queryBuilder
             ->select('uid')
-            ->from('sys_category')->where($queryBuilder->expr()->eq(
-            'title',
-            $queryBuilder->createNamedParameter('KK Downloader', \PDO::PARAM_STR)
-        ), $queryBuilder->expr()->eq(
-            'parent',
-            $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
-        ))->executeQuery()
-            ->fetch();
+            ->from('sys_category')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'title',
+                    $queryBuilder->createNamedParameter('KK Downloader')
+                ),
+                $queryBuilder->expr()->eq(
+                    'parent',
+                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)
+                )
+            )
+            ->executeQuery()
+            ->fetchAssociative();
 
-        if (empty($sysCategory)) {
+        if ($sysCategory === false) {
             $connection = $this->getConnectionPool()->getConnectionForTable('sys_category');
             $connection->insert(
                 'sys_category',
@@ -300,11 +296,11 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
                     'title' => 'KK Downloader',
                 ],
                 [
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_INT,
-                    \PDO::PARAM_STR,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_INT,
+                    Connection::PARAM_STR,
                 ]
             );
             $sysCategoryUid = $connection->lastInsertId('sys_category');
@@ -331,5 +327,15 @@ class MigrateCategoriesUpgrade implements UpgradeWizardInterface
     protected function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getPrerequisites(): array
+    {
+        return [
+            DatabaseUpdatedPrerequisite::class,
+        ];
     }
 }

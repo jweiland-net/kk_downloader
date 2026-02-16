@@ -11,8 +11,10 @@ declare(strict_types=1);
 
 namespace JWeiland\KkDownloader\Domain\Repository;
 
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -30,11 +32,11 @@ class DownloadRepository extends AbstractRepository
             ->andWhere(
                 $queryBuilder->expr()->eq(
                     'i.uid',
-                    $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
                 )
             )
-            ->execute()
-            ->fetch();
+            ->executeQuery()
+            ->fetchAssociative();
 
         if ($downloadRecord === false) {
             $downloadRecord = [];
@@ -67,13 +69,13 @@ class DownloadRepository extends AbstractRepository
             $queryBuilder->orderBy('i.' . $orderBy, $direction);
         }
 
-        $statement = $queryBuilder
+        $queryResult = $queryBuilder
             ->setMaxResults($limit)
             ->setFirstResult($offset)
-            ->execute();
+            ->executeQuery();
 
         $downloads = [];
-        while ($downloadRecord = $statement->fetch()) {
+        while ($downloadRecord = $queryResult->fetchAssociative()) {
             $downloadRecord = $this->recordOverlay($downloadRecord, 'tx_kkdownloader_images');
             if ($downloadRecord !== null) {
                 $this->attachFilesToDownloadRecord($downloadRecord, 'image');
@@ -92,8 +94,10 @@ class DownloadRepository extends AbstractRepository
         $this->addCategoryToQueryBuilder($categoryUid, $queryBuilder);
 
         return (int)$queryBuilder
-            ->resetQueryParts(['select', 'groupBy', 'orderBy'])->count('*')->executeQuery()
-            ->fetchColumn();
+            ->resetQueryParts(['select', 'groupBy', 'orderBy'])
+            ->count('*')
+            ->executeQuery()
+            ->fetchOne();
     }
 
     protected function addStoragePagesToQueryBuilder(array $storagePages, QueryBuilder $queryBuilder): void
@@ -105,7 +109,7 @@ class DownloadRepository extends AbstractRepository
         $queryBuilder->andWhere(
             $queryBuilder->expr()->in(
                 'i.pid',
-                $queryBuilder->createNamedParameter($storagePages, Connection::PARAM_INT_ARRAY)
+                $queryBuilder->createNamedParameter($storagePages, ArrayParameterType::INTEGER)
             )
         );
     }
@@ -126,16 +130,16 @@ class DownloadRepository extends AbstractRepository
                     $queryBuilder->quoteIdentifier('sc_mm.uid_foreign')
                 ), $queryBuilder->expr()->eq(
                     'sc_mm.tablenames',
-                    $queryBuilder->createNamedParameter('tx_kkdownloader_images', \PDO::PARAM_STR)
+                    $queryBuilder->createNamedParameter('tx_kkdownloader_images', Connection::PARAM_STR)
                 ), $queryBuilder->expr()->eq(
                     'sc_mm.fieldname',
-                    $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
+                    $queryBuilder->createNamedParameter('categories', Connection::PARAM_STR)
                 ))
             )
             ->andWhere(
                 $queryBuilder->expr()->eq(
                     'sc_mm.uid_local',
-                    $queryBuilder->createNamedParameter($category, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($category, Connection::PARAM_INT)
                 )
             );
     }
@@ -208,15 +212,17 @@ class DownloadRepository extends AbstractRepository
     {
         $columns = [];
         $connection = $this->getConnectionPool()->getConnectionForTable('tx_kkdownloader_images');
-        if ($connection->getSchemaManager() instanceof AbstractSchemaManager) {
+        try {
+            $schemaManager = $connection->createSchemaManager();
             $columns = array_map(
                 static function ($column): string {
                     return 'i.' . $column;
                 },
                 array_keys(
-                    $connection->getSchemaManager()->listTableColumns('tx_kkdownloader_images') ?? []
+                    $schemaManager->listTableColumns('tx_kkdownloader_images') ?? []
                 )
             );
+        } catch (Exception $e) {
         }
 
         return $columns;

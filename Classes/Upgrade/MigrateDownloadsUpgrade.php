@@ -14,6 +14,7 @@ namespace JWeiland\KkDownloader\Upgrade;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -111,8 +112,10 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
      */
     public function updateNecessary(): bool
     {
-        return (bool)$this->getQueryBuilderForDownloads()->count('*')->executeQuery()
-            ->fetchColumn();
+        return (bool)$this->getQueryBuilderForDownloads()
+            ->count('*')
+            ->executeQuery()
+            ->fetchOne();
     }
 
     /**
@@ -154,7 +157,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
         $statement = $this->getQueryBuilderForDownloads()->select('uid', 'pid', 'downloaddescription', $this->fieldToMigrate)->executeQuery();
 
         $downloads = [];
-        while ($download = $statement->fetch()) {
+        while ($download = $statement->fetchAssociative()) {
             $downloads[] = $download;
         }
 
@@ -174,7 +177,7 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
                 $queryBuilder->expr()->isNotNull($this->fieldToMigrate),
                 $queryBuilder->expr()->neq(
                     $this->fieldToMigrate,
-                    $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)
+                    $queryBuilder->createNamedParameter('')
                 ),
                 $queryBuilder->expr()->comparison(
                     'CAST(CAST(' . $queryBuilder->quoteIdentifier($this->fieldToMigrate) . ' AS DECIMAL) AS CHAR)',
@@ -221,13 +224,21 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
 
                 $queryBuilder = $connectionPool->getQueryBuilderForTable('sys_file');
                 $queryBuilder->getRestrictions()->removeAll();
-                $existingFileRecord = $queryBuilder->select('uid')->from('sys_file')->where($queryBuilder->expr()->eq(
-                    'sha1',
-                    $queryBuilder->createNamedParameter($fileSha1, \PDO::PARAM_STR)
-                ), $queryBuilder->expr()->eq(
-                    'storage',
-                    $queryBuilder->createNamedParameter($storageUid, \PDO::PARAM_INT)
-                ))->executeQuery()->fetch();
+                $existingFileRecord = $queryBuilder
+                    ->select('uid')
+                    ->from('sys_file')
+                    ->where(
+                        $queryBuilder->expr()->eq(
+                            'sha1',
+                            $queryBuilder->createNamedParameter($fileSha1),
+                        ),
+                        $queryBuilder->expr()->eq(
+                            'storage',
+                            $queryBuilder->createNamedParameter($storageUid, Connection::PARAM_INT),
+                        )
+                    )
+                    ->executeQuery()
+                    ->fetchAssociative();
 
                 // the file exists, the file does not have to be moved again
                 if (is_array($existingFileRecord)) {
@@ -275,7 +286,11 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
                 ];
 
                 $queryBuilder = $connectionPool->getQueryBuilderForTable('sys_file_reference');
-                $queryBuilder->insert('sys_file_reference')->values($fields)->executeStatement();
+                $queryBuilder
+                    ->insert('sys_file_reference')
+                    ->values($fields)
+                    ->executeStatement();
+
                 ++$i;
             }
         }
@@ -284,12 +299,16 @@ class MigrateDownloadsUpgrade implements UpgradeWizardInterface, LoggerAwareInte
         // but only if all new references could be set
         if ($i === count($fieldItems)) {
             $queryBuilder = $connectionPool->getQueryBuilderForTable($this->table);
-            $queryBuilder->update($this->table)->where(
-                $queryBuilder->expr()->eq(
-                    'uid',
-                    $queryBuilder->createNamedParameter($row['uid'], \PDO::PARAM_INT)
+            $queryBuilder
+                ->update($this->table)
+                ->where(
+                    $queryBuilder->expr()->eq(
+                        'uid',
+                        $queryBuilder->createNamedParameter($row['uid'], Connection::PARAM_INT),
+                    )
                 )
-            )->set($this->fieldToMigrate, $i)->executeStatement();
+                ->set($this->fieldToMigrate, $i)
+                ->executeStatement();
         }
     }
 

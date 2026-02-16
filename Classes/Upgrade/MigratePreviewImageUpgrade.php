@@ -14,6 +14,7 @@ namespace JWeiland\KkDownloader\Upgrade;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -112,7 +113,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
     public function updateNecessary(): bool
     {
         return (bool)$this->getQueryBuilderForDownloads()->count('*')->executeQuery()
-            ->fetchColumn();
+            ->fetchOne();
     }
 
     /**
@@ -154,7 +155,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
         $statement = $this->getQueryBuilderForDownloads()->select('uid', 'pid', $this->fieldToMigrate)->executeQuery();
 
         $downloads = [];
-        while ($download = $statement->fetch()) {
+        while ($download = $statement->fetchAssociative()) {
             $downloads[] = $download;
         }
 
@@ -174,7 +175,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
                 $queryBuilder->expr()->isNotNull($this->fieldToMigrate),
                 $queryBuilder->expr()->neq(
                     $this->fieldToMigrate,
-                    $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)
+                    $queryBuilder->createNamedParameter('')
                 ),
                 $queryBuilder->expr()->comparison(
                     'CAST(CAST(' . $queryBuilder->quoteIdentifier($this->fieldToMigrate) . ' AS DECIMAL) AS CHAR)',
@@ -220,13 +221,21 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
 
                 $queryBuilder = $connectionPool->getQueryBuilderForTable('sys_file');
                 $queryBuilder->getRestrictions()->removeAll();
-                $existingFileRecord = $queryBuilder->select('uid')->from('sys_file')->where($queryBuilder->expr()->eq(
-                    'sha1',
-                    $queryBuilder->createNamedParameter($fileSha1, \PDO::PARAM_STR)
-                ), $queryBuilder->expr()->eq(
-                    'storage',
-                    $queryBuilder->createNamedParameter($storageUid, \PDO::PARAM_INT)
-                ))->executeQuery()->fetch();
+                $existingFileRecord = $queryBuilder
+                    ->select('uid')
+                    ->from('sys_file')
+                    ->where(
+                        $queryBuilder->expr()->eq(
+                            'sha1',
+                            $queryBuilder->createNamedParameter($fileSha1),
+                        ),
+                        $queryBuilder->expr()->eq(
+                            'storage',
+                            $queryBuilder->createNamedParameter($storageUid, Connection::PARAM_INT),
+                        ),
+                    )
+                    ->executeQuery()
+                    ->fetchAssociative();
 
                 // the file exists, the file does not have to be moved again
                 if (is_array($existingFileRecord)) {
@@ -285,7 +294,7 @@ class MigratePreviewImageUpgrade implements UpgradeWizardInterface, LoggerAwareI
             $queryBuilder->update($this->table)->where(
                 $queryBuilder->expr()->eq(
                     'uid',
-                    $queryBuilder->createNamedParameter($row['uid'], \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($row['uid'], Connection::PARAM_INT)
                 )
             )->set($this->fieldToMigrate, $i)->executeStatement();
         }
