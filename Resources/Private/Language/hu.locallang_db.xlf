@@ -5,51 +5,51 @@
     <body>
       <trans-unit id="tt_content.list_type_pi1">
         <source>KK Downloader</source>
-        <target state="needs-translation">KK Downloader</target>
+        <target state="translated">KK Downloader</target>
       </trans-unit>
       <trans-unit id="plugin.kkdownloader.title">
         <source>KK Downloader</source>
-        <target state="needs-translation">KK Downloader</target>
+        <target state="translated">KK Downloader</target>
       </trans-unit>
       <trans-unit id="plugin.kkdownloader.description">
         <source>Adds a plugin to list or show Downloads managed with KK Downloader.</source>
-        <target state="needs-translation">Adds a plugin to list or show Downloads managed with KK Downloader.</target>
+        <target state="translated">Bővítményt ad hozzá a KK Downloaderrel kezelt letöltések listázásához vagy megjelenítéséhez.</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images">
         <source>Download</source>
-        <target state="needs-translation">Download</target>
+        <target state="translated">Letöltés</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.name">
         <source>Download title</source>
-        <target state="needs-translation">Download title</target>
+        <target state="translated">Letöltés címe</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.image">
         <source>File(s)</source>
-        <target state="needs-translation">File(s)</target>
+        <target state="translated">Fájl(ok)</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.imagepreview">
         <source>Preview image (optional)</source>
-        <target state="needs-translation">Preview image (optional)</target>
+        <target state="translated">Előnézeti kép (opcionális)</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.description">
         <source>Short description</source>
-        <target state="needs-translation">Short description</target>
+        <target state="translated">Rövid leírás</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.longdescription">
         <source>Long description</source>
-        <target state="needs-translation">Long description</target>
+        <target state="translated">Hosszú leírás</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.clicks">
         <source>Clicks</source>
-        <target state="needs-translation">Clicks</target>
+        <target state="translated">Kattintások</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.cat">
         <source>Category</source>
-        <target state="needs-translation">Category</target>
+        <target state="translated">Kategória</target>
       </trans-unit>
       <trans-unit id="tx_kkdownloader_images.imagedescription">
         <source>Link description</source>
-        <target state="needs-translation">Link description</target>
+        <target state="translated">Hivatkozás leírása</target>
       </trans-unit>
     </body>
   </file>
