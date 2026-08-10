@@ -5,123 +5,123 @@
     <body>
       <trans-unit id="title">
         <source>Title</source>
-        <target state="needs-translation">Title</target>
+        <target state="translated">Cím</target>
       </trans-unit>
       <trans-unit id="categories">
         <source>Categories</source>
-        <target state="needs-translation">Categories</target>
+        <target state="translated">Kategóriák</target>
       </trans-unit>
       <trans-unit id="links">
         <source>Links</source>
-        <target state="needs-translation">Links</target>
+        <target state="translated">Hivatkozások</target>
       </trans-unit>
       <trans-unit id="shortDescription">
         <source>Short description</source>
-        <target state="needs-translation">Short description</target>
+        <target state="translated">Rövid leírás</target>
       </trans-unit>
       <trans-unit id="description">
         <source>Description</source>
-        <target state="needs-translation">Description</target>
+        <target state="translated">Leírás</target>
       </trans-unit>
       <trans-unit id="image">
         <source>Download object</source>
-        <target state="needs-translation">Download object</target>
+        <target state="translated">Letöltési objektum</target>
       </trans-unit>
       <trans-unit id="clicks">
         <source>downloads</source>
-        <target state="needs-translation">downloads</target>
+        <target state="translated">letöltések</target>
       </trans-unit>
       <trans-unit id="lastDownload">
         <source>Date last download</source>
-        <target state="needs-translation">Date last download</target>
+        <target state="translated">Utolsó letöltés dátuma</target>
       </trans-unit>
       <trans-unit id="ipLastDownload">
         <source>IP-address of last download</source>
-        <target state="needs-translation">IP-address of last download</target>
+        <target state="translated">Az utolsó letöltés IP-címe</target>
       </trans-unit>
       <trans-unit id="date">
         <source>since</source>
-        <target state="needs-translation">since</target>
+        <target state="translated">óta</target>
       </trans-unit>
       <trans-unit id="crDate">
         <source>Date file created</source>
-        <target state="needs-translation">Date file created</target>
+        <target state="translated">Fájl létrehozásának dátuma</target>
       </trans-unit>
       <trans-unit id="lastEdit">
         <source>This record was last edited at</source>
-        <target state="needs-translation">This record was last edited at</target>
+        <target state="translated">Ezt a rekordot utoljára ekkor szerkesztették:</target>
       </trans-unit>
       <trans-unit id="fileName">
         <source>Download file name</source>
-        <target state="needs-translation">Download file name</target>
+        <target state="translated">Letöltési fájl neve</target>
       </trans-unit>
       <trans-unit id="fileSize">
         <source>Size of download-file</source>
-        <target state="needs-translation">Size of download-file</target>
+        <target state="translated">A letöltési fájl mérete</target>
       </trans-unit>
       <trans-unit id="fileMDate">
         <source>File date last changed</source>
-        <target state="needs-translation">File date last changed</target>
+        <target state="translated">A fájl utolsó módosításának dátuma</target>
       </trans-unit>
       <trans-unit id="download">
         <source>Download</source>
-        <target state="needs-translation">Download</target>
+        <target state="translated">Letöltés</target>
       </trans-unit>
       <trans-unit id="downloads">
         <source>Downloads</source>
-        <target state="needs-translation">Downloads</target>
+        <target state="translated">Letöltések</target>
       </trans-unit>
       <trans-unit id="noValue">
         <source>No data, possibly missing ID!?</source>
-        <target state="needs-translation">No data, possibly missing ID!?</target>
+        <target state="translated">Nincs adat, valószínűleg hiányzó azonosító!?</target>
       </trans-unit>
       <trans-unit id="noTemplate">
         <source>No HTML-template. Neither in the flexform nor in the template-setup!?</source>
-        <target state="needs-translation">No HTML-template. Neither in the flexform nor in the template-setup!?</target>
+        <target state="translated">Nincs HTML-sablon. Sem a flexformban, sem a templatesetupban!?</target>
       </trans-unit>
       <trans-unit id="since">
         <source>since</source>
-        <target state="needs-translation">since</target>
+        <target state="translated">óta</target>
       </trans-unit>
       <trans-unit id="oclock">
         <source>o´clock</source>
-        <target state="needs-translation">o´clock</target>
+        <target state="translated">óra</target>
       </trans-unit>
       <trans-unit id="more">
         <source>[more]</source>
-        <target state="needs-translation">[more]</target>
+        <target state="translated">[több]</target>
       </trans-unit>
       <trans-unit id="linkBack">
         <source>Link back to previous page</source>
-        <target state="needs-translation">Link back to previous page</target>
+        <target state="translated">Visszalépés az előző oldalra</target>
       </trans-unit>
       <trans-unit id="pi_list_browseresults_page">
         <source>Page</source>
-        <target state="needs-translation">Page</target>
+        <target state="translated">Oldal</target>
       </trans-unit>
       <trans-unit id="pi_list_browseresults_prev">
         <source>Previous</source>
-        <target state="needs-translation">Previous</target>
+        <target state="translated">Előző</target>
       </trans-unit>
       <trans-unit id="pi_list_browseresults_next">
         <source>Next</source>
-        <target state="needs-translation">Next</target>
+        <target state="translated">Következő</target>
       </trans-unit>
       <trans-unit id="pi_list_browseresults_displays">
         <source>Displaying results %s to %s out of %s</source>
-        <target state="needs-translation">Displaying results %s to %s out of %s</target>
+        <target state="translated">Megjelenítve %s–%s a(z) %s eredményből</target>
       </trans-unit>
       <trans-unit id="pi_list_browseresults_noResults">
         <source>Sorry, no items were found.</source>
-        <target state="needs-translation">Sorry, no items were found.</target>
+        <target state="translated">Sajnáljuk, nem található elem.</target>
       </trans-unit>
       <trans-unit id="error.callSingleViewWithoutUid.title">
         <source>No download UID found</source>
-        <target state="needs-translation">No download UID found</target>
+        <target state="translated">Nem található letöltési UID</target>
       </trans-unit>
       <trans-unit id="error.callSingleViewWithoutUid.description">
         <source>Direct call of the single page without an item ID!?</source>
-        <target state="needs-translation">Direct call of the single page without an item ID!?</target>
+        <target state="translated">Egyetlen oldal közvetlen hívása elemazonosító nélkül!?</target>
       </trans-unit>
     </body>
   </file>
