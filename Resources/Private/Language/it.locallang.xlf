@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader" target-language="it">
+    <header/>
+    <body>
+      <trans-unit id="title">
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
+      </trans-unit>
+      <trans-unit id="categories">
+        <source>Categories</source>
+        <target state="needs-translation">Categories</target>
+      </trans-unit>
+      <trans-unit id="links">
+        <source>Links</source>
+        <target state="needs-translation">Links</target>
+      </trans-unit>
+      <trans-unit id="shortDescription">
+        <source>Short description</source>
+        <target state="needs-translation">Short description</target>
+      </trans-unit>
+      <trans-unit id="description">
+        <source>Description</source>
+        <target state="needs-translation">Description</target>
+      </trans-unit>
+      <trans-unit id="image">
+        <source>Download object</source>
+        <target state="needs-translation">Download object</target>
+      </trans-unit>
+      <trans-unit id="clicks">
+        <source>downloads</source>
+        <target state="needs-translation">downloads</target>
+      </trans-unit>
+      <trans-unit id="lastDownload">
+        <source>Date last download</source>
+        <target state="needs-translation">Date last download</target>
+      </trans-unit>
+      <trans-unit id="ipLastDownload">
+        <source>IP-address of last download</source>
+        <target state="needs-translation">IP-address of last download</target>
+      </trans-unit>
+      <trans-unit id="date">
+        <source>since</source>
+        <target state="needs-translation">since</target>
+      </trans-unit>
+      <trans-unit id="crDate">
+        <source>Date file created</source>
+        <target state="needs-translation">Date file created</target>
+      </trans-unit>
+      <trans-unit id="lastEdit">
+        <source>This record was last edited at</source>
+        <target state="needs-translation">This record was last edited at</target>
+      </trans-unit>
+      <trans-unit id="fileName">
+        <source>Download file name</source>
+        <target state="needs-translation">Download file name</target>
+      </trans-unit>
+      <trans-unit id="fileSize">
+        <source>Size of download-file</source>
+        <target state="needs-translation">Size of download-file</target>
+      </trans-unit>
+      <trans-unit id="fileMDate">
+        <source>File date last changed</source>
+        <target state="needs-translation">File date last changed</target>
+      </trans-unit>
+      <trans-unit id="download">
+        <source>Download</source>
+        <target state="needs-translation">Download</target>
+      </trans-unit>
+      <trans-unit id="downloads">
+        <source>Downloads</source>
+        <target state="needs-translation">Downloads</target>
+      </trans-unit>
+      <trans-unit id="noValue">
+        <source>No data, possibly missing ID!?</source>
+        <target state="needs-translation">No data, possibly missing ID!?</target>
+      </trans-unit>
+      <trans-unit id="noTemplate">
+        <source>No HTML-template. Neither in the flexform nor in the template-setup!?</source>
+        <target state="needs-translation">No HTML-template. Neither in the flexform nor in the template-setup!?</target>
+      </trans-unit>
+      <trans-unit id="since">
+        <source>since</source>
+        <target state="needs-translation">since</target>
+      </trans-unit>
+      <trans-unit id="oclock">
+        <source>o´clock</source>
+        <target state="needs-translation">o´clock</target>
+      </trans-unit>
+      <trans-unit id="more">
+        <source>[more]</source>
+        <target state="needs-translation">[more]</target>
+      </trans-unit>
+      <trans-unit id="linkBack">
+        <source>Link back to previous page</source>
+        <target state="needs-translation">Link back to previous page</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_page">
+        <source>Page</source>
+        <target state="needs-translation">Page</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_prev">
+        <source>Previous</source>
+        <target state="needs-translation">Previous</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_next">
+        <source>Next</source>
+        <target state="needs-translation">Next</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_displays">
+        <source>Displaying results %s to %s out of %s</source>
+        <target state="needs-translation">Displaying results %s to %s out of %s</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_noResults">
+        <source>Sorry, no items were found.</source>
+        <target state="needs-translation">Sorry, no items were found.</target>
+      </trans-unit>
+      <trans-unit id="error.callSingleViewWithoutUid.title">
+        <source>No download UID found</source>
+        <target state="needs-translation">No download UID found</target>
+      </trans-unit>
+      <trans-unit id="error.callSingleViewWithoutUid.description">
+        <source>Direct call of the single page without an item ID!?</source>
+        <target state="needs-translation">Direct call of the single page without an item ID!?</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
