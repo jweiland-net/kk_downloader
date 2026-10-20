@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="tx_kkdownloader.filesize">
+        <source>Show filesize</source>
+        <target>crwdns307708:0crwdne307708:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.imagepreview">
+        <source>Image preview?</source>
+        <target>crwdns307710:0crwdne307710:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.results_at_a_time">
+        <source>Max amount of records to show on list view</source>
+        <target>crwdns307712:0crwdne307712:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.results_at_a_time.description">
+        <source>If empty we will show value of TypoScript which is by default 25. If you want to show all records set this value high enough.</source>
+        <target>crwdns307714:0crwdne307714:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showPagebrowser">
+        <source>Show pagebrowser</source>
+        <target>crwdns307716:0crwdne307716:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showPagebrowser.description">
+        <source>Default on. If you deactivate this option and configure a low amount of records to show in list view, there is no possibility for the website visitor to navigate to the other records.</source>
+        <target>crwdns307718:0crwdne307718:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showCRDate">
+        <source>Show creation date/time of the download item</source>
+        <target>crwdns307720:0crwdne307720:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showCRDate.nodate">
+        <source>No date/time</source>
+        <target>crwdns307722:0crwdne307722:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showCRDate.date">
+        <source>Only date</source>
+        <target>crwdns307724:0crwdne307724:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showCRDate.datetime">
+        <source>Date and Time</source>
+        <target>crwdns307726:0crwdne307726:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showFileMDate">
+        <source>Show file last edit date</source>
+        <target>crwdns307728:0crwdne307728:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showFileMDate.nodate">
+        <source>No date/time</source>
+        <target>crwdns307730:0crwdne307730:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showFileMDate.date">
+        <source>Only date</source>
+        <target>crwdns307732:0crwdne307732:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showFileMDate.datetime">
+        <source>Date and Time</source>
+        <target>crwdns307734:0crwdne307734:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showEditDate">
+        <source>Show modification date</source>
+        <target>crwdns307736:0crwdne307736:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showEditDate.description">
+        <source>After activation, the modification date of the download data set is also displayed.</source>
+        <target>crwdns307738:0crwdne307738:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showDateLastDownload">
+        <source>Show date of last download</source>
+        <target>crwdns307740:0crwdne307740:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showIPLastDownload">
+        <source>Show IP-address of last download</source>
+        <target>crwdns307742:0crwdne307742:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showCats">
+        <source>Show Categories</source>
+        <target>crwdns307744:0crwdne307744:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.category">
+        <source>Select categories</source>
+        <target>crwdns307746:0crwdne307746:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.category.all">
+        <source>All</source>
+        <target>crwdns307748:0crwdne307748:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_conf">
+        <source>Settings</source>
+        <target>crwdns307750:0crwdne307750:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.showclicks">
+        <source>Display counted clicks</source>
+        <target>crwdns307752:0crwdne307752:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.what_to_display">
+        <source>View</source>
+        <target>crwdns307754:0crwdne307754:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.template_file">
+        <source>Template file</source>
+        <target>crwdns307756:0crwdne307756:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.orderby">
+        <source>Sort (only View = "LIST")</source>
+        <target>crwdns307758:0crwdne307758:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.orderbyTitle">
+        <source>by title</source>
+        <target>crwdns307760:0crwdne307760:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.orderbyFilename">
+        <source>by file-name</source>
+        <target>crwdns307762:0crwdne307762:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.orderbyCrDate">
+        <source>by creation date</source>
+        <target>crwdns307764:0crwdne307764:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.orderbyLastModified">
+        <source>by date last modified</source>
+        <target>crwdns307766:0crwdne307766:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.orderbyCategory">
+        <source>by category</source>
+        <target>crwdns307768:0crwdne307768:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.orderbyDateLastDownloaded">
+        <source>by date last downloaded</source>
+        <target>crwdns307770:0crwdne307770:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.orderbySorting">
+        <source>by sorting in sysfolder</source>
+        <target>crwdns307772:0crwdne307772:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.ascdesc">
+        <source>Ascending/Descending</source>
+        <target>crwdns307774:0crwdne307774:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.asc">
+        <source>Ascending</source>
+        <target>crwdns307776:0crwdne307776:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader.desc">
+        <source>Descending</source>
+        <target>crwdns307778:0crwdne307778:0</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
