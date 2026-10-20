@@ -1,58 +1,56 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader">
-		<header/>
-		<body>
-			<trans-unit id="tt_content.list_type_pi1">
-				<source>KK Downloader</source>
-				<target>KK Downloader</target>
-			</trans-unit>
-
-			<trans-unit id="plugin.kkdownloader.title">
-				<source>KK Downloader</source>
-				<target>KK Downloader</target>
-			</trans-unit>
-			<trans-unit id="plugin.kkdownloader.description">
-				<source>Adds a plugin to list or show Downloads managed with KK Downloader.</source>
-				<target>Fügt ein Plugin hinzu, das Downloads auflistet/anzeigt, die über KK Downloader verwaltet werden.</target>
-			</trans-unit>
-
-			<trans-unit id="tx_kkdownloader_images">
-				<source>Download</source>
-				<target>Download</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader_images.name">
-				<source>Download title</source>
-				<target>Titel</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader_images.image">
-				<source>File(s)</source>
-				<target>Download(s)</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader_images.imagepreview">
-				<source>Preview image (optional)</source>
-				<target>Vorschaubild</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader_images.description">
-				<source>Short description</source>
-				<target>Kurzbeschreibung</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader_images.longdescription">
-				<source>Long description</source>
-				<target>Langbeschreibung</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader_images.clicks">
-				<source>Clicks</source>
-				<target>Aufrufe</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader_images.cat">
-				<source>Category</source>
-				<target>Kategorie</target>
-			</trans-unit>
-			<trans-unit id="tx_kkdownloader_images.imagedescription">
-				<source>Link description</source>
-				<target>Link name</target>
-			</trans-unit>
-		</body>
-	</file>
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader" target-language="de">
+    <header/>
+    <body>
+      <trans-unit id="tt_content.list_type_pi1" approved="yes">
+        <source>KK Downloader</source>
+        <target state="final">KK Downloader</target>
+      </trans-unit>
+      <trans-unit id="plugin.kkdownloader.title" approved="yes">
+        <source>KK Downloader</source>
+        <target state="final">KK Downloader</target>
+      </trans-unit>
+      <trans-unit id="plugin.kkdownloader.description" approved="yes">
+        <source>Adds a plugin to list or show Downloads managed with KK Downloader.</source>
+        <target state="final">Fügt ein Plugin hinzu, um mit KK Downloader verwaltete Downloads aufzulisten oder anzuzeigen.</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images" approved="yes">
+        <source>Download</source>
+        <target state="final">Download</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.name" approved="yes">
+        <source>Download title</source>
+        <target state="final">Download Name</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.image" approved="yes">
+        <source>File(s)</source>
+        <target state="final">Datei(en)</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.imagepreview" approved="yes">
+        <source>Preview image (optional)</source>
+        <target state="final">Vorschaubild (optional)</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.description" approved="yes">
+        <source>Short description</source>
+        <target state="final">Kurzbeschreibung</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.longdescription" approved="yes">
+        <source>Long description</source>
+        <target state="final">Ausführliche Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.clicks" approved="yes">
+        <source>Clicks</source>
+        <target state="final">Klicks</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.cat" approved="yes">
+        <source>Category</source>
+        <target state="final">Kategorie</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.imagedescription" approved="yes">
+        <source>Link description</source>
+        <target state="final">Linkbeschreibung</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

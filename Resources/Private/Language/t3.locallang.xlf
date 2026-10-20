@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="title">
+        <source>Title</source>
+        <target>crwdns307780:0crwdne307780:0</target>
+      </trans-unit>
+      <trans-unit id="categories">
+        <source>Categories</source>
+        <target>crwdns307782:0crwdne307782:0</target>
+      </trans-unit>
+      <trans-unit id="links">
+        <source>Links</source>
+        <target>crwdns307784:0crwdne307784:0</target>
+      </trans-unit>
+      <trans-unit id="shortDescription">
+        <source>Short description</source>
+        <target>crwdns307786:0crwdne307786:0</target>
+      </trans-unit>
+      <trans-unit id="description">
+        <source>Description</source>
+        <target>crwdns307788:0crwdne307788:0</target>
+      </trans-unit>
+      <trans-unit id="image">
+        <source>Download object</source>
+        <target>crwdns307790:0crwdne307790:0</target>
+      </trans-unit>
+      <trans-unit id="clicks">
+        <source>downloads</source>
+        <target>crwdns307792:0crwdne307792:0</target>
+      </trans-unit>
+      <trans-unit id="lastDownload">
+        <source>Date last download</source>
+        <target>crwdns307794:0crwdne307794:0</target>
+      </trans-unit>
+      <trans-unit id="ipLastDownload">
+        <source>IP-address of last download</source>
+        <target>crwdns307796:0crwdne307796:0</target>
+      </trans-unit>
+      <trans-unit id="date">
+        <source>since</source>
+        <target>crwdns307798:0crwdne307798:0</target>
+      </trans-unit>
+      <trans-unit id="crDate">
+        <source>Date file created</source>
+        <target>crwdns307800:0crwdne307800:0</target>
+      </trans-unit>
+      <trans-unit id="lastEdit">
+        <source>This record was last edited at</source>
+        <target>crwdns307802:0crwdne307802:0</target>
+      </trans-unit>
+      <trans-unit id="fileName">
+        <source>Download file name</source>
+        <target>crwdns307804:0crwdne307804:0</target>
+      </trans-unit>
+      <trans-unit id="fileSize">
+        <source>Size of download-file</source>
+        <target>crwdns307806:0crwdne307806:0</target>
+      </trans-unit>
+      <trans-unit id="fileMDate">
+        <source>File date last changed</source>
+        <target>crwdns307808:0crwdne307808:0</target>
+      </trans-unit>
+      <trans-unit id="download">
+        <source>Download</source>
+        <target>crwdns307810:0crwdne307810:0</target>
+      </trans-unit>
+      <trans-unit id="downloads">
+        <source>Downloads</source>
+        <target>crwdns307812:0crwdne307812:0</target>
+      </trans-unit>
+      <trans-unit id="noValue">
+        <source>No data, possibly missing ID!?</source>
+        <target>crwdns307814:0crwdne307814:0</target>
+      </trans-unit>
+      <trans-unit id="noTemplate">
+        <source>No HTML-template. Neither in the flexform nor in the template-setup!?</source>
+        <target>crwdns307816:0crwdne307816:0</target>
+      </trans-unit>
+      <trans-unit id="since">
+        <source>since</source>
+        <target>crwdns307818:0crwdne307818:0</target>
+      </trans-unit>
+      <trans-unit id="oclock">
+        <source>o´clock</source>
+        <target>crwdns307820:0crwdne307820:0</target>
+      </trans-unit>
+      <trans-unit id="more">
+        <source>[more]</source>
+        <target>crwdns307822:0crwdne307822:0</target>
+      </trans-unit>
+      <trans-unit id="linkBack">
+        <source>Link back to previous page</source>
+        <target>crwdns307824:0crwdne307824:0</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_page">
+        <source>Page</source>
+        <target>crwdns307826:0crwdne307826:0</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_prev">
+        <source>Previous</source>
+        <target>crwdns307828:0crwdne307828:0</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_next">
+        <source>Next</source>
+        <target>crwdns307830:0crwdne307830:0</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_displays">
+        <source>Displaying results %s to %s out of %s</source>
+        <target>crwdns307832:0%scrwdnd307832:0%scrwdnd307832:0%scrwdne307832:0</target>
+      </trans-unit>
+      <trans-unit id="pi_list_browseresults_noResults">
+        <source>Sorry, no items were found.</source>
+        <target>crwdns307834:0crwdne307834:0</target>
+      </trans-unit>
+      <trans-unit id="error.callSingleViewWithoutUid.title">
+        <source>No download UID found</source>
+        <target>crwdns307836:0crwdne307836:0</target>
+      </trans-unit>
+      <trans-unit id="error.callSingleViewWithoutUid.description">
+        <source>Direct call of the single page without an item ID!?</source>
+        <target>crwdns307838:0crwdne307838:0</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

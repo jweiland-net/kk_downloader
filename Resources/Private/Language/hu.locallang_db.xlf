@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader" target-language="hu">
+    <header/>
+    <body>
+      <trans-unit id="tt_content.list_type_pi1">
+        <source>KK Downloader</source>
+        <target state="translated">KK Downloader</target>
+      </trans-unit>
+      <trans-unit id="plugin.kkdownloader.title">
+        <source>KK Downloader</source>
+        <target state="translated">KK Downloader</target>
+      </trans-unit>
+      <trans-unit id="plugin.kkdownloader.description">
+        <source>Adds a plugin to list or show Downloads managed with KK Downloader.</source>
+        <target state="translated">Bővítményt ad hozzá a KK Downloaderrel kezelt letöltések listázásához vagy megjelenítéséhez.</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images">
+        <source>Download</source>
+        <target state="translated">Letöltés</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.name">
+        <source>Download title</source>
+        <target state="translated">Letöltés címe</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.image">
+        <source>File(s)</source>
+        <target state="translated">Fájl(ok)</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.imagepreview">
+        <source>Preview image (optional)</source>
+        <target state="translated">Előnézeti kép (opcionális)</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.description">
+        <source>Short description</source>
+        <target state="translated">Rövid leírás</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.longdescription">
+        <source>Long description</source>
+        <target state="translated">Hosszú leírás</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.clicks">
+        <source>Clicks</source>
+        <target state="translated">Kattintások</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.cat">
+        <source>Category</source>
+        <target state="translated">Kategória</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.imagedescription">
+        <source>Link description</source>
+        <target state="translated">Hivatkozás leírása</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
