@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-05-07T08:00:40Z" product-name="kk_downloader" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="tt_content.list_type_pi1">
+        <source>KK Downloader</source>
+        <target>crwdns307840:0crwdne307840:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.kkdownloader.title">
+        <source>KK Downloader</source>
+        <target>crwdns307842:0crwdne307842:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.kkdownloader.description">
+        <source>Adds a plugin to list or show Downloads managed with KK Downloader.</source>
+        <target>crwdns307844:0crwdne307844:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images">
+        <source>Download</source>
+        <target>crwdns307846:0crwdne307846:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.name">
+        <source>Download title</source>
+        <target>crwdns307848:0crwdne307848:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.image">
+        <source>File(s)</source>
+        <target>crwdns307850:0crwdne307850:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.imagepreview">
+        <source>Preview image (optional)</source>
+        <target>crwdns307852:0crwdne307852:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.description">
+        <source>Short description</source>
+        <target>crwdns307854:0crwdne307854:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.longdescription">
+        <source>Long description</source>
+        <target>crwdns307856:0crwdne307856:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.clicks">
+        <source>Clicks</source>
+        <target>crwdns307858:0crwdne307858:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.cat">
+        <source>Category</source>
+        <target>crwdns307860:0crwdne307860:0</target>
+      </trans-unit>
+      <trans-unit id="tx_kkdownloader_images.imagedescription">
+        <source>Link description</source>
+        <target>crwdns307862:0crwdne307862:0</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
